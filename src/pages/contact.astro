@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Loop from '../components/Loop.astro';
+import ThreadRule from '../components/ThreadRule.astro';
+import Kicker from '../components/Kicker.astro';
+
+const expectations = [
+  { num: '01', title: 'I reply within 2 days', body: 'A real note from me, not an autoresponder.' },
+  { num: '02', title: 'We set up a call', body: '30 minutes on the team, the role, and how I work.' },
+  { num: '03', title: 'We see if it’s a fit', body: 'Honest on both sides — and next steps if it is.' },
+];
+---
+<BaseLayout title="Contact — Mingwei Ma" description="Get in touch with Mingwei Ma about a full-time, contract, or fractional Senior Project Manager role.">
+  <Nav current="contact" />
+
+  <header class="wrap hero">
+    <Loop variant="above" />
+    <Kicker text="Contact" />
+    <h1>Let's talk about the role.</h1>
+    <p class="lede">Tell me a little about the team and the opening. I read every message myself and reply within two business days.</p>
+  </header>
+
+  <ThreadRule />
+
+  <section class="wrap body-grid">
+    <div>
+      <div id="contact-success" class="success-panel" hidden>
+        <div class="success-title">Thank you — message received.</div>
+        <p class="success-body">I'll be in touch within two business days. If it's time-sensitive, email me directly at <a href="mailto:mingweima98@gmail.com">mingweima98@gmail.com</a>.</p>
+      </div>
+
+      <p id="contact-error" class="error-note" hidden>Something went wrong sending that — please email me directly at <a href="mailto:mingweima98@gmail.com">mingweima98@gmail.com</a> instead.</p>
+
+      <form id="contact-form" class="contact-form">
+        <div class="form-row-2">
+          <div class="field"><label for="name">Your name</label><input class="input" id="name" name="name" required placeholder="Jane Rivera" /></div>
+          <div class="field"><label for="email">Email</label><input class="input" id="email" name="email" type="email" required placeholder="jane@company.com" /></div>
+        </div>
+        <div class="field"><label for="org">Company</label><input class="input" id="org" name="org" placeholder="Where you're hiring" /></div>
+        <div class="field">
+          <label>What's this about?</label>
+          <div class="seg">
+            <label class="seg-opt"><input type="radio" name="need" value="fulltime" checked />Full-time role</label>
+            <label class="seg-opt"><input type="radio" name="need" value="contract" />Contract / fractional</label>
+            <label class="seg-opt"><input type="radio" name="need" value="connect" />Just connecting</label>
+          </div>
+        </div>
+        <div class="field"><label for="msg">Tell me about the role</label><textarea class="input" id="msg" name="msg" required placeholder="What's the team, what would I own, and what does success look like in the first 90 days?"></textarea></div>
+        <button type="submit" class="btn btn-primary submit-btn">Send message →</button>
+      </form>
+    </div>
+
+    <aside>
+      <div class="aside-block">
+        <div class="kick" style="margin-bottom: var(--space-2);">Prefer email?</div>
+        <a href="mailto:mingweima98@gmail.com" class="aside-email">mingweima98@gmail.com</a>
+      </div>
+      <div class="aside-buttons">
+        <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-primary btn-block aside-btn">Download résumé (PDF)</a>
+        <a href="https://www.linkedin.com/in/mingwei-ma/" target="_blank" rel="noopener" class="btn btn-secondary btn-block aside-btn">View LinkedIn</a>
+      </div>
+      <div>
+        <div class="kick" style="margin-bottom: var(--space-3);">What happens next</div>
+        {expectations.map((e) => (
+          <div class="expect-row">
+            <span class="expect-num">{e.num}</span>
+            <div>
+              <div class="expect-title">{e.title}</div>
+              <div class="expect-body">{e.body}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="aside-tags">
+        <span class="tag tag-outline">PMP in progress</span>
+        <span class="tag tag-neutral">New York</span>
+        <span class="tag tag-neutral">Remote-first · on-site when it counts</span>
+      </div>
+    </aside>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<script src="../scripts/contact-form.ts"></script>
+
+<style>
+  .hero { text-align: center; padding-top: 88px; padding-bottom: 56px; max-width: 640px; }
+  .hero h1 { font-size: 52px; line-height: 1.08; margin: 20px 0 22px; font-weight: 400; }
+
+  .body-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 72px; align-items: start; padding-bottom: 40px; }
+  .contact-form { display: flex; flex-direction: column; gap: var(--space-4); }
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+  .submit-btn { align-self: flex-start; font-size: 14px; padding: 12px 26px; }
+
+  .success-panel { border: 1px solid var(--color-accent); border-radius: var(--radius-lg); padding: var(--space-6); text-align: center; }
+  .success-title { font-family: var(--font-heading); font-size: 28px; margin-bottom: var(--space-2); }
+  .success-body { font-size: 15px; font-family: var(--font-sans); color: color-mix(in srgb, var(--color-text) 80%, transparent); }
+  .error-note { font-size: 14px; font-family: var(--font-sans); color: #a33; margin-bottom: var(--space-3); }
+
+  .aside-block { margin-bottom: var(--space-5); }
+  .aside-email { font-family: var(--font-heading); font-size: 21px; color: var(--color-accent); text-decoration: none; word-break: break-all; }
+  .aside-buttons { margin-bottom: var(--space-6); display: flex; flex-direction: column; gap: 10px; }
+  .aside-btn { font-size: 14px; padding: 11px 20px; }
+  .expect-title { font-family: var(--font-heading); font-size: 17px; }
+  .expect-body { font-size: 13px; color: var(--color-neutral-600); }
+  .aside-tags { margin-top: var(--space-6); display: flex; flex-wrap: wrap; gap: 8px; }
+
+  @media (max-width: 860px) {
+    .hero { padding-top: 56px; padding-bottom: 40px; }
+    .hero h1 { font-size: 34px; }
+    .body-grid { grid-template-columns: 1fr; gap: 40px; }
+    .form-row-2 { grid-template-columns: 1fr; }
+  }
+</style>

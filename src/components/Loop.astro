@@ -1,0 +1,24 @@
+---
+// Small hand-drawn loop mark used above section eyebrows and in heroes.
+// Four rotating variants, or pass a custom `d` for a one-off.
+export type LoopVariant = 'above' | 'below' | 'double' | 'flourish';
+
+interface Props {
+  variant?: LoopVariant;
+  d?: string;
+  class?: string;
+}
+
+const paths: Record<LoopVariant, string> = {
+  above: 'M 6 28 C 22 28 26 12 44 12 C 58 12 58 32 44 32 C 32 32 33 16 50 16 C 66 16 70 28 86 28',
+  below: 'M 6 16 C 22 16 26 32 44 32 C 58 32 58 12 44 12 C 32 12 33 28 50 28 C 66 28 70 16 86 16',
+  double: 'M 4 26 C 14 26 16 14 28 14 C 40 14 40 30 28 30 C 18 30 21 21 34 22 C 46 23 48 22 58 22 C 70 22 72 14 62 14 C 52 14 52 30 64 30 C 78 30 82 26 88 26',
+  flourish: 'M 4 30 C 24 30 28 12 46 14 C 60 15 60 30 47 30 C 36 30 38 16 54 16 C 74 16 78 28 90 24',
+};
+
+const { variant = 'above', d, class: className } = Astro.props;
+const path = d ?? paths[variant];
+---
+<svg class={`thread loopmark ${className ?? ''}`} viewBox="0 0 92 44" aria-hidden="true">
+  <path class="tl" pathLength="100" d={path}></path>
+</svg>

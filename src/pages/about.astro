@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Loop from '../components/Loop.astro';
+import ThreadRule from '../components/ThreadRule.astro';
+import Kicker from '../components/Kicker.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+
+const values = [
+  { num: '01', title: 'Trust, built fast', body: 'I create the conditions for cross-functional teams and clients to be honest with each other — the real prerequisite for any project to move.' },
+  { num: '02', title: 'Initiative, not escalation', body: "When something's blocked I go find the answer and clear the path, rather than logging it and waiting for permission." },
+  { num: '03', title: 'Calm under pressure', body: 'The messier the moment, the steadier I get. Teams borrow that calm, and it\'s often what gets the work over the line.' },
+];
+
+const credentials = [
+  'PMP · In progress (Q3)',
+  '6+ years leading delivery',
+  '$2.6M+ delivered',
+  'Building AI fluency with Claude Code',
+];
+
+const timeline = [
+  { year: 'Oct 2025 – May 2026', role: 'Founding Product Manager · SUBSCRIBE', org: 'Fintech SaaS', body: 'Built the program management function from scratch — intake, roadmap, and a P0–P4 escalation framework adopted across 10+ cross-functional teams.' },
+  { year: 'Nov 2024 – Oct 2025', role: 'Senior Digital Project Manager · Wide Eye', org: 'Creative agency', body: 'Led $2.6M+ of custom brand and web work across 10+ clients, running resourcing for blended teams and lifting efficiency 20%.' },
+  { year: 'Nov 2023 – Nov 2024', role: 'Senior Digital Project Manager · Studio Simpatico', org: 'Creative agency', body: 'Managed 7+ web builds and 20 retainer clients, and led the change from Basecamp to Linear to raise team velocity.' },
+];
+
+const toolkit = [
+  { label: 'Program & project management', style: 'outline', tags: ['Intake process design', 'Roadmap & backlog prioritization', 'Risk escalation (P0–P4)', 'KPI & status reporting', 'Resource & capacity planning', 'Change management', 'Budget management', 'Agile methodologies'] },
+  { label: 'Tools', style: 'neutral', tags: ['Asana', 'Jira', 'Linear', 'Notion', 'Airtable', 'Confluence', 'Excel / MS Office'] },
+  { label: 'Stakeholder & creative ops', style: 'outline', tags: ['Discovery workshops', 'Requirements gathering', 'Executive communication', 'Client onboarding', 'Cross-functional collaboration', 'Creative operations'] },
+  { label: 'Documentation', style: 'neutral', tags: ['Functional specs', 'Acceptance criteria', 'Operational systems', 'Process documentation', 'SOW writing'] },
+];
+---
+<BaseLayout title="About — Mingwei Ma" description="I'm Mingwei Ma, and I make delivery feel calm. Senior Project Manager with six years leading cross-functional delivery.">
+  <Nav current="about" />
+
+  <header class="wrap hero">
+    <div>
+      <Loop variant="double" class="hero-loop" />
+      <Kicker text="About" />
+      <h1>I'm Mingwei — and I make delivery feel calm.</h1>
+      <p class="lede">For six years I've been the person teams hand their hardest, most tangled projects to. Not because I have the fanciest framework, but because I earn trust quickly and use it to keep everyone — product, engineering, design, and leadership — moving in the same direction.</p>
+    </div>
+    <div>
+      <ImagePlaceholder label="Drop your portrait" aspect="3/4" class="portrait" />
+    </div>
+  </header>
+
+  <section class="wrap prose story">
+    <p>I started out coordinating small builds and quickly found the part of the work I loved most wasn't the Gantt chart — it was the people. Getting a wary engineer and an anxious client to actually trust each other. Spotting the quiet blocker no one had named yet. Turning a room full of competing priorities into a plan everyone could get behind.</p>
+    <p>That's still the heart of how I work. I believe most project problems are really trust and communication problems wearing a schedule as a disguise. Fix the first two and the timeline tends to follow.</p>
+    <p>Lately I've been deepening my technical and AI fluency — building small tools with Claude Code to sharpen how I think about software and to put AI to sensible use in planning and reporting. I want to speak my engineers' language and bring genuinely useful ideas to the table, not just track their tickets.</p>
+  </section>
+
+  <section class="wrap section">
+    <div class="section-head">
+      <Loop d="M 4 14 C 20 22 30 30 40 30 C 54 30 54 12 40 12 C 28 12 30 28 46 28 C 60 28 68 22 88 14" />
+      <Kicker text="What I bring" />
+      <h2>The strengths behind the schedule.</h2>
+    </div>
+    <div class="values-grid">
+      {values.map((v) => (
+        <div class="card">
+          <span class="card-kicker">{v.num}</span>
+          <span class="card-title">{v.title}</span>
+          <p class="card-body">{v.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section" style="text-align: center;">
+    <Kicker text="Credentials" />
+    <div class="cred-row">
+      {credentials.map((c, i) => (
+        <span class={`tag ${i === 0 ? 'tag-outline' : 'tag-neutral'} cred-tag`}>{c}</span>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section timeline-section">
+    <div class="section-head">
+      <Loop d="M 4 30 C 30 30 34 8 48 8 C 62 8 62 26 48 26 C 40 26 40 16 50 16 C 66 16 70 30 88 30" />
+      <Kicker text="The path here" />
+      <h2>Where I've done the work.</h2>
+    </div>
+    {timeline.map((t) => (
+      <div class="tl-row">
+        <span class="tl-year">{t.year}</span>
+        <div>
+          <div class="tl-role">{t.role}</div>
+          <div class="tl-org">{t.org}</div>
+          <p class="tl-body">{t.body}</p>
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section class="wrap section toolkit-section">
+    <div class="section-head">
+      <Kicker text="Toolkit" />
+      <h2>The skills behind the delivery.</h2>
+    </div>
+    <div class="toolkit-grid">
+      {toolkit.map((group) => (
+        <div>
+          <div class="kick toolkit-label">{group.label}</div>
+          <div class="toolkit-tags">
+            {group.tags.map((t) => (
+              <span class={`tag tag-${group.style}`}>{t}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="edu-row">
+      <div class="edu-degree">B.S., International Trade &amp; Marketing</div>
+      <div class="edu-school">Fashion Institute of Technology (SUNY) · Dec 2019</div>
+    </div>
+  </section>
+
+  <ThreadRule />
+  <section class="wrap cta-section">
+    <div class="cta-band">
+      <Loop variant="below" />
+      <h2 class="cta-h2">Think we might be a fit?</h2>
+      <a href="/contact" class="btn btn-primary cta-btn">Book a discovery call →</a>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: center; padding-top: 88px; padding-bottom: 72px; }
+  .hero h1 { font-size: 52px; line-height: 1.08; margin: 20px 0 24px; font-weight: 400; }
+  .hero-loop { margin: 0 0 var(--space-3); }
+  .portrait { width: 100%; }
+
+  .story { max-width: 720px; padding-top: 24px; }
+
+  .section { padding-top: 80px; }
+  .section-head { text-align: center; margin-bottom: var(--space-6); }
+  .section-head h2 { font-size: 36px; margin-top: 14px; font-weight: 400; }
+
+  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+
+  .cred-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: var(--space-4); }
+  .cred-tag { font-size: 13px; padding: 6px 14px; }
+
+  .timeline-section { max-width: 780px; }
+  .tl-role { font-family: var(--font-heading); font-size: 21px; }
+  .tl-org { font-size: 12.5px; font-family: var(--font-sans); letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-neutral-600); margin: 3px 0 6px; }
+  .tl-body { font-size: 14px; line-height: 1.6; margin: 0; font-family: var(--font-body); color: color-mix(in srgb, var(--color-text) 78%, transparent); }
+
+  .toolkit-section { max-width: 860px; }
+  .toolkit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5) var(--space-8); }
+  .toolkit-label { margin-bottom: var(--space-3); }
+  .toolkit-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .edu-row { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--color-divider); display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; }
+  .edu-degree { font-family: var(--font-heading); font-size: 20px; }
+  .edu-school { font-size: 13px; font-family: var(--font-sans); color: var(--color-neutral-600); }
+
+  .cta-section { padding-top: 0; text-align: center; }
+  .cta-band { padding: 64px 0; }
+  .cta-h2 { font-size: 42px; margin: 0 0 18px; font-weight: 400; }
+  .cta-btn { font-size: 15px; padding: 13px 28px; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; padding-top: 56px; padding-bottom: 40px; text-align: center; }
+    .hero h1 { font-size: 34px; }
+    .portrait { max-width: 320px; margin: 0 auto; }
+    .section { padding-top: 48px; }
+    .values-grid { grid-template-columns: 1fr; }
+    .tl-row { grid-template-columns: 1fr; }
+    .toolkit-grid { grid-template-columns: 1fr; }
+    .cta-h2 { font-size: 28px; }
+  }
+</style>

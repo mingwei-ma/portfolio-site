@@ -1,0 +1,20 @@
+---
+// Renders an eyebrow/kicker label with the per-letter rainbow treatment,
+// computed at build time (no client JS needed for it).
+interface Props {
+  text: string;
+  class?: string;
+}
+const { text, class: className } = Astro.props;
+const palette = ['#b1553f', '#b3783c', '#93803a', '#5f7d4f', '#3f7c77', '#4d6a92', '#6a5a90', '#a4547e'];
+let i = 0;
+const chars = [...text].map((ch) => {
+  if (!ch.trim()) return { ch, color: null };
+  const color = palette[i % palette.length];
+  i++;
+  return { ch, color };
+});
+---
+<span class={`kick ${className ?? ''}`}>{chars.map(({ ch, color }) => (
+  color ? <span style={{ color }}>{ch}</span> : ch
+))}</span>

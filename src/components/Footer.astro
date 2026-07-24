@@ -1,0 +1,22 @@
+---
+interface Props {
+  bordered?: boolean;
+}
+const { bordered = true } = Astro.props;
+---
+<footer class="wrap site-foot" style={bordered ? 'border-top: 1px solid var(--color-divider);' : undefined}>
+  <div>
+    <div style="font-family: var(--font-heading); font-size: 22px;">Mingwei Ma</div>
+    <div style="font-size: 13px; font-family: var(--font-sans); color: var(--color-neutral-600); margin-top: 4px;">Senior Project Manager · Open to full-time roles</div>
+  </div>
+  <div class="foot-cols">
+    <div class="foot-col"><a class="footlink" href="/">Home</a><a class="footlink" href="/work">Work</a></div>
+    <div class="foot-col"><a class="footlink" href="/about">About</a><a class="footlink" href="/contact">Contact</a></div>
+  </div>
+  <div class="foot-col" style="font-size: 14px;">
+    <a class="footlink" href="mailto:mingweima98@gmail.com" style="color: var(--color-accent);">mingweima98@gmail.com</a>
+    <a class="footlink" href="https://www.linkedin.com/in/mingwei-ma/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="footlink" href="/assets/Mingwei-Ma-Resume.pdf" target="_blank">Résumé (PDF)</a>
+    <div style="font-size: 12px; color: var(--color-neutral-600); margin-top: 4px;">© 2026 Mingwei Ma</div>
+  </div>
+</footer>

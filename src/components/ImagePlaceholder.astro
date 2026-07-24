@@ -1,0 +1,31 @@
+---
+// Stand-in for a case-study/portrait image slot until a real photo is supplied.
+// Swap the <ImagePlaceholder> usage for a real <img> wrapped in .plate once art is ready.
+interface Props {
+  label: string;
+  aspect?: string;
+  class?: string;
+}
+const { label, aspect = '4/3', class: className } = Astro.props;
+---
+<div class={`plate img-placeholder ${className ?? ''}`} style={`aspect-ratio: ${aspect};`}>
+  <span>{label}</span>
+</div>
+
+<style>
+  .img-placeholder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface);
+    text-align: center;
+  }
+  .img-placeholder span {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--color-neutral-500);
+    padding: 0 var(--space-3);
+  }
+</style>

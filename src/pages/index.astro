@@ -1,0 +1,279 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Loop from '../components/Loop.astro';
+import ThreadRule from '../components/ThreadRule.astro';
+import Journey from '../components/Journey.astro';
+import Kicker from '../components/Kicker.astro';
+
+const services = [
+  {
+    num: '01',
+    name: 'Program & delivery management',
+    desc: "I've led end-to-end delivery in waterfall, hybrid, and agile environments, choosing the structure based on what the team and project actually need, not just process for the sake of it. From kickoff to gate reviews, I build the cadence a team will keep so leadership always knows what's shipping and when.",
+  },
+  {
+    num: '02',
+    name: 'Intake, roadmap & backlog',
+    desc: "I design intake systems that give every request a clear path, whether that means building structure from scratch or untangling a system that's grown past its limits. Once requests are in, I prioritize by real business impact, not who asks loudest.",
+  },
+  {
+    num: '03',
+    name: 'Client & stakeholder relationships',
+    desc: "For my team, that means tight feedback loops, clear acceptance criteria, and requests routed through the right channel, so nobody's guessing what's actually being asked. For the client, it means staying ahead of their questions, communicating early when something's off track, and showing up like a long-term partner instead of a vendor they hired for one project.",
+  },
+  {
+    num: '04',
+    name: 'Risk, escalation & reporting',
+    desc: "I build reporting that's easy to self-serve, so people aren't waiting on me for status. When our tools couldn't get me the visibility I needed, I taught myself SQL and started pulling my own Metabase reports instead of waiting on someone else to do it. In standups, I listen for the early signals that something's starting to drift, and I always escalate with a recommendation already attached.",
+  },
+  {
+    num: '05',
+    name: 'Resourcing & capacity planning',
+    desc: 'I balance workload across concurrent projects by working directly with design and engineering leads, and flex up or down with freelance staffing when a project needs it. To keep burn and capacity numbers accurate, I built custom spreadsheet reporting that tracked hours against budget in real time.',
+  },
+];
+
+const process = [
+  { step: 'Step 01', title: 'Listen & map', body: 'I meet the people and the project where they are before I touch the plan, learning the goals, the constraints, and where trust needs to be built.' },
+  { step: 'Step 02', title: 'Create & execute the plan', body: 'A plan the team helped shape and actually believes in with clear owners, honest dates, visible risks & mitigations.' },
+  { step: 'Step 03', title: 'Unblock daily', body: "I chase down answers and clear the path, protecting my team's time so they can do what they do best." },
+  { step: 'Step 04', title: 'Land & learn', body: 'Ship it, close it cleanly, leaving the team with practices that outlast the project and leaving the client excited to start a new engagement.' },
+];
+
+const work = [
+  { kicker: 'SUBSCRIBE · Founding PM', title: 'A program system built from zero', body: 'Replaced 100+ unstructured boards with one intake-to-delivery system adopted across 10+ teams.' },
+  { kicker: 'Wide Eye · Senior DPM', title: '$2.6M+ of brand & web, delivered', body: 'Ran delivery and resourcing for 10+ clients and lifted team efficiency by 20%.' },
+  { kicker: 'Studio Simpatico · Senior DPM', title: 'The tools that sped up delivery', body: 'Change-managed 20 retainer clients and 7+ builds from Basecamp to Linear.' },
+];
+
+const testimonials = [
+  { quote: 'Mingwei walked into a project that was three weeks underwater and had it back on track before we’d finished onboarding her. She just <em>handles</em> people and problems.', attr: 'Director of Ops · Design agency' },
+  { quote: 'The calmest person in every room, and somehow also the one moving things fastest. Our team trusted her within a week.', attr: 'VP Engineering · SaaS company' },
+  { quote: "She unblocked things we didn't even know were stuck. We got a launch and a better way of working out of it.", attr: 'Program Director · Nonprofit' },
+  { quote: "Rare mix of warmth and rigor. Clients felt heard and the work still shipped on time. I'd hire her for anything.", attr: 'Founder · Product studio' },
+];
+
+const faqs = [
+  { q: 'What kind of teams fit you best?', a: 'Strategic and creative tech organizations where I get to work with talented doers from multiple disciplines. Teams that push each other to new limits to create unique experiences that delight.' },
+  { q: 'Which tools and methods do you use?', a: "Asana, Jira, Linear, Notion, Airtable, and Confluence, among others. I'm methodology-agnostic (Agile and Scrum where they fit, something lighter where they don't) and I shape process to the work, not the other way around." },
+  { q: 'Do you hold any certifications (PMP, CSM)?', a: 'My PMP is in progress, with completion expected by the end of Q3. I hold six years of hands-on project management behind it.' },
+  { q: 'How does AI fit into how you work?', a: "I'm actively building my technical and AI fluency, including prototyping tools with Claude Code and Design so I can speak my engineers' language and put AI to work sensibly on planning, reporting, and the busywork around delivery. Check out what I'm building here!" },
+];
+---
+<BaseLayout title="Mingwei Ma — Senior Project Manager" description="The thread that holds everything together. Portfolio of Mingwei Ma, Senior Project Manager.">
+  <Nav current="home" />
+
+  <header class="wrap hero">
+    <Loop variant="above" />
+    <Kicker text="Mingwei Ma | Senior Project Manager" />
+    <h1>The thread that holds everything together.</h1>
+    <p class="lede hero-lede">Six years leading cross-functional, client-facing delivery at award-winning creative agencies and startups. I build the systems, roadmaps, and relationships that turn tangled work into shipped work. When things get sticky, I figure out why it's stuck, not just how to unstick it.</p>
+    <div class="hero-ctas">
+      <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-primary hero-btn">Download résumé (PDF)</a>
+      <a href="/work" class="btn btn-ghost hero-btn">See the work →</a>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="marquee">
+      <span>Program management</span><span class="dot">·</span>
+      <span>Intake &amp; process design</span><span class="dot">·</span>
+      <span>Roadmap &amp; backlog</span><span class="dot">·</span>
+      <span>Risk &amp; escalation</span><span class="dot">·</span>
+      <span>Budgets &amp; SOWs</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">6+</div><div class="stat-label">Years leading delivery</div></div>
+      <div class="stat stat-mid"><div class="stat-num">$2.6M+</div><div class="stat-label">In project budgets managed</div></div>
+      <div class="stat"><div class="stat-num">68%</div><div class="stat-label">Client retention &amp; growth</div></div>
+    </div>
+  </div>
+
+  <section class="wrap section">
+    <div class="section-head">
+      <Kicker text="What I do" />
+      <h2>Where I create leverage for a team.</h2>
+    </div>
+    {services.map((s) => (
+      <div class="svc-row">
+        <span class="svc-num">{s.num}</span>
+        <span class="svc-name">{s.name}</span>
+        <span class="svc-desc">{s.desc}</span>
+      </div>
+    ))}
+  </section>
+
+  <section class="wrap section">
+    <div class="section-head" style="margin-bottom: var(--space-5);">
+      <Kicker text="How I work" />
+      <h2>Trust first, then throughput.</h2>
+      <p class="lede section-lede">Every engagement is really one thing: getting a project from where it is to where it needs to land.</p>
+    </div>
+    <Journey />
+    <div class="process-grid">
+      {process.map((p) => (
+        <div class="card">
+          <span class="card-kicker">{p.step}</span>
+          <span class="card-title">{p.title}</span>
+          <p class="card-body">{p.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="work-head">
+      <div>
+        <Kicker text="Selected work" />
+        <h2 style="font-size: 34px; margin-top: 12px;">A few things I've landed.</h2>
+      </div>
+      <a href="/work" class="btn btn-ghost">All case studies →</a>
+    </div>
+    <div class="work-grid">
+      {work.map((w) => (
+        <a href="/work" class="card work-card">
+          <span class="card-kicker">{w.kicker}</span>
+          <span class="card-title">{w.title}</span>
+          <p class="card-body">{w.body}</p>
+          <span class="card-meta" style="color: var(--color-accent);">Read case →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <ThreadRule />
+    <div style="text-align: center; margin-bottom: var(--space-6);"><Kicker text="In their words" /></div>
+    <div class="testi-grid">
+      {testimonials.map((t) => (
+        <figure>
+          <blockquote class="testi-quote" set:html={t.quote} />
+          <figcaption class="testi-attr">{t.attr}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="section-head">
+      <Kicker text="What's next" />
+      <h2>What I'm looking for next.</h2>
+    </div>
+    <div class="next-grid">
+      <div class="card next-card">
+        <span class="card-kicker">The role</span>
+        <span class="card-title next-title">Senior project manager</span>
+        <p class="card-body next-body">Owning delivery end to end across strategy, creative, and technology, as the steady point of contact that clients and teams both trust to keep things moving.</p>
+      </div>
+      <div class="card next-card next-card-accent">
+        <span class="card-kicker">The team</span>
+        <span class="card-title next-title">Design &amp; technology agencies</span>
+        <p class="card-body next-body">Strategy, creative, and technology teams pushing toward what's next, new formats and platforms, who need a PM who can turn that ambition into something real.</p>
+      </div>
+      <div class="card next-card">
+        <span class="card-kicker">The setup</span>
+        <span class="card-title next-title">Full-time, remote-first</span>
+        <p class="card-body next-body">Based in New York, remote-first with on-site when it counts. Open to contract or fractional for the right fit.</p>
+      </div>
+    </div>
+    <p class="pmp-note">Currently pursuing PMP certification, with completion expected by the end of Q3.</p>
+  </section>
+
+  <section class="wrap section faq-section">
+    <ThreadRule />
+    <div class="section-head">
+      <Kicker text="Questions" />
+      <h2>Good to know.</h2>
+    </div>
+    {faqs.map((f) => (
+      <div class="faq-row">
+        <div class="faq-q">{f.q}</div>
+        <p class="faq-a">{f.a}</p>
+      </div>
+    ))}
+  </section>
+
+  <section class="wrap section cta-section">
+    <div class="cta-band">
+      <Loop variant="below" />
+      <Kicker text="Let's talk" />
+      <h2 class="cta-h2">Hiring for a role I'd fit?</h2>
+      <p class="lede cta-lede">I'd love to hear about the team and the work. Send a note, or take my résumé with you.</p>
+      <div class="cta-ctas">
+        <a href="/contact" class="btn btn-primary cta-btn">Get in touch →</a>
+        <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-ghost cta-btn cta-btn-icon">
+          Download résumé
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer bordered={false} />
+</BaseLayout>
+
+<style>
+  .hero { text-align: center; padding-top: 84px; padding-bottom: 64px; }
+  .hero h1 { font-size: 60px; line-height: 1.07; margin: 22px 0; font-weight: 400; }
+  .hero-lede { max-width: 720px; margin: 0 auto; }
+  .hero-ctas { display: flex; gap: var(--space-3); justify-content: center; margin-top: 38px; flex-wrap: wrap; }
+  .hero-btn { font-size: 14px; padding: 12px 24px; }
+
+  .marquee {
+    display: flex; flex-wrap: wrap; gap: 10px 22px; justify-content: center;
+    font-family: var(--font-heading); font-size: 18px; color: var(--color-neutral-700);
+    padding: 26px 0; border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider);
+  }
+  .marquee .dot { color: var(--color-accent); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); padding: 40px 0 4px; text-align: center; }
+  .stat-mid { border-left: 1px solid var(--color-divider); border-right: 1px solid var(--color-divider); }
+  .stat-num { font-family: var(--font-heading); font-size: 44px; font-variant-numeric: tabular-nums; }
+  .stat-label { font-size: 12px; font-family: var(--font-sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-600); margin-top: 6px; }
+
+  .section { padding-top: 90px; }
+  .section-head { text-align: center; margin-bottom: var(--space-6); }
+  .section-head h2 { font-size: 38px; margin-top: 14px; font-weight: 400; }
+  .section-lede { max-width: 500px; margin: 14px auto 0; font-size: 16px; }
+
+  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+
+  .work-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: var(--space-4); border-bottom: 1px solid var(--color-divider); padding-bottom: var(--space-3); flex-wrap: wrap; gap: var(--space-3); }
+  .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+  .work-card { text-decoration: none; color: inherit; }
+
+  .testi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8) var(--space-6); }
+  .testi-quote { margin: 0; font-family: var(--font-heading); font-size: 24px; line-height: 1.32; font-weight: 400; }
+  .testi-attr { font-size: 13px; font-family: var(--font-sans); letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-neutral-600); margin-top: var(--space-3); }
+
+  .next-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+  .next-card { padding: var(--space-4); }
+  .next-card-accent { border-color: var(--color-accent); box-shadow: var(--shadow-sm); }
+  .next-title { font-size: 22px; }
+  .next-body { font-size: 14px; }
+  .pmp-note { text-align: center; font-size: 13px; font-family: var(--font-sans); color: var(--color-neutral-600); margin-top: var(--space-4); }
+
+  .faq-section { max-width: 760px; }
+
+  .cta-section { padding-top: 96px; text-align: center; }
+  .cta-band { border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider); padding: 64px 0; }
+  .cta-h2 { font-size: 46px; margin: 18px 0; font-weight: 400; }
+  .cta-lede { max-width: 520px; margin: 0 auto var(--space-6); }
+  .cta-ctas { display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+  .cta-btn { font-size: 15px; padding: 13px 28px; }
+  .cta-btn-icon { display: inline-flex; align-items: center; gap: 8px; }
+
+  @media (max-width: 860px) {
+    .hero { padding-top: 56px; padding-bottom: 44px; }
+    .hero h1 { font-size: 38px; margin: 18px 0; }
+    .stats { grid-template-columns: 1fr; gap: var(--space-4); }
+    .stat-mid { border-left: none; border-right: none; border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider); padding: var(--space-4) 0; }
+    .process-grid { grid-template-columns: 1fr; }
+    .work-grid { grid-template-columns: 1fr; }
+    .testi-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+    .next-grid { grid-template-columns: 1fr; }
+    .section { padding-top: 56px; }
+    .cta-h2 { font-size: 32px; }
+  }
+</style>
