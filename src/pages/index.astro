@@ -50,9 +50,9 @@ const work = [
 
 const testimonials = [
   { quote: 'Mingwei was absolutely amazing to work with...all of the organizational systems she put into place meant we were able to survive after she left.', attr: 'Lead Developer · Design Agency' },
-  { quote: 'The calmest person in every room, and somehow also the one moving things fastest. Our team trusted her within a week.', attr: 'VP Engineering · SaaS company' },
-  { quote: "She unblocked things we didn't even know were stuck. We got a launch and a better way of working out of it.", attr: 'Program Director · Nonprofit' },
-  { quote: "Rare mix of warmth and rigor. Clients felt heard and the work still shipped on time. I'd hire her for anything.", attr: 'Founder · Product studio' },
+  { quote: 'Top-tier when it came to project management. We never had any confusion about where we were in the process. [Mingwei] stuck to the plan and did it without making us feel overwhelmed.', attr: 'Director of Communications · Henry Luce Foundation' },
+  { quote: 'Mingwei was a joy to work with — a great facilitator and note-taker, so nothing ever got dropped, with immediate follow-up after every meeting and a weekly digest that kept everything clear.', attr: 'Director of Comms · Natural Areas Conservancy' },
+  { quote: "Mingwei was fantastic. I wish she could manage all my projects and my whole life. I couldn't have worked with a better team.", attr: 'Communications Consultant · Girl Be Heard' },
 ];
 
 const faqs = [
@@ -72,8 +72,7 @@ const faqs = [
     <p class="lede hero-lede">Six years leading cross-functional, client-facing delivery at award-winning creative agencies and startups. I build the systems, roadmaps, and relationships that turn tangled work into shipped work. When things get sticky, I figure out why it's stuck, not just how to unstick it.</p>
     <div class="hero-ctas">
       <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-primary hero-btn">Download résumé (PDF)</a>
-      {/* "See the work" hidden temporarily while Work content is in progress — restore this <a> when ready.
-      <a href="/work" class="btn btn-ghost hero-btn">See the work →</a> */}
+      <a href="/work" class="btn btn-ghost hero-btn">See the work →</a>
     </div>
   </header>
 
@@ -124,7 +123,6 @@ const faqs = [
     </div>
   </section>
 
-  {/* "Selected work" section hidden temporarily while Work content is in progress — restore this <section> when ready.
   <section class="wrap section">
     <div class="work-head">
       <div>
@@ -143,7 +141,7 @@ const faqs = [
         </a>
       ))}
     </div>
-  </section> */}
+  </section>
 
   <section class="wrap section">
     <ThreadRule />
@@ -204,7 +202,7 @@ const faqs = [
       <h2 class="cta-h2">Hiring for a role I'd fit?</h2>
       <p class="lede cta-lede">I'd love to hear about the team and the work. Send a note, or take my résumé with you.</p>
       <div class="cta-ctas">
-        <a href="mailto:mingweima98@gmail.com" class="btn btn-primary cta-btn">Get in touch →</a>
+        <a href="/contact" class="btn btn-primary cta-btn">Get in touch →</a>
         <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-ghost cta-btn cta-btn-icon">
           Download résumé
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -245,7 +243,7 @@ const faqs = [
   .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
   .work-card { text-decoration: none; color: inherit; }
 
-  .testi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8) var(--space-6); }
+  .testi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8) var(--space-6); align-items: start; }
   .testi-quote { margin: 0; font-family: var(--font-heading); font-size: 24px; line-height: 1.32; font-weight: 400; }
   .testi-attr { font-size: 13px; font-family: var(--font-sans); letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-neutral-600); margin-top: var(--space-3); }
 
