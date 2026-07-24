@@ -92,11 +92,12 @@ const expectations = [
 
   .body-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 72px; align-items: start; padding-bottom: 40px; }
   .contact-form { display: flex; flex-direction: column; gap: var(--space-4); }
+  .contact-form[hidden] { display: none; }
   .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
   .submit-btn { align-self: flex-start; font-size: 14px; padding: 12px 26px; }
 
   .success-panel { border: 1px solid var(--color-accent); border-radius: var(--radius-lg); padding: var(--space-6); text-align: center; }
-  .success-title { font-family: var(--font-heading); font-size: 28px; margin-bottom: var(--space-2); }
+  .success-title { font-family: var(--font-heading); font-size: 28px; margin-bottom: var(--space-4); }
   .success-body { font-size: 15px; font-family: var(--font-sans); color: color-mix(in srgb, var(--color-text) 80%, transparent); }
   .error-note { font-size: 14px; font-family: var(--font-sans); color: #a33; margin-bottom: var(--space-3); }
 
