@@ -34,6 +34,7 @@ function init() {
 
     try {
       await submitContactForm(new FormData(form));
+      form.reset();
       form.hidden = true;
       successPanel.hidden = false;
     } catch {
