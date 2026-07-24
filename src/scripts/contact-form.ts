@@ -1,13 +1,13 @@
-// Contact form submit handling.
-//
-// TODO(wire-backend): this currently only validates and shows the success
-// state — no message is actually sent anywhere. To wire it up for real,
-// replace the body of `submitContactForm` with one of:
-//   - Formspree:  fetch(`https://formspree.io/f/YOUR_FORM_ID`, { method: 'POST', headers: { Accept: 'application/json' }, body: formData })
-//   - Resend / a serverless function: fetch('/api/contact', { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json' } })
-// and throw on a non-ok response so the error state below can catch it.
+// Contact form submit handling — sends via Formspree.
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xjgnanor';
+
 async function submitContactForm(formData: FormData): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, 400));
+  const res = await fetch(FORMSPREE_ENDPOINT, {
+    method: 'POST',
+    headers: { Accept: 'application/json' },
+    body: formData,
+  });
+  if (!res.ok) throw new Error(`Formspree responded with ${res.status}`);
 }
 
 function init() {
