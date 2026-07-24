@@ -97,7 +97,7 @@ figcaption {
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   cursor: pointer; text-decoration: none;
-  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-family: var(--font-sans); font-weight: var(--font-heading-weight);
   font-size: 13px; line-height: 1.2; color: var(--color-text);
   background: transparent; border: 1px solid transparent;
   padding: calc(var(--space-2) * 0.85) var(--space-3);
