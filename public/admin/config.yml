@@ -1,0 +1,27 @@
+backend:
+  name: github
+  repo: mingwei-ma/portfolio-site
+  branch: staging
+  auth_endpoint: api/auth
+  # base_url intentionally omitted here — overridden dynamically at runtime
+  # in admin/index.html so the same config works from staging and production.
+
+media_folder: "public/images/blog"
+public_folder: "/images/blog"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    format: "frontmatter"
+    extension: "md"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD", time_format: false, picker_utc: true }
+      - { label: "Description / Excerpt", name: "description", widget: "text" }
+      - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
+      - { label: "Tags", name: "tags", widget: "list", default: [] }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
