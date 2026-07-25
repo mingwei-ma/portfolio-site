@@ -81,7 +81,7 @@ const cases = [
             <p><strong>The results.</strong> {c.results}</p>
             <div class="result-row">
               {c.stats.map((s) => (
-                <div class="result-stat"><b>{s.b}</b><span>{s.span}</span></div>
+                <div class="result-stat"><b set:html={s.b.replace('→', '<span class="stat-arrow">→</span>')} /><span>{s.span}</span></div>
               ))}
             </div>
           </div>
@@ -123,6 +123,7 @@ const cases = [
   .meta-tag { padding-top: 2px; }
 
   .result-row { display: flex; gap: var(--space-6); margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-divider); flex-wrap: wrap; }
+  :global(.result-stat b .stat-arrow) { display: inline-block; position: relative; top: 0.15em; font-size: inherit; color: inherit; text-transform: none; letter-spacing: normal; }
 
   .testi-band { padding-top: 88px; text-align: center; max-width: 780px; }
   .testi-quote { margin: 0; font-family: var(--font-heading); font-size: 30px; line-height: 1.28; font-weight: 400; padding: var(--space-6) 0; border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider); }
