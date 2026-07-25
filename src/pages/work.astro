@@ -5,11 +5,9 @@ import Footer from '../components/Footer.astro';
 import Loop from '../components/Loop.astro';
 import ThreadRule from '../components/ThreadRule.astro';
 import Kicker from '../components/Kicker.astro';
-import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 
 const cases = [
   {
-    imageFirst: true,
     role: 'Product Manager',
     company: 'SUBSCRIBE · Fintech SaaS',
     when: 'Oct 2025 – May 2026',
@@ -17,6 +15,7 @@ const cases = [
     title: 'A company-wide project management system, built from zero',
     situation: "The company's Asana workspace was a free-for-all — teams spun up disjointed new boards every month with no shared standards, tasks routinely fell through the cracks, and I found unassigned work dating back four years. Leadership had no cross-functional visibility into what was actually shipping.",
     whatIDid: "I audited how all ten teams — from creative and sales to engineering and execs — actually used Asana, then architected a three-tiered workspace with standardized naming, custom fields, and automations to cut out manual data entry. I drove adoption by documenting the new system in our wiki and joining teams' daily standups, so they helped shape it rather than have it handed down.",
+    results: "Pipeline confusion and cross-functional friction dropped sharply, and the four-year-old backlog was triaged and closed out in weeks instead of months. With clean, reliable data for the first time, teams could finally use the workspace to forecast capacity and plan resourcing proactively instead of just reacting.",
     stats: [
       { b: '10', span: 'Teams onboarded' },
       { b: '4 yrs→weeks', span: 'Backlog cleared' },
@@ -24,7 +23,6 @@ const cases = [
     ],
   },
   {
-    imageFirst: false,
     role: 'Senior Digital PM',
     company: 'Wide Eye · Creative agency',
     when: 'Nov 2024 – Oct 2025',
@@ -32,6 +30,7 @@ const cases = [
     title: '$2.6M+ of brand and web work, delivered',
     situation: 'A creative agency needed an operational backbone for a blended team of designers and engineers running custom brand and web projects across 10+ concurrent clients.',
     whatIDid: 'I owned day-to-day operations and resourcing in Asana, Notion, and Airtable — capacity planning, staffing, and workload balancing across projects — while managing budgets and burn reports through the full lifecycle. I translated ambiguous stakeholder feedback into clear requirements, built reusable trackers and reporting templates, and provided thought leadership on process, building new tooling in Notion that improved team efficiency by 20%.',
+    results: "The team shipped $2.6M+ of brand and web work across 10+ concurrent clients without burning out — capacity was planned, budgets stayed predictable, and burn was visible weeks ahead instead of after the fact. The Notion tooling I built lifted team efficiency by ~20% and became the studio's default way of working.",
     stats: [
       { b: '$2.6M+', span: 'Delivered' },
       { b: '10+', span: 'Concurrent clients' },
@@ -39,7 +38,6 @@ const cases = [
     ],
   },
   {
-    imageFirst: true,
     role: 'Senior Digital PM',
     company: 'Studio Simpatico · Creative agency',
     when: 'Nov 2023 – Nov 2024',
@@ -47,6 +45,7 @@ const cases = [
     title: 'The tooling change that sped up delivery',
     situation: 'A creative agency was managing 7+ custom web builds and 20 retainer clients on tools that were slowing the team down, with triage processes that blurred defects and functional gaps.',
     whatIDid: 'I led cross-functional teams from kickoff through launch while owning the change management from Basecamp to Linear — documenting new workflows in Confluence to raise velocity and output quality. I built intake forms that sharpened QA and triage, and facilitated product design sprints and discovery workshops that turned vague client ideas into developer-ready requirements and repeatable prioritization practices.',
+    results: "The move onto Linear raised delivery velocity and output quality across 7+ builds and 20 retainer clients. Sharper intake meant defects and scope gaps were no longer confused in triage, and discovery workshops turned vague client asks into developer-ready requirements — repeatably, not case by case.",
     stats: [
       { b: '27', span: 'Clients & builds' },
       { b: '2', span: 'Tools migrated' },
@@ -68,38 +67,24 @@ const cases = [
   {cases.map((c, i) => (
     <>
       <section class="wrap case case-section" style={i === 0 ? 'padding-top: 40px;' : 'padding-top: 72px;'}>
-        <div class="case-grid" style={`grid-template-columns: ${c.imageFirst ? '1fr 1.1fr' : '1.1fr 1fr'};`}>
-          {c.imageFirst && (
-            <div>
-              <ImagePlaceholder label="Project image (optional)" aspect="4/3" />
-              <div class="meta-table">
-                <div class="meta-row"><span class="meta-label">Role</span><span class="meta-value">{c.role}</span></div>
-                <div class="meta-row"><span class="meta-label">Company</span><span class="meta-value">{c.company}</span></div>
-                <div class="meta-row meta-row-last"><span class="meta-label">When</span><span class="meta-value">{c.when}</span></div>
-              </div>
-            </div>
-          )}
+        <div class="case-grid">
+          <aside class="meta-list">
+            <div class="meta-row"><span class="l">Role</span><span class="v">{c.role}</span></div>
+            <div class="meta-row"><span class="l">Company</span><span class="v">{c.company}</span></div>
+            <div class="meta-row"><span class="l">When</span><span class="v">{c.when}</span></div>
+            <div class="meta-tag"><span class="tag tag-outline">{c.tag}</span></div>
+          </aside>
           <div>
-            <span class="tag tag-outline">{c.tag}</span>
             <h2 class="case-title">{c.title}</h2>
             <p><strong>The situation.</strong> {c.situation}</p>
             <p><strong>What I did.</strong> {c.whatIDid}</p>
+            <p><strong>The results.</strong> {c.results}</p>
             <div class="result-row">
               {c.stats.map((s) => (
                 <div class="result-stat"><b>{s.b}</b><span>{s.span}</span></div>
               ))}
             </div>
           </div>
-          {!c.imageFirst && (
-            <div>
-              <ImagePlaceholder label="Project image (optional)" aspect="4/3" />
-              <div class="meta-table">
-                <div class="meta-row"><span class="meta-label">Role</span><span class="meta-value">{c.role}</span></div>
-                <div class="meta-row"><span class="meta-label">Company</span><span class="meta-value">{c.company}</span></div>
-                <div class="meta-row meta-row-last"><span class="meta-label">When</span><span class="meta-value">{c.when}</span></div>
-              </div>
-            </div>
-          )}
         </div>
       </section>
       {i < cases.length - 1 && <ThreadRule />}
@@ -127,14 +112,15 @@ const cases = [
   .hero { text-align: center; padding-top: 88px; padding-bottom: 56px; max-width: 720px; }
   .hero h1 { font-size: 52px; line-height: 1.08; margin: 20px 0 22px; font-weight: 400; }
 
-  .case-grid { display: grid; gap: 48px; align-items: start; padding-top: var(--space-6); border-top: 1px solid var(--color-divider); }
-  .case-title { font-size: 30px; margin: 14px 0 12px; font-weight: 400; }
+  .case-grid { display: grid; grid-template-columns: 248px 1fr; gap: 56px; align-items: start; padding-top: var(--space-6); border-top: 1px solid var(--color-divider); }
+  .case-title { font-size: 30px; margin: 0 0 12px; font-weight: 400; }
 
-  .meta-table { margin-top: var(--space-4); display: grid; gap: 10px; font-size: 13px; font-family: var(--font-sans); }
-  .meta-row { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--color-divider); }
-  .meta-row-last { border-bottom: none; padding-bottom: 0; }
-  .meta-label { color: var(--color-neutral-600); text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
-  .meta-value { font-family: var(--font-heading); font-size: 15px; }
+  .meta-list { display: grid; gap: 14px; font-size: 13px; font-family: var(--font-sans); }
+  .meta-row { display: flex; flex-direction: column; gap: 3px; padding-bottom: 12px; border-bottom: 1px solid var(--color-divider); }
+  .meta-row:last-of-type { border-bottom: none; padding-bottom: 0; }
+  .meta-row .l { color: var(--color-neutral-600); text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
+  .meta-row .v { font-family: var(--font-heading); font-size: 16px; }
+  .meta-tag { padding-top: 2px; }
 
   .result-row { display: flex; gap: var(--space-6); margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-divider); flex-wrap: wrap; }
 
