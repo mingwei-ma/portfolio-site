@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Loop from '../../components/Loop.astro';
+import Kicker from '../../components/Kicker.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+
+const projects = [
+  {
+    num: '01 · Web app · Work in progress',
+    title: 'Outpost',
+    tagline: 'A coffee-shop finder for people who work from anywhere.',
+    paras: [
+      { lead: 'The itch.', text: "I was deep in PMP-exam studying and desperate to get out of my apartment — to focus, or to co-work with friends. But finding a café that ticked every box (outlets, strong wifi, real seating, laptop-friendly, actually quiet) meant three tabs and a group chat every single time." },
+      { lead: 'So I built the thing.', text: 'Outpost lets you filter cafés on the criteria that actually matter for getting work done, and see them on a map. I designed and shipped it end to end with Claude — my first time taking an idea from blank canvas to a live, deployed app.' },
+    ],
+    criteriaLabel: 'Filters on what matters',
+    criteria: ['Outlets', 'Strong wifi', 'Lots of seating', 'Laptops welcome', 'Low noise'],
+    stack: ['Claude Design', 'Claude Code', 'Vercel', 'Supabase'],
+    links: [
+      { label: 'Visit the live app →', href: '#', style: 'primary' },
+      { label: 'Peek at the code', href: '#', style: 'secondary' },
+    ],
+    imageLabel: 'Outpost — map & filters view',
+    rev: false,
+  },
+  {
+    num: '02 · Craft build',
+    title: 'Your next one goes here',
+    tagline: "You mentioned a hands-on, physical build — let's give it a home.",
+    paras: [
+      { lead: 'Placeholder.', text: "Tell me what it is — what you made, why, roughly when, and anything you learned or would do differently. A sentence or two per point is plenty and I'll shape it to match Outpost above." },
+    ],
+    extraPara: "Drop a photo into the frame and this block reads exactly like a finished feature. If there's a link (a build log, a shop listing, an Instagram post) I'll wire it in too.",
+    imageLabel: 'Craft build — add a caption',
+    rev: true,
+  },
+];
+---
+<BaseLayout title="Personal — Mingwei Ma" description="Side projects Mingwei Ma has built for the fun of it, outside client work.">
+  <Nav current="personal" />
+
+  <header class="wrap hero">
+    <Loop variant="double" />
+    <Kicker text="Off the clock" />
+    <h1>Things I've made for the fun of it.</h1>
+    <p class="lede">The same instinct that runs a delivery plan also builds side projects at 11pm. These are the ones I scratched my own itch with — no client, no deadline, just a problem I wanted solved.</p>
+  </header>
+
+  {projects.map((p) => (
+    <section class={`wrap feat ${p.rev ? 'rev' : ''}`}>
+      <div class="feat-art">
+        <ImagePlaceholder label={p.imageLabel} aspect="4/3" />
+        <div class="art-note">{p.imageLabel}</div>
+      </div>
+      <div>
+        <span class="feat-num">{p.num}</span>
+        <h2>{p.title}</h2>
+        <p class="tagline">{p.tagline}</p>
+        {p.paras.map((para) => (
+          <p><strong>{para.lead}</strong> {para.text}</p>
+        ))}
+        {p.extraPara && <p>{p.extraPara}</p>}
+        {p.criteria && (
+          <div class="crit">
+            <span class="crit-label" style="width: 100%;">{p.criteriaLabel}</span>
+            {p.criteria.map((c) => <span class="tag tag-outline">{c}</span>)}
+          </div>
+        )}
+        {p.stack && (
+          <div class="stackline">
+            <span class="stack-label">Built with</span>
+            {p.stack.map((s) => <span class="tag tag-neutral">{s}</span>)}
+          </div>
+        )}
+        {p.links && (
+          <div class="feat-links">
+            {p.links.map((l) => (
+              <a href={l.href} target="_blank" class={`btn btn-${l.style} feat-btn`}>{l.label}</a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  ))}
+
+  <section class="wrap cta-section">
+    <Loop variant="flourish" />
+    <h2 class="cta-h2">Got an idea you want built?</h2>
+    <p class="lede cta-lede">The professional work is where the rigor lives — but I'm always up for a good side project. Say hi.</p>
+    <div class="cta-ctas">
+      <a href="/contact" class="btn btn-primary cta-btn">Get in touch →</a>
+      <a href="/work/professional" class="btn btn-secondary cta-btn">See the professional work</a>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hero { text-align: center; padding-top: 88px; padding-bottom: 48px; max-width: 720px; margin: 0 auto; }
+  .hero h1 { font-size: 52px; line-height: 1.08; margin: 20px 0 22px; font-weight: 400; }
+
+  .feat { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: center; padding: var(--space-8) 0; border-top: 1px solid var(--color-divider); }
+  .feat.rev .feat-art { order: 2; }
+  .feat-num { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); font-family: var(--font-sans); font-variant-numeric: tabular-nums; }
+  .feat h2 { font-size: 42px; line-height: 1.02; font-weight: 400; margin: 12px 0 8px; }
+  .tagline { font-family: var(--font-heading); font-style: italic; font-size: 22px; line-height: 1.3; color: color-mix(in srgb, var(--color-text) 74%, transparent); margin: 0 0 var(--space-3); }
+  .feat p { font-size: 15.5px; line-height: 1.7; color: color-mix(in srgb, var(--color-text) 82%, transparent); }
+  .feat p strong { font-weight: 600; color: var(--color-text); }
+
+  .crit { display: flex; flex-wrap: wrap; gap: 8px; margin: var(--space-3) 0 var(--space-4); }
+  .crit-label, .stack-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-600); font-family: var(--font-sans); }
+  .stackline { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-divider); }
+  .feat-links { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-6); }
+  .feat-btn { font-size: 15px; padding: 12px 24px; }
+  .feat-art .plate { width: 100%; filter: none; }
+  .art-note { font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-neutral-600); margin-top: 10px; text-align: right; }
+
+  .cta-section { padding-top: 96px; text-align: center; border-top: 1px solid var(--color-divider); margin-top: var(--space-8); }
+  .cta-h2 { font-size: 42px; margin: 0 0 18px; font-weight: 400; }
+  .cta-lede { max-width: 560px; margin: 0 auto 28px; }
+  .cta-ctas { display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; margin-top: var(--space-6); }
+  .cta-btn { font-size: 15px; padding: 13px 28px; }
+
+  @media (max-width: 860px) {
+    .hero { padding-top: 56px; padding-bottom: 40px; }
+    .hero h1 { font-size: 34px; }
+    .feat { grid-template-columns: 1fr; gap: var(--space-4); }
+    .feat.rev .feat-art { order: 0; }
+    .cta-section { padding-top: 56px; }
+    .cta-h2 { font-size: 28px; }
+  }
+</style>

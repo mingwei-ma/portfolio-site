@@ -21,6 +21,8 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD", time_format: false, picker_utc: true }
       - { label: "Description / Excerpt", name: "description", widget: "text" }
+      - { label: "Category", name: "category", widget: "select", options: [{ label: "Thought leadership", value: "tl" }, { label: "Lessons learned", value: "ll" }] }
+      - { label: "Featured (shown as the lead post on the archive)", name: "featured", widget: "boolean", default: false }
       - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
       - { label: "Tags", name: "tags", widget: "list", default: [] }
       - { label: "Draft", name: "draft", widget: "boolean", default: false }

@@ -1,15 +1,44 @@
 ---
+// Sticky top nav. Work and About are hover/focus dropdowns; each trigger
+// links to its first child and stays accent-colored while any child page
+// is active. Dropdown item labels are pre-split into per-letter <span>s so
+// the rainbow hover treatment (global.css .navmenu a:hover span:nth-child)
+// can apply without client JS.
 interface Props {
-  current: 'home' | 'work' | 'about' | 'contact' | 'blog';
+  current: 'home' | 'professional' | 'personal' | 'about' | 'blog' | 'contact';
 }
 const { current } = Astro.props;
 const isCurrent = (page: string) => (current === page ? 'page' : undefined);
+const letters = (text: string) => [...text].map((ch) => (ch.trim() ? ch : { space: true }));
+const workActive = current === 'professional' || current === 'personal';
+const aboutActive = current === 'about' || current === 'blog';
 ---
 <nav class="navbar">
   <a href="/" aria-current={isCurrent('home')}>Home</a>
-  <a href="/work" aria-current={isCurrent('work')}>Work</a>
-  <a href="/blog" aria-current={isCurrent('blog')}>Blog</a>
+
+  <div class="navdrop">
+    <a href="/work/professional" aria-current={workActive ? 'page' : undefined}>
+      Work
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
+    <div class="navmenu">
+      <a href="/work/professional" aria-current={isCurrent('professional')}>{letters('Professional').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
+      <a href="/work/personal" aria-current={isCurrent('personal')}>{letters('Personal').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
+    </div>
+  </div>
+
   <a href="/" class="brand">Mingwei&nbsp;Ma</a>
-  <a href="/about" aria-current={isCurrent('about')}>About</a>
+
+  <div class="navdrop">
+    <a href="/about" aria-current={aboutActive ? 'page' : undefined}>
+      About
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
+    <div class="navmenu">
+      <a href="/about" aria-current={isCurrent('about')}>{letters('About').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
+      <a href="/blog" aria-current={isCurrent('blog')}>{letters('Field Notes').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
+    </div>
+  </div>
+
   <a href="/contact" aria-current={isCurrent('contact')}>Contact</a>
 </nav>

@@ -3,23 +3,159 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
+import Loop from '../../components/Loop.astro';
+import ThreadRule from '../../components/ThreadRule.astro';
+import Kicker from '../../components/Kicker.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import { categoryLabel, readTime } from '../../lib/readTime';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+const featured = allPosts.find((p) => p.data.featured) ?? allPosts[0];
+const rest = allPosts.filter((p) => p.id !== featured?.id);
+
+const monthYear = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 ---
-<BaseLayout title="Blog — Mingwei Ma" description="Posts from Mingwei Ma.">
+<BaseLayout title="Field Notes — Mingwei Ma" description="Notes on delivery, trust, and the craft of getting things done, from Mingwei Ma.">
   <Nav current="blog" />
-  <main class="wrap">
-    <h1>Blog</h1>
-    <ul>
-      {posts.map((post) => (
-        <li>
-          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-          <p>{post.data.description}</p>
-        </li>
+
+  <header class="wrap hero">
+    <Loop variant="double" />
+    <Kicker text="Field Notes" />
+    <h1>Notes on delivery, trust, and the craft of getting things done.</h1>
+    <p class="lede">Half thought leadership, half field notes. What I'm learning about running projects, leading without authority, and putting AI to sensible use — written down so it's useful to someone besides me.</p>
+    <div class="filterbar">
+      <button class="fchip" data-cat="all" aria-pressed="true">All</button>
+      <button class="fchip" data-cat="tl" aria-pressed="false">Thought leadership</button>
+      <button class="fchip" data-cat="ll" aria-pressed="false">Lessons learned</button>
+    </div>
+  </header>
+
+  {featured && (
+    <section class="wrap feat-post-section">
+      <article class="feat-post">
+        <ImagePlaceholder label="Optional cover image for the featured post" aspect="5/4" class="feat-cover" />
+        <div>
+          <div class="feat-post-meta">
+            <span class={`post-cat ${featured.data.category}`}>{categoryLabel[featured.data.category]}</span>
+            <span class="post-date">{monthYear(featured.data.pubDate)} · Featured</span>
+          </div>
+          <h2><a href={`/blog/${featured.id}/`}>{featured.data.title}</a></h2>
+          <p>{featured.data.description}</p>
+          <a href={`/blog/${featured.id}/`} class="btn btn-secondary feat-post-btn">Read the essay →</a>
+        </div>
+      </article>
+    </section>
+  )}
+
+  <section class="wrap archive-section">
+    <div class="post-list">
+      {rest.map((post) => (
+        <article class="post-row" data-cat={post.data.category}>
+          <div class="post-meta">
+            <span class="post-date">{monthYear(post.data.pubDate)}</span>
+            <span class={`post-cat ${post.data.category}`}>{categoryLabel[post.data.category]}</span>
+          </div>
+          <div>
+            <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+            <p>{post.data.description}</p>
+          </div>
+          <span class="read">{readTime(post.body ?? '')} min</span>
+        </article>
       ))}
-    </ul>
-  </main>
+    </div>
+  </section>
+
+  <section class="wrap subscribe-section">
+    <div class="subscribe-band">
+      <Loop variant="below" />
+      <h2 class="subscribe-h2">New notes, now and then.</h2>
+      <p class="lede subscribe-lede">No schedule, no spam — just a note when I've written something worth your time.</p>
+      <form class="subscribe-form" data-no-op>
+        <input class="input" type="email" placeholder="you@company.com" required />
+        <button class="btn btn-primary" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <ThreadRule />
   <Footer />
 </BaseLayout>
+
+<script>
+  const bar = document.querySelector<HTMLDivElement>('.filterbar');
+  if (bar) {
+    const chips = bar.querySelectorAll<HTMLButtonElement>('.fchip');
+    bar.addEventListener('click', (e) => {
+      const chip = (e.target as HTMLElement).closest<HTMLButtonElement>('.fchip');
+      if (!chip) return;
+      chips.forEach((c) => c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
+      const cat = chip.dataset.cat;
+      document.querySelectorAll<HTMLElement>('.post-row').forEach((row) => {
+        const show = cat === 'all' || row.dataset.cat === cat;
+        row.classList.toggle('hidden', !show);
+      });
+    });
+  }
+
+  const form = document.querySelector<HTMLFormElement>('.subscribe-form[data-no-op]');
+  form?.addEventListener('submit', (e) => e.preventDefault());
+</script>
+
+<style>
+  .hero { text-align: center; padding-top: 88px; padding-bottom: 40px; max-width: 760px; margin: 0 auto; }
+  .hero h1 { font-size: 52px; line-height: 1.08; margin: 20px 0 22px; font-weight: 400; }
+
+  .filterbar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 23px; }
+  .fchip {
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-family: var(--font-sans);
+    padding: 8px 16px; border: 1px solid var(--color-divider); border-radius: 999px;
+    background: transparent; color: var(--color-neutral-700); cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .fchip:hover { border-color: var(--color-accent); color: var(--color-accent); }
+  .fchip[aria-pressed="true"] { border-color: var(--color-accent); color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
+
+  .feat-post-section { padding-top: 40px; }
+  .feat-post-section :global(.feat-cover) { filter: none; }
+  .feat-post { display: grid; grid-template-columns: 1.08fr 1fr; gap: 56px; align-items: center; }
+  .feat-post h2 { font-size: 40px; line-height: 1.06; font-weight: 400; margin: 14px 0 16px; }
+  .feat-post h2 a { color: inherit; text-decoration: none; }
+  .feat-post h2 a:hover { color: var(--color-accent); }
+  .feat-post p { font-size: 16px; line-height: 1.68; color: color-mix(in srgb, var(--color-text) 80%, transparent); }
+  .feat-post-meta { display: flex; align-items: center; gap: 12px; }
+  .feat-post-btn { font-size: 14px; padding: 10px 20px; margin-top: var(--space-4); }
+
+  .post-cat { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-family: var(--font-sans); }
+  .post-cat.tl { color: var(--color-accent-700); }
+  .post-cat.ll { color: #3f7c77; }
+  .post-date { font-size: 13px; font-variant-numeric: tabular-nums; color: var(--color-neutral-600); font-family: var(--font-sans); }
+
+  .archive-section { padding-top: 72px; padding-bottom: 24px; }
+  .post-list { border-top: 1px solid var(--color-divider); }
+  .post-row { display: grid; grid-template-columns: 190px 1fr auto; gap: 23px; align-items: baseline; padding: 23px 0; border-bottom: 1px solid var(--color-divider); }
+  .post-row.hidden { display: none; }
+  .post-meta { display: flex; flex-direction: column; gap: 8px; }
+  .post-row h3 { font-size: 25px; line-height: 1.18; font-weight: 400; margin: 0 0 8px; }
+  .post-row h3 a { color: inherit; text-decoration: none; }
+  .post-row h3 a:hover { color: var(--color-accent); }
+  .post-row p { font-size: 14.5px; line-height: 1.62; margin: 0; color: color-mix(in srgb, var(--color-text) 74%, transparent); max-width: 56ch; }
+  .read { font-size: 12px; color: var(--color-neutral-600); white-space: nowrap; font-variant-numeric: tabular-nums; font-family: var(--font-sans); }
+
+  .subscribe-section { padding-top: 64px; text-align: center; }
+  .subscribe-band { border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider); padding: 56px 0; max-width: 620px; margin: 0 auto; }
+  .subscribe-h2 { font-size: 34px; margin: 0 0 12px; font-weight: 400; }
+  .subscribe-lede { font-size: 16px; max-width: 480px; margin: 0 auto var(--space-4); }
+  .subscribe-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 440px; margin: 0 auto; }
+  .subscribe-form .input { flex: 1; min-width: 220px; }
+  .subscribe-form .btn { font-size: 14px; padding: 11px 22px; }
+
+  @media (max-width: 860px) {
+    .hero { padding-top: 56px; padding-bottom: 32px; }
+    .hero h1 { font-size: 34px; }
+    .feat-post { grid-template-columns: 1fr; }
+    .post-row { grid-template-columns: 1fr; gap: var(--space-3); }
+    .read { display: none; }
+  }
+</style>

@@ -72,7 +72,7 @@ const faqs = [
     <p class="lede hero-lede">Over five years leading cross-functional, client-facing delivery at award-winning creative agencies and startups. I build the systems, roadmaps, and relationships that turn tangled work into shipped work. When things get sticky, I figure out why it's stuck, not just how to unstick it.</p>
     <div class="hero-ctas">
       <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-primary hero-btn">Download résumé (PDF)</a>
-      <a href="/work" class="btn btn-ghost hero-btn">See the work →</a>
+      <a href="/work/professional" class="btn btn-ghost hero-btn">See the work →</a>
     </div>
   </header>
 
@@ -129,11 +129,11 @@ const faqs = [
         <Kicker text="Selected work" />
         <h2 style="font-size: 34px; margin-top: 12px;">A few things I've landed.</h2>
       </div>
-      <a href="/work" class="btn btn-ghost">All case studies →</a>
+      <a href="/work/professional" class="btn btn-ghost">All case studies →</a>
     </div>
     <div class="work-grid">
       {work.map((w) => (
-        <a href={`/work#${w.slug}`} class="card work-card">
+        <a href={`/work/professional#${w.slug}`} class="card work-card">
           <span class="card-kicker">{w.kicker}</span>
           <span class="card-title">{w.title}</span>
           <p class="card-body">{w.body}</p>

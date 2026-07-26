@@ -3,23 +3,134 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
+import { categoryLabel, readTime } from '../../lib/readTime';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts.map((post) => ({
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+  return posts.map((post, i) => ({
     params: { slug: post.id },
-    props: { post },
+    props: { post, prev: posts[i - 1], next: posts[i + 1] },
   }));
 }
 
-const { post } = Astro.props;
+const { post, prev, next } = Astro.props;
 const { Content } = await render(post);
+const monthYear = post.data.pubDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 ---
 <BaseLayout title={`${post.data.title} — Mingwei Ma`} description={post.data.description}>
   <Nav current="blog" />
+
+  <header class="wrap art-header">
+    <div class="article">
+      <a href="/blog" class="back-link">← All field notes</a>
+      <h1 class="art-title">{post.data.title}</h1>
+      <div class="art-meta">
+        <span class="post-cat">{categoryLabel[post.data.category]}</span>
+        <span class="dot"></span>
+        <span>{monthYear}</span>
+        <span class="dot"></span>
+        <span>{readTime(post.body ?? '')} min read</span>
+      </div>
+      <p class="art-lede">{post.data.description}</p>
+    </div>
+  </header>
+
+  {post.data.coverImage && (
+    <figure class="wrap art-hero">
+      <div class="article">
+        <div class="plate">
+          <img src={post.data.coverImage} alt="" />
+        </div>
+      </div>
+    </figure>
+  )}
+
   <article class="wrap">
-    <h1>{post.data.title}</h1>
-    <Content />
+    <div class="article art-body">
+      <Content />
+    </div>
+
+    <div class="article">
+      <div class="bio">
+        <div class="avatar">
+          <div class="plate"><img src="/assets/about-portrait.jpg" alt="Portrait of Mingwei Ma" /></div>
+        </div>
+        <div>
+          <div class="bio-name">Mingwei Ma</div>
+          <p class="bio-blurb">Senior Project Manager writing about delivery, trust, and putting AI to sensible use. Currently open to full-time and fractional roles. <a href="/contact">Say hello →</a></p>
+        </div>
+      </div>
+
+      {(prev || next) && (
+        <nav class="post-nav">
+          {prev ? (
+            <a href={`/blog/${prev.id}/`} class="prev">
+              <span class="nav-post-label">← Previous</span>
+              <span class="t">{prev.data.title}</span>
+            </a>
+          ) : <span />}
+          {next ? (
+            <a href={`/blog/${next.id}/`} class="next">
+              <span class="nav-post-label">Next →</span>
+              <span class="t">{next.data.title}</span>
+            </a>
+          ) : <span />}
+        </nav>
+      )}
+    </div>
   </article>
+
   <Footer />
 </BaseLayout>
+
+<style>
+  .article { max-width: 700px; margin: 0 auto; }
+
+  .art-header { padding-top: 72px; }
+  .art-header .article { text-align: center; }
+  .back-link { font-size: 13px; color: var(--color-accent); text-decoration: none; letter-spacing: 0.04em; font-family: var(--font-sans); }
+  .art-title { font-size: 46px; line-height: 1.08; font-weight: 400; letter-spacing: -0.018em; margin: 18px 0 20px; text-wrap: balance; }
+  .art-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; font-size: 13px; font-family: var(--font-sans); color: var(--color-neutral-600); }
+  .art-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-neutral-500); }
+  .post-cat { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-700); font-family: var(--font-sans); }
+  .art-lede { font-family: var(--font-heading); font-style: italic; font-size: 24px; line-height: 1.4; color: color-mix(in srgb, var(--color-text) 80%, transparent); margin: 24px 0 0; }
+
+  .art-hero { margin: var(--space-6) auto; }
+  .art-hero .plate { width: 100%; aspect-ratio: 16/9; filter: none; }
+  .art-hero .plate img { width: 100%; height: 100%; object-fit: cover; }
+
+  .art-body :global(p) { font-size: 17px; line-height: 1.78; text-align: justify; hyphens: auto; margin: 0 0 var(--space-4); font-family: var(--font-body); }
+  .art-body :global(> p:first-of-type::first-letter) { font-family: var(--font-heading); font-size: 58px; line-height: 0.8; float: left; padding: 6px 10px 0 0; color: var(--color-accent); }
+  .art-body :global(h2) { font-size: 28px; font-weight: 400; letter-spacing: -0.01em; margin: var(--space-6) 0 var(--space-3); }
+  .art-body :global(strong) { font-weight: 600; }
+  .art-body :global(a) { color: var(--color-accent-700); text-underline-offset: 3px; }
+  .art-body :global(blockquote) {
+    text-align: center; margin: 32px auto; max-width: 620px; border: none; padding: 0;
+    font-family: var(--font-heading); font-style: italic; font-size: 30px; line-height: 1.32;
+    font-weight: 400; letter-spacing: -0.01em; color: var(--color-text);
+  }
+  .art-body :global(blockquote p) { margin: 0; text-align: center; text-wrap: balance; }
+
+  .bio { display: flex; gap: var(--space-4); align-items: center; margin-top: 32px; padding-top: 23px; border-top: 1px solid var(--color-divider); }
+  .bio .avatar { width: 66px; height: 66px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+  .bio .avatar .plate { width: 100%; height: 100%; border-radius: 50%; }
+  .bio .avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .bio-name { font-family: var(--font-heading); font-size: 20px; }
+  .bio-blurb { font-size: 14px; line-height: 1.6; margin: 4px 0 0; color: color-mix(in srgb, var(--color-text) 76%, transparent); font-family: var(--font-body); }
+  .bio-blurb a { color: var(--color-accent); }
+
+  .post-nav { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-top: var(--space-6); }
+  .post-nav a { text-decoration: none; color: inherit; border: 1px solid var(--color-divider); border-radius: var(--radius-md); padding: var(--space-4); transition: border-color 0.15s ease; }
+  .post-nav a:hover { border-color: var(--color-accent); }
+  .post-nav a.next { text-align: right; }
+  .nav-post-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-600); font-family: var(--font-sans); }
+  .post-nav .t { font-family: var(--font-heading); font-size: 18px; line-height: 1.24; margin-top: 6px; display: block; }
+
+  @media (max-width: 700px) {
+    .art-title { font-size: 34px; }
+    .post-nav { grid-template-columns: 1fr; }
+    .post-nav a.next { text-align: left; }
+  }
+</style>
