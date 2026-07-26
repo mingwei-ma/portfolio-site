@@ -29,9 +29,12 @@ const cases = [
     when: 'Nov 2024 – Oct 2025',
     tag: 'Senior DPM · Delivery & resourcing',
     title: '$2.6M+ of brand and web work, delivered',
-    situation: 'A creative agency needed an operational backbone for a blended team of designers and engineers running custom brand and web projects across 10+ concurrent clients.',
-    whatIDid: 'I owned day-to-day operations and resourcing in Asana, Notion, and Airtable — capacity planning, staffing, and workload balancing across projects — while managing budgets and burn reports through the full lifecycle. I translated ambiguous stakeholder feedback into clear requirements, built reusable trackers and reporting templates, and provided thought leadership on process, building new tooling in Notion that improved team efficiency by 20%.',
-    results: "The team shipped $2.6M+ of brand and web work across 10+ concurrent clients without burning out — capacity was planned, budgets stayed predictable, and burn was visible weeks ahead instead of after the fact. The Notion tooling I built lifted team efficiency by ~20% and became the studio's default way of working.",
+    situation: "Wide Eye's lead PM was leaving, and the agency needed someone who could ramp up fast and take over a blended team of designers and engineers running custom brand and web work across several high-profile projects, without missing a beat on delivery.",
+    whatIDid: [
+      "I owned day-to-day operations and resourcing in Harvest, Asana, Notion, and Airtable, running capacity planning, staffing, and workload balancing across projects while managing budgets and burn reports through the full lifecycle. I translated ambiguous stakeholder feedback into clear requirements, built reusable trackers and reporting templates adopted across the wider PM team, and automated status reporting in Slack that cut the time it took to pull a report in half.",
+      "I also built content production and management templates to make client handoffs smoother, and started experimenting with AI tools for meeting notes and surfacing patterns in client feedback. When I spotted room to expand a client's scope, I worked with sales and the client directly to help shape it.",
+    ],
+    results: "My teams shipped $2.6M+ of brand and web work without burning out. Capacity was planned, budgets stayed predictable, and burn was visible weeks ahead instead of after the fact. The Slack automation and reporting templates became the team's default way of working, and half of my clients during that time expanded their scope or moved to a retainer.",
     stats: [
       { b: '$2.6M+', span: 'Delivered' },
       { b: '10+', span: 'Concurrent clients' },
@@ -44,14 +47,20 @@ const cases = [
     company: 'Studio Simpatico · Creative agency',
     when: 'Nov 2023 – Nov 2024',
     tag: 'Senior DPM · Change management',
-    title: 'The tooling change that sped up delivery',
-    situation: 'A creative agency was managing 7+ custom web builds and 20 retainer clients on tools that were slowing the team down, with triage processes that blurred defects and functional gaps.',
-    whatIDid: 'I led cross-functional teams from kickoff through launch while owning the change management from Basecamp to Linear — documenting new workflows in Confluence to raise velocity and output quality. I built intake forms that sharpened QA and triage, and facilitated product design sprints and discovery workshops that turned vague client ideas into developer-ready requirements and repeatable prioritization practices.',
-    results: "The move onto Linear raised delivery velocity and output quality across 7+ builds and 20 retainer clients. Sharper intake meant defects and scope gaps were no longer confused in triage, and discovery workshops turned vague client asks into developer-ready requirements — repeatably, not case by case.",
+    title: 'How I Migrated Our Dev Team to Linear and Cut Handoff Times by a Full Week',
+    situation: "Our agency was using Basecamp for both internal engineering work and external client communication. This shared setup created a serious liability: raw, internal technical debates and messy bug triaging were at risk of becoming visible to our clients. At the same time, Basecamp's minimalist feature set was holding our developers back. They needed a dedicated tool to run modern, agile sprints, but our monolithic workflow was capping their velocity and putting client trust at risk.",
+    whatIDid: ["To fix the workflow bottleneck and secure our data, I led a zero-downtime migration to separate our client and internal communication tracks:"],
+    bullets: [
+      { label: 'Audited alternative platforms', text: "Researched Monday.com, Asana, Notion, and Airtable against our engineering team's lifecycle needs." },
+      { label: 'Co-designed the new framework', text: 'Partnered directly with our Technical Architect and Lead Developer to build a high-velocity sprint system inside Linear.' },
+      { label: 'Secured team buy-in', text: 'Pitched the strategic value to the agency owner and the design team, ensuring everyone was aligned on how the new tool ecosystem would function.' },
+      { label: 'Established clear governance', text: 'Documented strict communication rules and handoff procedures to permanently separate internal development chat from client-facing spaces.' },
+    ],
+    results: "The migration completely eliminated the risk of clients seeing internal development notes. By tailoring the workflow to how our engineers actually work, we streamlined our QA ticket triage and made the handoff from design to development incredibly clean. Ultimately, this structural change compressed our handoff timelines by a full seven days and drastically improved our delivery precision.",
     stats: [
-      { b: '27', span: 'Clients & builds' },
-      { b: '2', span: 'Tools migrated' },
-      { b: 'Faster', span: 'Team velocity' },
+      { b: '-7 Days', span: 'Design-to-Dev Handoff Time' },
+      { b: '0%', span: 'Exposed Internal Communications' },
+      { b: 'Improved', span: 'Agile Sprint Adoption' },
     ],
   },
 ];
@@ -78,7 +87,19 @@ const cases = [
           <div>
             <h2 class="case-title">{c.title}</h2>
             <p><strong>The situation.</strong> {c.situation}</p>
-            <p><strong>What I did.</strong> {c.whatIDid}</p>
+            {Array.isArray(c.whatIDid) ? (
+              <>
+                <p><strong>What I did.</strong> {c.whatIDid[0]}</p>
+                {c.whatIDid.slice(1).map((p) => <p>{p}</p>)}
+              </>
+            ) : (
+              <p><strong>What I did.</strong> {c.whatIDid}</p>
+            )}
+            {c.bullets && (
+              <ul class="case-list">
+                {c.bullets.map((b) => <li><strong>{b.label}:</strong> {b.text}</li>)}
+              </ul>
+            )}
             <p><strong>The results.</strong> {c.results}</p>
             <div class="result-row">
               {c.stats.map((s) => (
@@ -121,6 +142,9 @@ const cases = [
   .meta-row .l { color: var(--color-neutral-600); text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
   .meta-row .v { font-family: var(--font-heading); font-size: 16px; }
   .meta-tag { padding-top: 2px; }
+
+  .case-list { margin: 10px 0 0; padding-left: 20px; }
+  .case-list li { font-size: 15px; line-height: 1.68; font-family: var(--font-body); color: color-mix(in srgb, var(--color-text) 82%, transparent); margin-bottom: 8px; }
 
   .result-row { display: flex; gap: var(--space-6); margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-divider); flex-wrap: wrap; }
   :global(.result-stat b .stat-arrow) { display: inline-block; position: relative; top: 0.15em; font-size: inherit; color: inherit; text-transform: none; letter-spacing: normal; }
