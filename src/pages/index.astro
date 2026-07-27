@@ -43,9 +43,9 @@ const process = [
 ];
 
 const work = [
-  { kicker: 'SUBSCRIBE · Founding PM', title: 'A program system built from zero', body: 'Replaced 100+ unstructured boards with one intake-to-delivery system adopted across 10+ teams.' },
-  { kicker: 'Wide Eye · Senior DPM', title: '$2.6M+ of brand & web, delivered', body: 'Ran delivery and resourcing for 10+ clients and lifted team efficiency by 20%.' },
-  { kicker: 'Studio Simpatico · Senior DPM', title: 'The tools that sped up delivery', body: 'Change-managed 20 retainer clients and 7+ builds from Basecamp to Linear.' },
+  { slug: 'subscribe', kicker: 'SUBSCRIBE · PM', title: 'A project management system built from zero', body: 'Standardized a chaotic Asana workspace and drove full adoption across 10 teams, clearing a 4-year-old backlog in weeks.' },
+  { slug: 'wide-eye', kicker: 'Wide Eye · Senior DPM', title: '$2.6M+ of brand & web, delivered', body: 'Ran delivery and resourcing for 10+ clients and lifted team efficiency by 20%.' },
+  { slug: 'studio-simpatico', kicker: 'Studio Simpatico · Senior DPM', title: 'The tools that sped up delivery', body: 'Change-managed 20 retainer clients and 7+ builds from Basecamp to Linear.' },
 ];
 
 const testimonials = [
@@ -72,8 +72,7 @@ const faqs = [
     <p class="lede hero-lede">Six years leading cross-functional, client-facing delivery at award-winning creative agencies and startups. I build the systems, roadmaps, and relationships that turn tangled work into shipped work. When things get sticky, I figure out why it's stuck, not just how to unstick it.</p>
     <div class="hero-ctas">
       <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-primary hero-btn">Download résumé (PDF)</a>
-      {/* "See the work" hidden temporarily while Work content is in progress — restore this <a> when ready.
-      <a href="/work" class="btn btn-ghost hero-btn">See the work →</a> */}
+      <a href="/work" class="btn btn-ghost hero-btn">See the work →</a>
     </div>
   </header>
 
@@ -124,7 +123,6 @@ const faqs = [
     </div>
   </section>
 
-  {/* "Selected work" section hidden temporarily while Work content is in progress — restore this <section> when ready.
   <section class="wrap section">
     <div class="work-head">
       <div>
@@ -135,7 +133,7 @@ const faqs = [
     </div>
     <div class="work-grid">
       {work.map((w) => (
-        <a href="/work" class="card work-card">
+        <a href={`/work#${w.slug}`} class="card work-card">
           <span class="card-kicker">{w.kicker}</span>
           <span class="card-title">{w.title}</span>
           <p class="card-body">{w.body}</p>
@@ -143,7 +141,7 @@ const faqs = [
         </a>
       ))}
     </div>
-  </section> */}
+  </section>
 
   <section class="wrap section">
     <ThreadRule />

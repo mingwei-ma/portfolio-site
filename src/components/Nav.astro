@@ -2,10 +2,13 @@
 interface Props {
   current: 'home' | 'work' | 'about' | 'contact';
 }
-// Page links are temporarily hidden while content is being worked on —
-// only the brand link (back to home) remains. Restore the <a> tags below
-// to bring Work/About/Contact back.
+const { current } = Astro.props;
+const isCurrent = (page: string) => (current === page ? 'page' : undefined);
+// About/Contact links are still temporarily hidden while that content is
+// being finalized — Work is back now that its case studies are ready.
+// Restore the remaining <a> tags below when About/Contact are ready too.
 ---
 <nav class="navbar">
+  <a href="/work" aria-current={isCurrent('work')}>Work</a>
   <a href="/" class="brand">Mingwei&nbsp;Ma</a>
 </nav>
