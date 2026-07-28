@@ -4,11 +4,12 @@ interface Props {
 }
 const { current } = Astro.props;
 const isCurrent = (page: string) => (current === page ? 'page' : undefined);
-// About/Contact links are still temporarily hidden while that content is
-// being finalized — Work is back now that its case studies are ready.
-// Restore the remaining <a> tags below when About/Contact are ready too.
+// Contact link is still temporarily hidden while that content is being
+// finalized — Work and About are back now that their content is ready.
+// Restore the remaining <a> tag below when Contact is ready too.
 ---
 <nav class="navbar">
   <a href="/work" aria-current={isCurrent('work')}>Work</a>
   <a href="/" class="brand">Mingwei&nbsp;Ma</a>
+  <a href="/about" aria-current={isCurrent('about')}>About</a>
 </nav>
