@@ -54,8 +54,14 @@ const projects = [
     <section class={`wrap feat ${p.rev ? 'rev' : ''}`}>
       <div class="feat-art">
         {p.video ? (
-          <div class="plate" style="aspect-ratio: 1360 / 886; filter: none;">
+          <div class="plate video-plate" style="aspect-ratio: 1360 / 886; filter: none;">
             <video class="feat-video" src={p.video} poster={p.videoPoster} autoplay muted loop playsinline tabindex="0" role="button" aria-label={`${p.imageLabel} — click to pause or play`} />
+            <div class="video-overlay" aria-hidden="true">
+              <span class="icon-circle">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"></path></svg>
+              </span>
+            </div>
           </div>
         ) : p.image ? (
           <div class="plate" style="aspect-ratio: 4/3; filter: none;">
@@ -129,6 +135,18 @@ const projects = [
   .feat-btn { font-size: 15px; padding: 12px 24px; }
   .feat-art .plate { width: 100%; filter: none; }
   .feat-video { cursor: pointer; }
+  .video-plate { position: relative; }
+  .video-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+  .icon-circle {
+    width: 60px; height: 60px; border-radius: 50%; background: rgba(0, 0, 0, 0.5);
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    opacity: 0; transition: opacity 0.2s ease;
+  }
+  .video-plate:hover .icon-circle, .video-plate.is-paused .icon-circle { opacity: 1; }
+  .icon-circle svg { width: 24px; height: 24px; }
+  .icon-play { display: none; }
+  .video-plate.is-paused .icon-pause { display: none; }
+  .video-plate.is-paused .icon-play { display: block; }
   .art-note { font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-neutral-600); margin-top: 10px; text-align: right; }
 
   .cta-section { padding-top: 96px; padding-bottom: 96px; text-align: center; border-top: 1px solid var(--color-divider); margin-top: var(--space-8); }
@@ -149,7 +167,10 @@ const projects = [
 
 <script>
   document.querySelectorAll<HTMLVideoElement>('.feat-video').forEach((video) => {
+    const plate = video.closest('.video-plate');
     const toggle = () => (video.paused ? video.play() : video.pause());
+    video.addEventListener('play', () => plate?.classList.remove('is-paused'));
+    video.addEventListener('pause', () => plate?.classList.add('is-paused'));
     video.addEventListener('click', toggle);
     video.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
