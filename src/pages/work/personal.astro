@@ -50,7 +50,10 @@ const projects = [
     <p class="lede">The same instinct that runs a delivery plan also builds side projects on weekends and nights. Here are a few recent builds made possible with AI assistance.</p>
   </header>
 
-  {projects.map((p) => (
+  {/* Case study 2 ("Your next one goes here") is a placeholder awaiting real
+      content — only show Outpost for now. Change back to projects.map to
+      restore it once there's a second project to show. */}
+  {projects.slice(0, 1).map((p) => (
     <section class={`wrap feat ${p.rev ? 'rev' : ''}`}>
       <div class="feat-art">
         {p.video ? (
@@ -103,15 +106,18 @@ const projects = [
     </section>
   ))}
 
-  <section class="wrap cta-section">
-    <Loop variant="flourish" />
-    <h2 class="cta-h2">Got an idea you want built?</h2>
-    <p class="lede cta-lede">The professional work is where the rigor lives — but I'm always up for a good side project. Say hi.</p>
-    <div class="cta-ctas">
-      <a href="/contact" class="btn btn-primary cta-btn">Get in touch →</a>
-      <a href="/work/professional" class="btn btn-secondary cta-btn">See the professional work</a>
-    </div>
-  </section>
+  {/* Bottom CTA hidden for now alongside case study 2 — flip to true to restore. */}
+  {false && (
+    <section class="wrap cta-section">
+      <Loop variant="flourish" />
+      <h2 class="cta-h2">Got an idea you want built?</h2>
+      <p class="lede cta-lede">The professional work is where the rigor lives — but I'm always up for a good side project. Say hi.</p>
+      <div class="cta-ctas">
+        <a href="/contact" class="btn btn-primary cta-btn">Get in touch →</a>
+        <a href="/work/professional" class="btn btn-secondary cta-btn">See the professional work</a>
+      </div>
+    </section>
+  )}
 
   <Footer />
 </BaseLayout>
