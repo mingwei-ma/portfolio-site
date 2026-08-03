@@ -22,7 +22,8 @@ const projects = [
       { label: 'Visit the live app →', href: 'https://outpost-cafe-finder-five.vercel.app/', style: 'primary' },
       { label: 'Peek at the code', href: '#', style: 'secondary' },
     ],
-    image: '/assets/outpost-screenshot.jpg',
+    video: '/assets/outpost-demo.mp4',
+    videoPoster: '/assets/outpost-demo-poster.jpg',
     imageLabel: 'Outpost — map & filters view',
     rev: false,
   },
@@ -52,7 +53,11 @@ const projects = [
   {projects.map((p) => (
     <section class={`wrap feat ${p.rev ? 'rev' : ''}`}>
       <div class="feat-art">
-        {p.image ? (
+        {p.video ? (
+          <div class="plate" style="aspect-ratio: 4/3; filter: none;">
+            <video src={p.video} poster={p.videoPoster} autoplay muted loop playsinline aria-label={p.imageLabel} />
+          </div>
+        ) : p.image ? (
           <div class="plate" style="aspect-ratio: 4/3; filter: none;">
             <img src={p.image} alt={p.imageLabel} />
           </div>
