@@ -1,6 +1,6 @@
 ---
 interface Props {
-  current: 'home' | 'work' | 'about' | 'contact';
+  current: 'home' | 'work' | 'personal' | 'about' | 'contact';
 }
 const { current } = Astro.props;
 const isCurrent = (page: string) => (current === page ? 'page' : undefined);
