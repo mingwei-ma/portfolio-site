@@ -1,15 +1,87 @@
 ---
+// Sticky top nav. Above 860px: Work is a hover/focus dropdown (its trigger
+// links to /work and stays accent-colored while /work or /work/personal is
+// active). At/below 860px the dropdown and inline links are replaced by a
+// hamburger button that reveals a stacked panel, with Work as a native
+// <details> accordion (keyboard/screen-reader support for free).
 interface Props {
   current: 'home' | 'work' | 'personal' | 'about' | 'contact';
 }
 const { current } = Astro.props;
 const isCurrent = (page: string) => (current === page ? 'page' : undefined);
+const workActive = current === 'work' || current === 'personal';
 // Contact link is still temporarily hidden while that content is being
-// finalized — Work and About are back now that their content is ready.
-// Restore the remaining <a> tag below when Contact is ready too.
+// finalized. Restore the <a> tag below when Contact is ready too.
 ---
 <nav class="navbar">
-  <a href="/work" aria-current={isCurrent('work')}>Work</a>
   <a href="/" class="brand">Mingwei&nbsp;Ma</a>
-  <a href="/about" aria-current={isCurrent('about')}>About</a>
+
+  <div class="nav-links-desktop">
+    <div class="navdrop nav-work">
+      <a href="/work" aria-current={workActive ? 'page' : undefined}>
+        Work
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+      <div class="navmenu">
+        <a href="/work" aria-current={isCurrent('work')}>Professional</a>
+        <a href="/work/personal" aria-current={isCurrent('personal')}>Personal</a>
+      </div>
+    </div>
+
+    <a href="/about" class="nav-about" aria-current={isCurrent('about')}>About</a>
+  </div>
+
+  <button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Open menu">
+    <svg class="icon-burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+
+  <div id="mobile-nav-panel" class="mobile-nav-panel">
+    <details class="mobile-accordion" open={workActive}>
+      <summary class={workActive ? 'current' : undefined}>Work</summary>
+      <a href="/work" aria-current={isCurrent('work')}>Professional</a>
+      <a href="/work/personal" aria-current={isCurrent('personal')}>Personal</a>
+    </details>
+
+    <a href="/about" aria-current={isCurrent('about')}>About</a>
+  </div>
 </nav>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const panel = document.getElementById('mobile-nav-panel');
+
+  if (toggle && panel) {
+    const closeMenu = () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      panel.classList.remove('open');
+    };
+    const openMenu = () => {
+      toggle.setAttribute('aria-expanded', 'true');
+      panel.classList.add('open');
+    };
+
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      if (expanded) closeMenu();
+      else openMenu();
+    });
+
+    panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    document.addEventListener('click', (e) => {
+      const target = e.target as Node;
+      if (toggle.getAttribute('aria-expanded') === 'true' && !panel.contains(target) && !toggle.contains(target)) {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 860) closeMenu();
+    });
+  }
+</script>

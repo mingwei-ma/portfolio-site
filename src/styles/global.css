@@ -187,7 +187,44 @@ textarea.input { min-height: 90px; resize: vertical; }
 }
 .navbar a { color: inherit; text-decoration: none; }
 .navbar a:hover, .navbar a[aria-current="page"] { color: var(--color-accent); }
-.navbar .brand { font-family: var(--font-heading); font-size: 20px; padding: 0 var(--space-4); }
+.navbar .brand { font-family: var(--font-heading); font-size: 20px; padding: 0 var(--space-4); order: 3; }
+
+/* Desktop: nav-links-desktop's children join the .navbar flex row directly,
+   ordered around the brand (which sits earlier in the DOM for the mobile
+   hamburger's benefit but must still render in the middle on desktop). */
+.nav-links-desktop { display: contents; }
+.nav-work { order: 2; }
+.nav-about { order: 4; }
+
+.nav-toggle {
+  display: none; background: none; border: none; padding: 4px; margin: 0; cursor: pointer;
+  color: inherit; order: 4;
+}
+.nav-toggle .icon-close { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-burger { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-close { display: block; }
+
+.mobile-nav-panel { display: none; }
+
+.navdrop { position: relative; display: inline-flex; }
+.navbar .navdrop > a { display: inline-flex; align-items: center; gap: 5px; }
+.navdrop .chev { width: 13px; height: 13px; transition: transform 0.2s ease; }
+.navdrop:hover .chev, .navdrop:focus-within .chev { transform: rotate(180deg); }
+.navmenu {
+  position: absolute; top: calc(100% + 12px); left: 50%;
+  transform: translateX(-50%) translateY(-4px); min-width: 176px;
+  background: var(--color-bg); border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: 6px;
+  display: flex; flex-direction: column; opacity: 0; visibility: hidden;
+  transition: opacity 0.16s ease, transform 0.16s ease; z-index: 30;
+}
+.navdrop:hover .navmenu, .navdrop:focus-within .navmenu {
+  opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+}
+.navmenu::before { content: ""; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+.navmenu a { padding: 9px 12px; border-radius: var(--radius-sm); white-space: nowrap; transition: none; }
+.navmenu a[aria-current="page"] { color: var(--color-accent); }
+.navmenu a:hover { color: inherit; }
 
 /* — footer — */
 footer.site-foot {
@@ -264,8 +301,41 @@ footer.site-foot {
 @media (max-width: 860px) {
   .wrap { padding: 0 24px; }
   h1 { font-size: 38px !important; }
-  .navbar { gap: var(--space-3); padding: 14px 20px; flex-wrap: wrap; }
+  .navbar { justify-content: space-between; padding: 14px 20px; position: relative; }
+  .navbar .brand { order: 1; padding: 0; }
+  .nav-links-desktop { display: none; }
+  .nav-toggle { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; order: 2; }
+  .nav-toggle svg { width: 22px; height: 22px; }
+
+  .mobile-nav-panel {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--color-bg); border-bottom: 1px solid var(--color-divider);
+    box-shadow: var(--shadow-md);
+    flex-direction: column; max-height: 0; overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+  .mobile-nav-panel.open { display: flex; max-height: 70vh; overflow-y: auto; }
+  .mobile-nav-panel > a { padding: 14px 20px; border-bottom: 1px solid var(--color-divider); }
+  .mobile-nav-panel > a[aria-current="page"] { color: var(--color-accent); }
+
+  .mobile-accordion { border-bottom: 1px solid var(--color-divider); }
+  .mobile-accordion summary {
+    padding: 14px 20px; cursor: pointer; list-style: none;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .mobile-accordion summary.current { color: var(--color-accent); }
+  .mobile-accordion summary::-webkit-details-marker { display: none; }
+  .mobile-accordion summary::after { content: "+"; color: var(--color-neutral-600); font-size: 18px; }
+  .mobile-accordion[open] summary::after { content: "\2212"; }
+  .mobile-accordion a { display: block; padding: 12px 20px 12px 34px; }
+  .mobile-accordion a[aria-current="page"] { color: var(--color-accent); }
+  .mobile-accordion a:last-child { padding-bottom: 16px; }
+
   .svc-row { grid-template-columns: 1fr; gap: var(--space-1); }
   .tl-row { grid-template-columns: 1fr; }
   footer.site-foot { padding: 36px 24px 48px; }
+}
+
+@media (min-width: 861px) {
+  .mobile-nav-panel { display: none !important; }
 }
