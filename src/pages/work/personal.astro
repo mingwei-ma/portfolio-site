@@ -22,6 +22,7 @@ const projects = [
       { label: 'Visit the live app →', href: 'https://outpost-cafe-finder-five.vercel.app/', style: 'primary' },
       { label: 'Peek at the code', href: '#', style: 'secondary' },
     ],
+    image: '/assets/outpost-screenshot.jpg',
     imageLabel: 'Outpost — map & filters view',
     rev: false,
   },
@@ -45,13 +46,19 @@ const projects = [
     <Loop variant="double" />
     <Kicker text="Off the clock" />
     <h1>Things I've made for the fun of it.</h1>
-    <p class="lede">The same instinct that runs a delivery plan also builds side projects at 11pm. These are the ones I scratched my own itch with — no client, no deadline, just a problem I wanted solved.</p>
+    <p class="lede">The same instinct that runs a delivery plan also builds side projects on weekends and nights. Here are a few recent builds made possible with AI assistance.</p>
   </header>
 
   {projects.map((p) => (
     <section class={`wrap feat ${p.rev ? 'rev' : ''}`}>
       <div class="feat-art">
-        <ImagePlaceholder label={p.imageLabel} aspect="4/3" />
+        {p.image ? (
+          <div class="plate" style="aspect-ratio: 4/3; filter: none;">
+            <img src={p.image} alt={p.imageLabel} />
+          </div>
+        ) : (
+          <ImagePlaceholder label={p.imageLabel} aspect="4/3" />
+        )}
         <div class="art-note">{p.imageLabel}</div>
       </div>
       <div>
