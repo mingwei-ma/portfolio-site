@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import Loop from '../../components/Loop.astro';
 import Kicker from '../../components/Kicker.astro';
 import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import JourneyCarousel from '../../components/JourneyCarousel.astro';
 
 const projects = [
   {
@@ -82,9 +83,17 @@ const projects = [
         <span class="feat-num">{p.num}</span>
         <h2>{p.title}</h2>
         <p class="tagline">{p.tagline}</p>
-        {p.paras.map((para) => (
-          <p><strong>{para.lead}</strong> {para.text}</p>
-        ))}
+        {p.paras.length > 1 ? (
+          <JourneyCarousel steps={p.paras.map((para, i) => ({
+            step: `Part 0${i + 1} · 0${p.paras.length}`,
+            title: para.lead,
+            body: para.text,
+          }))} />
+        ) : (
+          p.paras.map((para) => (
+            <p><strong>{para.lead}</strong> {para.text}</p>
+          ))
+        )}
         {p.extraPara && <p>{p.extraPara}</p>}
         {p.criteria && (
           <div class="crit">
