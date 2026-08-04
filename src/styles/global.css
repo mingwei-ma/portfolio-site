@@ -259,8 +259,26 @@ footer.site-foot {
 .thread-rule { width: 100%; max-width: 1120px; height: auto; display: block; margin: var(--space-6) auto; }
 .thread-rule .tl { stroke-width: 1.5; }
 
+.journey { display: block; width: 100%; height: auto; overflow: visible; margin: 4px 0 8px; }
+.journey .line {
+  fill: none; stroke: var(--color-accent); stroke-width: 2.2;
+  stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 100; stroke-dashoffset: 100;
+  transition: stroke-dashoffset 2.2s cubic-bezier(.5,0,.2,1);
+}
+.journey.drawn .line { stroke-dashoffset: 0; }
+.journey .ab-dot { fill: var(--color-bg); stroke: var(--color-accent); stroke-width: 2.2; }
+.journey .ab { opacity: 0; transform: scale(0.4); transform-box: fill-box; transform-origin: center; transition: opacity .5s ease, transform .5s cubic-bezier(.34,1.56,.64,1); }
+.journey .ab.b { transition-delay: 1.7s; }
+.journey.drawn .ab { opacity: 1; transform: scale(1); }
+.journey .lab { font-family: var(--font-sans); fill: var(--color-neutral-700); opacity: 0; transition: opacity .6s ease; }
+.journey .lab .code { font-size: 11px; letter-spacing: 0.18em; fill: var(--color-accent-700); }
+.journey .lab .cap { font-size: 12.5px; fill: var(--color-neutral-600); }
+.journey .lab.b { transition-delay: 1.9s; }
+.journey.drawn .lab { opacity: 1; }
+
 @media (prefers-reduced-motion: reduce) {
-  .thread .tl { transition: none !important; }
+  .thread .tl, .journey .line, .journey .ab, .journey .lab { transition: none !important; }
 }
 
 /* — shared row/list patterns reused across pages — */

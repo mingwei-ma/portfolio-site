@@ -1,5 +1,4 @@
-// Draws .thread (loop marks, thread rules) on scroll into view. The Home page's
-// journey carousel handles its own reveal (see JourneyCarousel.astro).
+// Draws .thread (loop marks, thread rules) and .journey lines on scroll into view.
 // Respects prefers-reduced-motion by applying the end state instantly.
 function initThreadDraw() {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -23,6 +22,26 @@ function initThreadDraw() {
       threadIo.observe(el);
     }
   });
+
+  const journey = document.querySelector('.journey');
+  if (journey) {
+    if (reduce) {
+      journey.classList.add('drawn');
+    } else {
+      const journeyIo = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              journey.classList.add('drawn');
+              journeyIo.disconnect();
+            }
+          }
+        },
+        { threshold: 0.35 }
+      );
+      journeyIo.observe(journey);
+    }
+  }
 }
 
 if (document.readyState === 'loading') {
