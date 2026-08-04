@@ -104,7 +104,7 @@ const projects = [
         <p class="tagline">{p.tagline}</p>
         {p.paras.length > 1 ? (
           <JourneyCarousel steps={p.paras.map((para, i) => ({
-            step: `Part 0${i + 1} · 0${p.paras.length}`,
+            step: `Part 0${i + 1} / 0${p.paras.length}`,
             title: para.lead,
             body: para.text,
           }))} />
