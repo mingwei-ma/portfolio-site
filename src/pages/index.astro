@@ -4,7 +4,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Loop from '../components/Loop.astro';
 import ThreadRule from '../components/ThreadRule.astro';
-import Journey from '../components/Journey.astro';
+import JourneyCarousel from '../components/JourneyCarousel.astro';
 import Kicker from '../components/Kicker.astro';
 
 const services = [
@@ -111,16 +111,7 @@ const faqs = [
       <h2>Trust first, then throughput.</h2>
       <p class="lede section-lede">Every engagement is really one thing: getting a project from where it is to where it needs to land.</p>
     </div>
-    <Journey />
-    <div class="process-grid">
-      {process.map((p) => (
-        <div class="card">
-          <span class="card-kicker">{p.step}</span>
-          <span class="card-title">{p.title}</span>
-          <p class="card-body">{p.body}</p>
-        </div>
-      ))}
-    </div>
+    <JourneyCarousel steps={process} />
   </section>
 
   <section class="wrap section">
@@ -237,8 +228,6 @@ const faqs = [
   .section-head h2 { font-size: 38px; margin-top: 14px; font-weight: 400; }
   .section-lede { max-width: 500px; margin: 14px auto 0; font-size: 16px; }
 
-  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
-
   .work-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: var(--space-4); border-bottom: 1px solid var(--color-divider); padding-bottom: var(--space-3); flex-wrap: wrap; gap: var(--space-3); }
   .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
   .work-card { text-decoration: none; color: inherit; }
@@ -268,7 +257,6 @@ const faqs = [
     .hero h1 { font-size: 38px; margin: 18px 0; }
     .stats { grid-template-columns: 1fr; gap: var(--space-4); }
     .stat-mid { border-left: none; border-right: none; border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider); padding: var(--space-4) 0; }
-    .process-grid { grid-template-columns: 1fr; }
     .work-grid { grid-template-columns: 1fr; }
     .testi-grid { grid-template-columns: 1fr; gap: var(--space-6); }
     .next-grid { grid-template-columns: 1fr; }
