@@ -15,6 +15,7 @@ const { steps } = Astro.props;
 ---
 <div class="journey-carousel">
   <svg class="journey" viewBox="0 0 1000 210" overflow="visible" role="img" aria-label="A hand-drawn line with a numbered point for each step below. It draws further along the path as you step through them.">
+    <path class="jc-track" d="M 40 152 C 150 152 168 72 268 90 C 356 106 366 178 460 154 C 520 139 520 92 566 96 C 616 100 622 158 572 162 C 522 166 520 116 566 106 C 654 84 712 150 806 116 C 872 92 902 96 936 78"></path>
     <path class="jc-line" pathLength="100" d="M 40 152 C 150 152 168 72 268 90 C 356 106 366 178 460 154 C 520 139 520 92 566 96 C 616 100 622 158 572 162 C 522 166 520 116 566 106 C 654 84 712 150 806 116 C 872 92 902 96 936 78"></path>
   </svg>
 
@@ -166,6 +167,10 @@ const { steps } = Astro.props;
   .journey-carousel { display: block; }
 
   .journey { display: block; width: 100%; height: auto; overflow: visible; margin: 4px 0 20px; }
+  .jc-track {
+    fill: none; stroke: var(--color-divider); stroke-width: 2.2;
+    stroke-linecap: round; stroke-dasharray: 0.5 9;
+  }
   .jc-line {
     fill: none; stroke: var(--color-accent); stroke-width: 2.2;
     stroke-linecap: round; stroke-linejoin: round;
