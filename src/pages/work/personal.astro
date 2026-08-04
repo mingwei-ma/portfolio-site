@@ -78,23 +78,6 @@ const projects = [
           <ImagePlaceholder label={p.imageLabel} aspect="4/3" />
         )}
         <div class="art-note">{p.imageLabel}</div>
-      </div>
-      <div>
-        <span class="feat-num">{p.num}</span>
-        <h2>{p.title}</h2>
-        <p class="tagline">{p.tagline}</p>
-        {p.paras.length > 1 ? (
-          <JourneyCarousel steps={p.paras.map((para, i) => ({
-            step: `Part 0${i + 1} · 0${p.paras.length}`,
-            title: para.lead,
-            body: para.text,
-          }))} />
-        ) : (
-          p.paras.map((para) => (
-            <p><strong>{para.lead}</strong> {para.text}</p>
-          ))
-        )}
-        {p.extraPara && <p>{p.extraPara}</p>}
         {p.criteria && (
           <div class="crit">
             <span class="crit-label" style="width: 100%;">{p.criteriaLabel}</span>
@@ -114,6 +97,23 @@ const projects = [
             ))}
           </div>
         )}
+      </div>
+      <div>
+        <span class="feat-num">{p.num}</span>
+        <h2>{p.title}</h2>
+        <p class="tagline">{p.tagline}</p>
+        {p.paras.length > 1 ? (
+          <JourneyCarousel steps={p.paras.map((para, i) => ({
+            step: `Part 0${i + 1} · 0${p.paras.length}`,
+            title: para.lead,
+            body: para.text,
+          }))} />
+        ) : (
+          p.paras.map((para) => (
+            <p><strong>{para.lead}</strong> {para.text}</p>
+          ))
+        )}
+        {p.extraPara && <p>{p.extraPara}</p>}
       </div>
     </section>
   ))}

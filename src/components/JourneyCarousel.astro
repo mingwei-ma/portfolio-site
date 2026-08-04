@@ -1,9 +1,8 @@
 ---
-// Home-only "journey" carousel: the Point A -> Point B line from Journey.astro,
-// repurposed as a 4-point progress line paired with a step carousel. Each step
-// is a point along the same curve (computed at runtime via getPointAtLength so
-// it always matches the path exactly); the line progressively draws from
-// Point A up to the active step as the user clicks through.
+// A hand-drawn line paired with a step carousel. Each step is a numbered
+// point along the curve (computed at runtime via getPointAtLength so it
+// always matches the path exactly); the line progressively draws from the
+// start up to the active step as the user clicks through.
 interface Step {
   step: string;
   title: string;
@@ -15,7 +14,7 @@ interface Props {
 const { steps } = Astro.props;
 ---
 <div class="journey-carousel">
-  <svg class="journey" viewBox="0 0 1000 210" overflow="visible" role="img" aria-label="A hand-drawn line looping from Point A, where your project starts, through the messy middle, to Point B, where it lands delivered and on time. It draws further as you step through the process below.">
+  <svg class="journey" viewBox="0 0 1000 210" overflow="visible" role="img" aria-label="A hand-drawn line with a numbered point for each step below. It draws further along the path as you step through them.">
     <path class="jc-line" pathLength="100" d="M 40 152 C 150 152 168 72 268 90 C 356 106 366 178 460 154 C 520 139 520 92 566 96 C 616 100 622 158 572 162 C 522 166 520 116 566 106 C 654 84 712 150 806 116 C 872 92 902 96 936 78"></path>
   </svg>
 
@@ -62,7 +61,7 @@ const { steps } = Astro.props;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // Compute each step's point along the actual rendered curve, evenly spaced
-    // from Point A (fraction 0) to Point B (fraction 1).
+    // from start (fraction 0) to end (fraction 1).
     const totalLength = path.getTotalLength();
     const points = Array.from({ length: count }, (_, i) => {
       const frac = count === 1 ? 0 : i / (count - 1);
@@ -70,36 +69,27 @@ const { steps } = Astro.props;
     });
 
     const svgNS = 'http://www.w3.org/2000/svg';
-    const markers = points.map((pt) => {
+    const markers: SVGCircleElement[] = [];
+    const numbers: SVGTextElement[] = [];
+    points.forEach((pt, i) => {
       const c = document.createElementNS(svgNS, 'circle');
       c.setAttribute('class', 'jc-point');
       c.setAttribute('cx', String(pt.x));
       c.setAttribute('cy', String(pt.y));
-      c.setAttribute('r', '8');
+      c.setAttribute('r', '15');
       svg.appendChild(c);
-      return c;
-    });
+      markers.push(c);
 
-    const addCaption = (pt: DOMPoint, lines: [string, string], anchor: 'start' | 'middle' | 'end', below: boolean) => {
-      const g = document.createElementNS(svgNS, 'g');
-      g.setAttribute('class', 'jc-caption');
-      const dy = below ? [29, 46] : [-34, -51];
-      lines.forEach((line, i) => {
-        const t = document.createElementNS(svgNS, 'text');
-        t.setAttribute('x', String(pt.x));
-        t.setAttribute('y', String(pt.y + dy[i]));
-        t.setAttribute('text-anchor', anchor);
-        t.setAttribute('class', i === 0 ? 'code' : 'cap');
-        t.textContent = line;
-        g.appendChild(t);
-      });
-      svg.appendChild(g);
-    };
-    // Point A sits low on the curve, so its caption goes below the dot;
-    // Point B sits high, so its caption goes above — matches the curve's
-    // shape at each end and keeps both clear of the stroke and other dots.
-    addCaption(points[0], ['POINT A', 'day one'], 'middle', true);
-    addCaption(points[count - 1], ['POINT B', 'delivered, on time & in budget'], 'end', false);
+      const t = document.createElementNS(svgNS, 'text');
+      t.setAttribute('class', 'jc-num');
+      t.setAttribute('x', String(pt.x));
+      t.setAttribute('y', String(pt.y));
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('dominant-baseline', 'central');
+      t.textContent = String(i + 1);
+      svg.appendChild(t);
+      numbers.push(t);
+    });
 
     let active = 0;
 
@@ -110,6 +100,10 @@ const { steps } = Astro.props;
       markers.forEach((m, i) => {
         m.classList.toggle('reached', i <= active);
         m.classList.toggle('current', i === active);
+      });
+      numbers.forEach((n, i) => {
+        n.classList.toggle('reached', i <= active);
+        n.classList.toggle('current', i === active);
       });
 
       slides.forEach((s, i) => {
@@ -185,14 +179,15 @@ const { steps } = Astro.props;
   }
   .journey-carousel.drawn :global(.jc-point) { opacity: 1; transform: scale(1); }
   :global(.jc-point.reached) { stroke: var(--color-accent); }
-  :global(.jc-point.current) { fill: var(--color-accent); stroke: var(--color-accent); r: 9; }
-  :global(.jc-caption) {
-    font-family: var(--font-sans); fill: var(--color-neutral-700); opacity: 0;
-    transition: opacity .6s ease .3s;
+  :global(.jc-point.current) { fill: var(--color-accent); stroke: var(--color-accent); }
+  :global(.jc-num) {
+    font-family: var(--font-sans); font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums;
+    fill: var(--color-neutral-500); opacity: 0; pointer-events: none;
+    transition: opacity .4s ease, fill .3s ease;
   }
-  .journey-carousel.drawn :global(.jc-caption) { opacity: 1; }
-  :global(.jc-caption .code) { font-size: 11px; letter-spacing: 0.18em; fill: var(--color-accent-700); }
-  :global(.jc-caption .cap) { font-size: 12.5px; fill: var(--color-neutral-600); }
+  .journey-carousel.drawn :global(.jc-num) { opacity: 1; }
+  :global(.jc-num.reached) { fill: var(--color-accent-700); }
+  :global(.jc-num.current) { fill: var(--color-bg); font-weight: 600; }
 
   .jc-body { display: flex; align-items: stretch; gap: var(--space-4); max-width: 640px; margin: 0 auto; }
   .jc-slides { flex: 1; min-width: 0; }
@@ -224,6 +219,6 @@ const { steps } = Astro.props;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .jc-line, :global(.jc-point), :global(.jc-caption) { transition: none !important; }
+    .jc-line, :global(.jc-point), :global(.jc-num) { transition: none !important; }
   }
 </style>
