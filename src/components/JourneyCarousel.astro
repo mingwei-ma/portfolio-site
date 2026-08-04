@@ -72,13 +72,29 @@ const { steps } = Astro.props;
     const svgNS = 'http://www.w3.org/2000/svg';
     const markers: SVGCircleElement[] = [];
     const numbers: SVGTextElement[] = [];
+    const markerGroups: SVGGElement[] = [];
     points.forEach((pt, i) => {
+      const g = document.createElementNS(svgNS, 'g');
+      g.setAttribute('class', 'jc-marker');
+      g.setAttribute('tabindex', '0');
+      g.setAttribute('role', 'button');
+      g.setAttribute('aria-label', `Go to step ${i + 1}`);
+
+      // Larger invisible circle so the click/tap target isn't limited to the
+      // small visible dot.
+      const hit = document.createElementNS(svgNS, 'circle');
+      hit.setAttribute('class', 'jc-hit');
+      hit.setAttribute('cx', String(pt.x));
+      hit.setAttribute('cy', String(pt.y));
+      hit.setAttribute('r', '22');
+      g.appendChild(hit);
+
       const c = document.createElementNS(svgNS, 'circle');
       c.setAttribute('class', 'jc-point');
       c.setAttribute('cx', String(pt.x));
       c.setAttribute('cy', String(pt.y));
       c.setAttribute('r', '15');
-      svg.appendChild(c);
+      g.appendChild(c);
       markers.push(c);
 
       const t = document.createElementNS(svgNS, 'text');
@@ -88,8 +104,11 @@ const { steps } = Astro.props;
       t.setAttribute('text-anchor', 'middle');
       t.setAttribute('dominant-baseline', 'central');
       t.textContent = String(i + 1);
-      svg.appendChild(t);
+      g.appendChild(t);
       numbers.push(t);
+
+      svg.appendChild(g);
+      markerGroups.push(g);
     });
 
     let active = 0;
@@ -125,6 +144,15 @@ const { steps } = Astro.props;
     };
 
     dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+    markerGroups.forEach((g, i) => {
+      g.addEventListener('click', () => goTo(i));
+      g.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          goTo(i);
+        }
+      });
+    });
     prevBtn?.addEventListener('click', () => goTo(active - 1));
     nextBtn?.addEventListener('click', () => goTo(active + 1));
     root.addEventListener('keydown', (e) => {
@@ -168,9 +196,13 @@ const { steps } = Astro.props;
 
   .journey { display: block; width: 100%; height: auto; overflow: visible; margin: 4px 0 20px; }
   .jc-track {
-    fill: none; stroke: var(--color-divider); stroke-width: 2.2;
-    stroke-linecap: round; stroke-dasharray: 0.5 9;
+    fill: none; stroke: var(--color-neutral-400); stroke-width: 2.4;
+    stroke-linecap: round; stroke-dasharray: 0.5 8;
   }
+  :global(.jc-marker) { cursor: pointer; }
+  :global(.jc-hit) { fill: transparent; stroke: none; }
+  :global(.jc-marker:hover .jc-point), :global(.jc-marker:focus-visible .jc-point) { stroke: var(--color-accent); stroke-width: 3; }
+  :global(.jc-marker:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 50%; }
   .jc-line {
     fill: none; stroke: var(--color-accent); stroke-width: 2.2;
     stroke-linecap: round; stroke-linejoin: round;
