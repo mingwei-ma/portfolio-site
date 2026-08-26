@@ -5,12 +5,10 @@ interface Props {
 const { bordered = true } = Astro.props;
 ---
 <footer class="wrap site-foot" style={bordered ? 'border-top: 1px solid var(--color-divider);' : undefined}>
-  <div style="display: flex; align-items: center; gap: 14px;">
-    <div>
-      <div style="font-family: var(--font-heading); font-size: 22px;">Mingwei Ma</div>
-      <div style="font-size: 13px; font-family: var(--font-sans); color: var(--color-neutral-600); margin-top: 4px;">Senior Project Manager · Open to full-time roles</div>
-    </div>
-    <a href="https://www.credly.com/badges/43ee1b52-ec44-4f12-9f74-6249470cb4ca" target="_blank" rel="noopener" title="View PMP certification on Credly">
+  <div>
+    <div style="font-family: var(--font-heading); font-size: 22px;">Mingwei Ma</div>
+    <div style="font-size: 13px; font-family: var(--font-sans); color: var(--color-neutral-600); margin-top: 4px;">Senior Project Manager · Open to full-time roles</div>
+    <a href="https://www.credly.com/badges/43ee1b52-ec44-4f12-9f74-6249470cb4ca" target="_blank" rel="noopener" title="View PMP certification on Credly" style="display: block; margin-top: 10px;">
       <img src="/assets/pmp-badge.png" alt="PMP Certified badge" width="40" height="40" style="display: block;" />
     </a>
   </div>
