@@ -6,6 +6,7 @@ import Loop from '../../components/Loop.astro';
 import Kicker from '../../components/Kicker.astro';
 import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
 import JourneyCarousel from '../../components/JourneyCarousel.astro';
+import { letters } from '../../lib/letters';
 
 const projects = [
   {
@@ -127,8 +128,8 @@ const projects = [
       <h2 class="cta-h2">Got an idea you want built?</h2>
       <p class="lede cta-lede">The professional work is where the rigor lives — but I'm always up for a good side project. Say hi.</p>
       <div class="cta-ctas">
-        <a href="/contact" class="btn btn-primary cta-btn">Get in touch →</a>
-        <a href="/work/professional" class="btn btn-secondary cta-btn">See the professional work</a>
+        <a href="/contact" class="btn btn-primary cta-btn"><span class="btn-label">Get in touch →</span></a>
+        <a href="/work/professional" class="btn btn-secondary cta-btn hover-rainbow"><span>{letters('See the professional work').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))}</span></a>
       </div>
     </section>
   )}

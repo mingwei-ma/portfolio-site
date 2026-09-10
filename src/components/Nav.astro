@@ -1,34 +1,40 @@
 ---
-// Sticky top nav. Above 860px: Work is a hover/focus dropdown (its trigger
-// links to /work and stays accent-colored while /work or /work/personal is
-// active). At/below 860px the dropdown and inline links are replaced by a
-// hamburger button that reveals a stacked panel, with Work as a native
-// <details> accordion (keyboard/screen-reader support for free).
+// Sticky top nav. Above 860px: Work and About are hover/focus dropdowns
+// (each trigger links to its first child and stays accent-colored while
+// any child page is active; dropdown item labels are pre-split into
+// per-letter <span>s for the rainbow hover treatment in global.css).
+// At/below 860px the dropdowns and inline links are replaced by a
+// hamburger button that reveals a stacked panel, with Work/About as
+// native <details> accordions (keyboard/screen-reader support for free).
 interface Props {
-  current: 'home' | 'work' | 'personal' | 'about' | 'contact';
+  current: 'home' | 'professional' | 'personal' | 'about' | 'blog' | 'contact';
 }
 const { current } = Astro.props;
 const isCurrent = (page: string) => (current === page ? 'page' : undefined);
-const workActive = current === 'work' || current === 'personal';
-// Contact link is still temporarily hidden while that content is being
-// finalized. Restore the <a> tag below when Contact is ready too.
+const letters = (text: string) => [...text].map((ch) => (ch.trim() ? ch : { space: true }));
+const workActive = current === 'professional' || current === 'personal';
+const aboutActive = current === 'about' || current === 'blog';
 ---
 <nav class="navbar">
   <a href="/" class="brand">Mingwei&nbsp;Ma</a>
 
   <div class="nav-links-desktop">
+    <a href="/" class="nav-home" aria-current={isCurrent('home')}>Home</a>
+
     <div class="navdrop nav-work">
-      <a href="/work" aria-current={workActive ? 'page' : undefined}>
+      <a href="/work/professional" aria-current={workActive ? 'page' : undefined}>
         Work
         <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </a>
       <div class="navmenu">
-        <a href="/work" aria-current={isCurrent('work')}>Professional</a>
-        <a href="/work/personal" aria-current={isCurrent('personal')}>Personal</a>
+        <a href="/work/professional" aria-current={isCurrent('professional')}>{letters('Professional').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
+        <a href="/work/personal" aria-current={isCurrent('personal')}>{letters('Personal').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
       </div>
     </div>
 
-    <a href="/about" class="nav-about" aria-current={isCurrent('about')}>About</a>
+    <a href="/about" class="nav-about" aria-current={aboutActive ? 'page' : undefined}>About</a>
+
+    <a href="/contact" class="nav-contact" aria-current={isCurrent('contact')}>Contact</a>
   </div>
 
   <button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Open menu">
@@ -37,13 +43,17 @@ const workActive = current === 'work' || current === 'personal';
   </button>
 
   <div id="mobile-nav-panel" class="mobile-nav-panel">
+    <a href="/" aria-current={isCurrent('home')}>Home</a>
+
     <details class="mobile-accordion" open={workActive}>
       <summary class={workActive ? 'current' : undefined}>Work</summary>
-      <a href="/work" aria-current={isCurrent('work')}>Professional</a>
+      <a href="/work/professional" aria-current={isCurrent('professional')}>Professional</a>
       <a href="/work/personal" aria-current={isCurrent('personal')}>Personal</a>
     </details>
 
-    <a href="/about" aria-current={isCurrent('about')}>About</a>
+    <a href="/about" aria-current={aboutActive ? 'page' : undefined}>About</a>
+
+    <a href="/contact" aria-current={isCurrent('contact')}>Contact</a>
   </div>
 </nav>
 

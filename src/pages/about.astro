@@ -4,12 +4,20 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Loop from '../components/Loop.astro';
 import ThreadRule from '../components/ThreadRule.astro';
+import Journey from '../components/Journey.astro';
 import Kicker from '../components/Kicker.astro';
 
 const values = [
   { num: '01', title: 'Trust, built fast', body: 'I create the conditions for cross-functional teams and clients to be honest with each other — the real prerequisite for any project to move.' },
   { num: '02', title: 'Autonomy, not just administration', body: "When things get tangled, I don't just log a ticket and wait. I investigate the root cause, map out potential solutions for the team, and bring a clear recommendation to leadership. Once resolved, I codify the solution into our workflows so we don't have to solve the same problem twice." },
   { num: '03', title: 'Calm under pressure', body: "The messier the moment, the steadier I get. Creative projects are inherently chaotic, but I stay grounded so teams have the confidence they need to focus on the work and get it over the line. I truly believe there are no obstacles that can't be overcome with clear leadership and teamwork." },
+];
+
+const process = [
+  { step: 'Step 01', title: 'Listen & map', body: 'I meet the people and the project where they are before I touch the plan, learning the goals, the constraints, and where trust needs to be built.' },
+  { step: 'Step 02', title: 'Create & execute the plan', body: 'A plan the team helped shape and actually believes in with clear owners, honest dates, visible risks & mitigations.' },
+  { step: 'Step 03', title: 'Unblock daily', body: "I chase down answers and clear the path, protecting my team's time so they can do what they do best." },
+  { step: 'Step 04', title: 'Land & learn', body: 'Ship it, close it cleanly, leaving the team with practices that outlast the project and leaving the client excited to start a new engagement.' },
 ];
 
 const credentials = [
@@ -78,6 +86,24 @@ const toolkit = [
     </div>
   </section>
 
+  <section class="wrap section">
+    <div class="section-head" style="margin-bottom: var(--space-5);">
+      <Kicker text="How I work" />
+      <h2>Trust first, then throughput.</h2>
+      <p class="lede section-lede">Every engagement is really one thing: getting a project from where it is to where it needs to land.</p>
+    </div>
+    <Journey />
+    <div class="process-grid">
+      {process.map((p) => (
+        <div class="card">
+          <span class="card-kicker">{p.step}</span>
+          <span class="card-title">{p.title}</span>
+          <p class="card-body">{p.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
   <section class="wrap section" style="text-align: center;">
     <Kicker text="Credentials" />
     <div class="cred-row">
@@ -139,7 +165,7 @@ const toolkit = [
     <div class="cta-band">
       <Loop variant="below" />
       <h2 class="cta-h2">Think we might be a fit?</h2>
-      <a href="/contact" class="btn btn-primary cta-btn">Book a discovery call →</a>
+      <a href="/contact" class="btn btn-primary cta-btn"><span class="btn-label">Book a discovery call →</span></a>
     </div>
   </section>
 
@@ -160,11 +186,14 @@ const toolkit = [
 
   .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
 
+  .section-lede { max-width: 500px; margin: 14px auto 0; font-size: 16px; }
+  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+
   .cred-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: var(--space-4); }
   .cred-tag { font-size: 13px; padding: 6px 14px; }
 
   .timeline-section { max-width: 780px; }
-  .tl-role { font-family: var(--font-heading); font-size: 21px; }
+  .tl-role { font-family: var(--font-nav); font-weight: 500; font-size: 17px; }
   .tl-org { font-size: 12.5px; font-family: var(--font-sans); letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-neutral-600); margin: 3px 0 6px; }
   .tl-body { font-size: 14px; line-height: 1.6; margin: 0; font-family: var(--font-body); color: color-mix(in srgb, var(--color-text) 78%, transparent); }
 
@@ -174,7 +203,7 @@ const toolkit = [
   .toolkit-tags { display: flex; flex-wrap: wrap; gap: 7px; }
   .toolkit-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; font-size: 13.5px; font-family: var(--font-sans); color: color-mix(in srgb, var(--color-text) 82%, transparent); }
   .edu-row { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--color-divider); display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; }
-  .edu-degree { font-family: var(--font-heading); font-size: 20px; }
+  .edu-degree { font-family: var(--font-nav); font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; font-size: 14px; }
   .edu-school { font-size: 13px; font-family: var(--font-sans); color: var(--color-neutral-600); }
 
   .cta-section { padding-top: 0; text-align: center; }
@@ -188,6 +217,7 @@ const toolkit = [
     .portrait { max-width: 320px; margin: 0 auto; }
     .section { padding-top: 48px; }
     .values-grid { grid-template-columns: 1fr; }
+    .process-grid { grid-template-columns: 1fr; }
     .tl-row { grid-template-columns: 1fr; }
     .toolkit-grid { grid-template-columns: 1fr; }
     .cta-h2 { font-size: 28px; }

@@ -1,0 +1,153 @@
+---
+// Vertical tabbed carousel: headings on the left act as tabs, the matching
+// description renders on the right. The active tab is marked with a
+// hand-drawn highlight box behind its label.
+interface Item {
+  num: string;
+  name: string;
+  desc: string;
+}
+interface Props {
+  items: Item[];
+}
+const { items } = Astro.props;
+---
+<div class="svc-tabs">
+  <div class="svc-tablist" role="tablist" aria-orientation="vertical">
+    {items.map((s, i) => (
+      <button
+        type="button"
+        class:list={['svc-tab', { active: i === 0 }]}
+        role="tab"
+        id={`svc-tab-${i}`}
+        aria-selected={i === 0 ? 'true' : 'false'}
+        aria-controls={`svc-panel-${i}`}
+        tabindex={i === 0 ? 0 : -1}
+      >
+        <span class="svc-num">{s.num}</span>
+        <span class="svc-name" style={`--highlight: url('/assets/svc-tab-highlight-${(i % 5) + 1}.png');`}>{s.name}</span>
+      </button>
+    ))}
+  </div>
+  <div class="svc-panels">
+    {items.map((s, i) => (
+      <p
+        class:list={['svc-desc', { 'is-active': i === 0 }]}
+        id={`svc-panel-${i}`}
+        role="tabpanel"
+        aria-labelledby={`svc-tab-${i}`}
+        aria-hidden={i === 0 ? 'false' : 'true'}
+      >
+        {s.desc}
+      </p>
+    ))}
+  </div>
+</div>
+
+<script>
+  function initServicesTabs() {
+    const root = document.querySelector<HTMLElement>('.svc-tabs');
+    if (!root) return;
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('.svc-tab'));
+    const panelsRoot = root.querySelector<HTMLElement>('.svc-panels');
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('.svc-desc'));
+    if (tabs.length === 0 || !panelsRoot) return;
+
+    // Lock the panel container to the tallest panel's height so the absolutely
+    // positioned panels can cross-fade in place without the page jumping.
+    let maxHeight = 0;
+    panels.forEach((p) => {
+      const wasActive = p.classList.contains('is-active');
+      p.classList.add('is-measuring');
+      maxHeight = Math.max(maxHeight, p.offsetHeight);
+      p.classList.remove('is-measuring');
+      p.classList.toggle('is-active', wasActive);
+    });
+    panelsRoot.style.minHeight = `${maxHeight}px`;
+
+    const activate = (i: number, focus = false) => {
+      tabs.forEach((t, idx) => {
+        const on = idx === i;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach((p, idx) => {
+        const on = idx === i;
+        p.classList.toggle('is-active', on);
+        p.setAttribute('aria-hidden', on ? 'false' : 'true');
+      });
+      if (focus) tabs[i].focus();
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => activate(i));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          activate((i + 1) % tabs.length, true);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          activate((i - 1 + tabs.length) % tabs.length, true);
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          activate(0, true);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          activate(tabs.length - 1, true);
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initServicesTabs);
+  } else {
+    initServicesTabs();
+  }
+</script>
+
+<style>
+  .svc-tabs { display: grid; grid-template-columns: minmax(240px, 380px) 1fr; gap: var(--space-6); align-items: start; }
+
+  .svc-tablist { display: flex; flex-direction: column; }
+  .svc-tab {
+    display: flex; align-items: baseline; gap: var(--space-3);
+    width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+    font: inherit; color: inherit;
+    padding: var(--space-3) 0; border-bottom: 1px solid var(--color-divider);
+  }
+  .svc-tab:first-of-type { border-top: 1px solid var(--color-divider); }
+  .svc-tab .svc-num { font-family: var(--font-sans); font-variant-numeric: tabular-nums; font-size: 15px; color: var(--color-accent); }
+  .svc-tab .svc-name {
+    position: relative; display: inline-block;
+    font-family: var(--font-nav); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; font-size: 16px; line-height: 1.3;
+    padding: 4px 10px; margin: -4px -10px;
+  }
+  .svc-tab .svc-name::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background-image: var(--highlight);
+    background-size: 100% 100%; background-position: center; background-repeat: no-repeat;
+    opacity: 0; transition: opacity 0.25s ease;
+  }
+  .svc-tab.active .svc-name::before { opacity: 1; }
+
+  .svc-panels { position: relative; min-height: 168px; }
+  .svc-desc {
+    margin: 0; font-size: 15px; line-height: 1.7; font-family: var(--font-body); letter-spacing: 0.003em;
+    color: color-mix(in srgb, var(--color-text) 78%, transparent);
+    position: absolute; inset: 0; opacity: 0; transform: translateY(6px); pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .svc-desc.is-active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .svc-desc.is-measuring { position: static; opacity: 1; }
+
+  @media (max-width: 860px) {
+    .svc-tabs { grid-template-columns: 1fr; gap: var(--space-4); }
+    .svc-tab .svc-name { font-size: 15px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .svc-name::before, .svc-desc { transition: none !important; }
+  }
+</style>

@@ -19,10 +19,10 @@ const { title, description } = Astro.props;
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <Analytics />
   </head>
   <body>
     <slot />
+    <Analytics />
     <script src="../scripts/thread-draw.ts"></script>
   </body>
 </html>
