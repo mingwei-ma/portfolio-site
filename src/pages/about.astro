@@ -3,15 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Loop from '../components/Loop.astro';
-import ThreadRule from '../components/ThreadRule.astro';
 import Journey from '../components/Journey.astro';
 import Kicker from '../components/Kicker.astro';
-
-const values = [
-  { num: '01', title: 'Trust, built fast', body: 'I create the conditions for cross-functional teams and clients to be honest with each other — the real prerequisite for any project to move.' },
-  { num: '02', title: 'Autonomy, not just administration', body: "When things get tangled, I don't just log a ticket and wait. I investigate the root cause, map out potential solutions for the team, and bring a clear recommendation to leadership. Once resolved, I codify the solution into our workflows so we don't have to solve the same problem twice." },
-  { num: '03', title: 'Calm under pressure', body: "The messier the moment, the steadier I get. Creative projects are inherently chaotic, but I stay grounded so teams have the confidence they need to focus on the work and get it over the line. I truly believe there are no obstacles that can't be overcome with clear leadership and teamwork." },
-];
+import { letters } from '../lib/letters';
 
 const process = [
   { step: 'Step 01', title: 'Listen & map', body: 'I meet the people and the project where they are before I touch the plan, learning the goals, the constraints, and where trust needs to be built.' },
@@ -19,6 +13,8 @@ const process = [
   { step: 'Step 03', title: 'Unblock daily', body: "I chase down answers and clear the path, protecting my team's time so they can do what they do best." },
   { step: 'Step 04', title: 'Land & learn', body: 'Ship it, close it cleanly, leaving the team with practices that outlast the project and leaving the client excited to start a new engagement.' },
 ];
+
+const processColors = ['#edafc0', '#dec376', '#eebaa0', '#b6cd9c'];
 
 const credentials = [
   'PMP Certified',
@@ -65,25 +61,8 @@ const toolkit = [
   <section class="wrap prose story">
     <p>My road to project management began back when high school group projects needed someone to build the color-coded schedule, empower each team member to contribute their part, and clear the path to deliver A+ work. Since then, I've spent over five years working my way up — from coordinating boutique brand and design projects to managing complex custom web builds at fast-paced agencies and startups.</p>
     <p>I quickly found that my favorite part of the work isn't the Gantt chart; it's the people and the cross-functional collaboration. Getting a skeptical engineer and an anxious client to align, spotting the quiet bottleneck before it breaks a timeline, and translating ambiguous client feedback into clear actionable items for a design team.</p>
-    <p>I believe most project problems are trust and communication problems wearing schedule as a disguise. My approach leads with human connection, creating the baseline trust required for strict operational rigor to actually be effective.</p>
+    <p>I believe most project problems are trust and communication problems wearing schedule as a disguise. My approach leads with human connection, creating the baseline trust required for strict operational rigor to actually be effective. And when something gets tangled, I don't just log a ticket and wait — I dig into the root cause, bring the team a clear recommendation, and codify the fix into our workflows so we don't solve the same problem twice.</p>
     <p>Lately, I've been deepening my technical and AI fluency by getting hands-on with tools like Claude Design and Claude Code to build things from scratch (including this website!). I don't want to just theorize about emerging tech; I want to speak my engineers' language, understand delivery friction firsthand, and actively find practical ways to leverage AI to make workflows faster and smarter for the whole team.</p>
-  </section>
-
-  <section class="wrap section">
-    <div class="section-head">
-      <Loop d="M 4 14 C 20 22 30 30 40 30 C 54 30 54 12 40 12 C 28 12 30 28 46 28 C 60 28 68 22 88 14" />
-      <Kicker text="What I bring" />
-      <h2>The strengths behind the schedule.</h2>
-    </div>
-    <div class="values-grid">
-      {values.map((v) => (
-        <div class="card">
-          <span class="card-kicker">{v.num}</span>
-          <span class="card-title">{v.title}</span>
-          <p class="card-body">{v.body}</p>
-        </div>
-      ))}
-    </div>
   </section>
 
   <section class="wrap section">
@@ -94,10 +73,14 @@ const toolkit = [
     </div>
     <Journey />
     <div class="process-grid">
-      {process.map((p) => (
-        <div class="card">
-          <span class="card-kicker">{p.step}</span>
-          <span class="card-title">{p.title}</span>
+      {process.map((p, i) => (
+        <div
+          class="card process-card-art"
+          style={`--card-head: url('/assets/process-card-${i + 1}-head.png'); --card-body-color: ${processColors[i]};`}
+        >
+          <div class="process-card-head">
+            <span class="card-title">{p.title}</span>
+          </div>
           <p class="card-body">{p.body}</p>
         </div>
       ))}
@@ -160,12 +143,19 @@ const toolkit = [
     </div>
   </section>
 
-  <ThreadRule />
-  <section class="wrap cta-section">
+  <section class="wrap section cta-section">
     <div class="cta-band">
       <Loop variant="below" />
+      <Kicker text="Let's talk" />
       <h2 class="cta-h2">Think we might be a fit?</h2>
-      <a href="/contact" class="btn btn-primary cta-btn"><span class="btn-label">Book a discovery call →</span></a>
+      <p class="lede cta-lede">I'd love to hear about the team and the work. Send a note, or take my résumé with you.</p>
+      <div class="cta-ctas">
+        <a href="/contact" class="btn btn-primary cta-btn"><span class="btn-label">Book a discovery call →</span></a>
+        <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-ghost cta-btn cta-btn-icon hover-rainbow">
+          <span>{letters('Download résumé').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -184,42 +174,62 @@ const toolkit = [
   .section-head { text-align: center; margin-bottom: var(--space-6); }
   .section-head h2 { font-size: 36px; margin-top: 14px; font-weight: 400; }
 
-  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
-
   .section-lede { max-width: 500px; margin: 14px auto 0; font-size: 16px; }
   .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+  .process-card-art {
+    border: none; padding: 0; gap: 0; overflow: hidden;
+    background-color: var(--card-body-color);
+  }
+  .process-card-head {
+    background-image: var(--card-head);
+    background-size: cover; background-position: center;
+    padding: var(--space-3);
+  }
+  .process-card-art .card-title { text-transform: none; letter-spacing: normal; font-size: 16px; display: block; }
+  .process-card-art .card-body { margin: 0; padding: var(--space-3); }
 
   .cred-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: var(--space-4); }
   .cred-tag { font-size: 13px; padding: 6px 14px; }
 
   .timeline-section { max-width: 780px; }
   .tl-role { font-family: var(--font-nav); font-weight: 500; font-size: 17px; }
-  .tl-org { font-size: 12.5px; font-family: var(--font-sans); letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-neutral-600); margin: 3px 0 6px; }
+  .tl-org { font-size: 12.5px; font-family: var(--font-nav); letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-neutral-600); margin: 3px 0 6px; }
   .tl-body { font-size: 14px; line-height: 1.6; margin: 0; font-family: var(--font-body); color: color-mix(in srgb, var(--color-text) 78%, transparent); }
 
   .toolkit-section { max-width: 860px; }
   .toolkit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5) var(--space-8); }
   .toolkit-label { margin-bottom: var(--space-3); }
   .toolkit-tags { display: flex; flex-wrap: wrap; gap: 7px; }
-  .toolkit-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; font-size: 13.5px; font-family: var(--font-sans); color: color-mix(in srgb, var(--color-text) 82%, transparent); }
+  .toolkit-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; font-size: 13.5px; font-family: var(--font-nav); color: color-mix(in srgb, var(--color-text) 82%, transparent); }
   .edu-row { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--color-divider); display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; }
   .edu-degree { font-family: var(--font-nav); font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; font-size: 14px; }
-  .edu-school { font-size: 13px; font-family: var(--font-sans); color: var(--color-neutral-600); }
+  .edu-school { font-size: 13px; font-family: var(--font-nav); color: var(--color-neutral-600); }
 
-  .cta-section { padding-top: 0; text-align: center; }
-  .cta-band { padding: 64px 0; }
-  .cta-h2 { font-size: 42px; margin: 0 0 18px; font-weight: 400; }
+  .cta-section { padding-top: 96px; text-align: center; }
+  .cta-band {
+    padding: 110px 48px;
+    border-radius: var(--radius-lg);
+    background-color: #f0e9df;
+    background-image: url('/assets/cta-bg.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  .cta-h2 { font-size: 42px; margin: 18px 0; font-weight: 400; }
+  .cta-lede { max-width: 520px; margin: 0 auto var(--space-6); }
+  .cta-ctas { display: flex; align-items: flex-start; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
   .cta-btn { font-size: 15px; padding: 13px 28px; }
+  .cta-btn-icon { display: inline-flex; align-items: center; gap: 8px; }
 
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; padding-top: 56px; padding-bottom: 40px; text-align: center; }
     .hero h1 { font-size: 34px; }
+    :global(.hero-loop) { margin-left: auto; margin-right: auto; }
     .portrait { max-width: 320px; margin: 0 auto; }
     .section { padding-top: 48px; }
-    .values-grid { grid-template-columns: 1fr; }
     .process-grid { grid-template-columns: 1fr; }
     .tl-row { grid-template-columns: 1fr; }
     .toolkit-grid { grid-template-columns: 1fr; }
     .cta-h2 { font-size: 28px; }
+    .cta-band { padding: 52px 24px; }
   }
 </style>
