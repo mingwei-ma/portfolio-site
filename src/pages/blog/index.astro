@@ -8,6 +8,7 @@ import ThreadRule from '../../components/ThreadRule.astro';
 import Kicker from '../../components/Kicker.astro';
 import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
 import { categoryLabel, readTime } from '../../lib/readTime';
+import { letters } from '../../lib/letters';
 
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -43,7 +44,7 @@ const monthYear = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', y
           </div>
           <h2><a href={`/blog/${featured.id}/`}>{featured.data.title}</a></h2>
           <p>{featured.data.description}</p>
-          <a href={`/blog/${featured.id}/`} class="btn btn-secondary feat-post-btn">Read the essay →</a>
+          <a href={`/blog/${featured.id}/`} class="btn btn-secondary feat-post-btn hover-rainbow"><span>{letters('Read the essay').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))} →</span></a>
         </div>
       </article>
     </section>
@@ -74,7 +75,7 @@ const monthYear = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', y
       <p class="lede subscribe-lede">No schedule, no spam — just a note when I've written something worth your time.</p>
       <form class="subscribe-form" data-no-op>
         <input class="input" type="email" placeholder="you@company.com" required />
-        <button class="btn btn-primary" type="submit">Subscribe</button>
+        <button class="btn btn-primary" type="submit"><span class="btn-label">Subscribe</span></button>
       </form>
     </div>
   </section>
