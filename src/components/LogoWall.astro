@@ -1,0 +1,92 @@
+---
+const logos = [
+  { file: 'crr.svg', name: 'Center for Reproductive Rights', ratio: 204 / 75 },
+  { file: 'ufw.svg', name: 'UFW Foundation', ratio: 1200 / 375 },
+  { file: 'volunteers-of-america.svg', name: 'Volunteers of America', ratio: 177 / 52 },
+  { file: 'strivetogether.svg', name: 'StriveTogether', ratio: 336 / 46 },
+  { file: 'fpf.svg', name: 'Freedom of the Press Foundation', ratio: 562 / 86 },
+  { file: 'cta.svg', name: 'California Teachers Association', ratio: 257 / 50 },
+  { file: 'sfa.svg', name: "Semper Fi & America's Fund", ratio: 158 / 39 },
+  { file: 'big-green.svg', name: 'Big Green', ratio: 130 / 62 },
+  { file: 'grasshopper.svg', name: 'Grasshopper', ratio: 215 / 40 },
+  { file: 'fireblocks.svg', name: 'Fireblocks', ratio: 142 / 24 },
+  { file: 'subscribe.svg', name: 'Subscribe', ratio: 136 / 24 },
+  { file: 'ten-to-one.svg', name: 'Ten To One Rum', ratio: 240 / 127 },
+  { file: 'blockdaemon.svg', name: 'Blockdaemon', ratio: 1500 / 328 },
+];
+
+const duration = 90;
+---
+<section class="wrap logo-wall-wrap">
+  <div class="logo-wall">
+    <div class="logo-row">
+      <div class="logo-track" style={`--duration:${duration}s`}>
+        {[...logos, ...logos].map((logo) => (
+          <span
+            class="logo-item"
+            style={`--logo-url:url(/assets/logos/${logo.file}); --ratio:${logo.ratio};`}
+            role="img"
+            aria-label={logo.name}
+            title={logo.name}
+          ></span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .logo-wall-wrap { padding: 8px 0; }
+  .logo-wall {
+    padding: 36px 0;
+    overflow: hidden;
+  }
+
+  .logo-row {
+    overflow: hidden;
+    width: 100%;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  }
+
+  .logo-track {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    width: max-content;
+    animation: scroll-left var(--duration) linear infinite;
+  }
+
+  .logo-item {
+    flex: none;
+    height: 34px;
+    aspect-ratio: var(--ratio);
+    background-color: var(--color-accent-700);
+    opacity: 0.4;
+    -webkit-mask-image: var(--logo-url);
+    mask-image: var(--logo-url);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+    transition: opacity 0.2s ease;
+  }
+  .logo-item:hover { opacity: 0.75; }
+
+  @keyframes scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-track { animation: none; }
+  }
+
+  @media (max-width: 860px) {
+    .logo-wall { padding: 26px 0; }
+    .logo-item { height: 26px; }
+    .logo-track { gap: 44px; }
+  }
+</style>
