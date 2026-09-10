@@ -32,16 +32,7 @@ const aboutActive = current === 'about' || current === 'blog';
       </div>
     </div>
 
-    <div class="navdrop nav-about">
-      <a href="/about" aria-current={aboutActive ? 'page' : undefined}>
-        About
-        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-      </a>
-      <div class="navmenu">
-        <a href="/about" aria-current={isCurrent('about')}>{letters('About').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
-        <a href="/blog" aria-current={isCurrent('blog')}>{letters('Field Notes').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
-      </div>
-    </div>
+    <a href="/about" class="nav-about" aria-current={aboutActive ? 'page' : undefined}>About</a>
 
     <a href="/contact" class="nav-contact" aria-current={isCurrent('contact')}>Contact</a>
   </div>
@@ -60,11 +51,7 @@ const aboutActive = current === 'about' || current === 'blog';
       <a href="/work/personal" aria-current={isCurrent('personal')}>Personal</a>
     </details>
 
-    <details class="mobile-accordion" open={aboutActive}>
-      <summary class={aboutActive ? 'current' : undefined}>About</summary>
-      <a href="/about" aria-current={isCurrent('about')}>About</a>
-      <a href="/blog" aria-current={isCurrent('blog')}>Field Notes</a>
-    </details>
+    <a href="/about" aria-current={aboutActive ? 'page' : undefined}>About</a>
 
     <a href="/contact" aria-current={isCurrent('contact')}>Contact</a>
   </div>
