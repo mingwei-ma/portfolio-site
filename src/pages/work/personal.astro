@@ -96,8 +96,8 @@ const projects = [
         {p.links && (
           <div class="feat-links">
             {p.links.map((l) => (
-              <a href={l.href} target="_blank" class={`btn btn-${l.style} feat-btn hover-rainbow`}>
-                <span class="btn-label">{letters(l.label).map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))}</span>
+              <a href={l.href} target="_blank" class={`btn btn-${l.style} feat-btn`}>
+                <span class="btn-label">{l.label}</span>
               </a>
             ))}
           </div>
