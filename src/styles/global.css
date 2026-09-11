@@ -216,7 +216,7 @@ textarea.input { min-height: 90px; resize: vertical; }
   font-family: var(--font-nav); font-weight: 500; font-size: 13px;
   text-transform: uppercase; letter-spacing: 0.2em;
 }
-.navbar a:hover, .navbar a[aria-current="page"] { color: var(--color-accent); }
+.navbar a[aria-current="page"] { color: var(--color-accent); }
 .navbar .brand { font-family: var(--font-script); font-size: 26px; padding: 0 var(--space-4); order: 3; }
 
 /* Desktop: nav-links-desktop's children join the .navbar flex row directly,
