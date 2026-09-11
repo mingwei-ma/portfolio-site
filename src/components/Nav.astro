@@ -19,11 +19,11 @@ const aboutActive = current === 'about' || current === 'blog';
   <a href="/" class="brand">Mingwei&nbsp;Ma</a>
 
   <div class="nav-links-desktop">
-    <a href="/" class="nav-home" aria-current={isCurrent('home')}>Home</a>
+    <a href="/" class="nav-home hover-rainbow" aria-current={isCurrent('home')}>{letters('Home').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
 
     <div class="navdrop nav-work">
-      <a href="/work/professional" aria-current={workActive ? 'page' : undefined}>
-        Work
+      <a href="/work/professional" class="hover-rainbow" aria-current={workActive ? 'page' : undefined}>
+        <span>{letters('Work').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</span>
         <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </a>
       <div class="navmenu">
@@ -32,9 +32,9 @@ const aboutActive = current === 'about' || current === 'blog';
       </div>
     </div>
 
-    <a href="/about" class="nav-about" aria-current={aboutActive ? 'page' : undefined}>About</a>
+    <a href="/about" class="nav-about hover-rainbow" aria-current={aboutActive ? 'page' : undefined}>{letters('About').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
 
-    <a href="/contact" class="nav-contact" aria-current={isCurrent('contact')}>Contact</a>
+    <a href="/contact" class="nav-contact hover-rainbow" aria-current={isCurrent('contact')}>{letters('Contact').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
   </div>
 
   <button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Open menu">
