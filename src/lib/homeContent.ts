@@ -40,3 +40,38 @@ export const testimonials = [
   { quote: "Mingwei was fantastic. I wish she could manage all my projects and my whole life. I couldn't have worked with a better team.", attr: 'Communications Consultant · Girl Be Heard' },
 ];
 
+
+// Homepage-specific (product-leaning) versions; /program keeps `services` and `work` above.
+export const homeServices = [
+  {
+    num: '01',
+    name: 'Requirements & MVP definition',
+    desc: "I turn customer and business needs into PRDs, functional requirements, user stories, and Gherkin acceptance criteria that design and engineering can build from. At SUBSCRIBE, I led the Invitations feature overhaul from PRD to a phased MVP rollout across six customer organizations.",
+  },
+  {
+    num: '02',
+    name: 'Roadmap & prioritization',
+    desc: "I prioritize backlogs by real impact, sequencing requirements and dependencies across concurrent initiatives. Across three engineering teams, that helped increase on-time feature releases by 50%, and I re-scoped a stalled three-year initiative into a prioritized plan that launched an initial release within 30 days.",
+  },
+  {
+    num: '03',
+    name: 'Launch readiness & quality',
+    desc: "I stay with a feature through launch: writing test plans and cases, running UAT, triaging defects with engineering, and authoring the day-of-launch runbooks and go-live checklists that make releases uneventful.",
+  },
+  {
+    num: '04',
+    name: 'Data, KPIs & iteration',
+    desc: "I define the KPIs before we ship, then measure them. I built a SQL-powered Metabase dashboard for an MVP, synthesized user-survey feedback, and ran structured post-launch validation to decide what to build next.",
+  },
+  {
+    num: '05',
+    name: 'Delivery systems & partnerships',
+    desc: "I work across UX, engineering, clients, and third-party vendors, and I build the systems that keep everyone aligned. That includes standardized workflows and QA templates, and a migration to Linear that increased operational efficiency by 25%.",
+  },
+];
+
+export const homeWork = [
+  { slug: 'subscribe', kicker: 'SUBSCRIBE · Product Manager', title: 'Invitations, from PRD to phased MVP', highlight: '/assets/work-highlight-1.png', body: 'Led the feature overhaul through a controlled rollout across six customer organizations, with MVP KPIs and a SQL-powered Metabase dashboard.' },
+  { slug: 'outpost', kicker: 'Outpost · Personal project', title: 'A product, from brief to prototype', highlight: '/assets/work-highlight-2.png', body: 'Took a coffee-shop finder for remote workers from problem framing to a working prototype with Claude Design and Claude Code.', href: '/work/personal', cta: 'See the build →' },
+  { slug: 'wide-eye', kicker: 'Wide Eye · Senior DPM', title: 'MVP for a certification app', highlight: '/assets/work-highlight-3.png', body: 'Defined the MVP with UX and engineering, mapped applicant and admin flows in Figma, and turned client scope additions into a post-MVP statement of work.' },
+];

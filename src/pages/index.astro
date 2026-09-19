@@ -8,12 +8,12 @@ import Kicker from '../components/Kicker.astro';
 import LogoWall from '../components/LogoWall.astro';
 import ServicesTabs from '../components/ServicesTabs.astro';
 import { letters } from '../lib/letters';
-import { services, work, testimonials } from '../lib/homeContent';
+import { homeServices, homeWork, testimonials } from '../lib/homeContent';
 
 const faqs = [
   { q: 'What kind of teams fit you best?', a: 'Strategic and creative tech organizations where I get to work with talented doers from multiple disciplines. Teams that push each other to new limits to create unique experiences that delight.' },
   { q: 'Which tools and methods do you use?', a: "Asana, Jira, Linear, Notion, Airtable, and Confluence, among others. I'm methodology-agnostic (Agile and Scrum where they fit, something lighter where they don't) and I shape process to the work, not the other way around." },
-  { q: 'Do you hold any certifications (PMP, CSM)?', a: "I'm PMP certified, backed by over five years of hands-on project management." },
+  { q: 'Do you hold any certifications (PMP, CSM)?', a: "I'm PMP certified, backed by over five years of hands-on product and project delivery." },
   { q: 'How does AI fit into how you work?', a: "I'm actively building my technical and AI fluency, including prototyping tools with Claude Code and Design so I can speak my engineers' language and put AI to work sensibly on planning, reporting, and the busywork around delivery. Check out what I'm building here!" },
 ];
 ---
@@ -24,7 +24,7 @@ const faqs = [
     <Loop variant="above" />
     <Kicker text="Product Manager, PMP" />
     <h1>The thread that holds everything together.</h1>
-    <p class="lede hero-lede">Over five years leading cross-functional, client-facing delivery at award-winning creative agencies and startups. I build the systems, roadmaps, and relationships that turn tangled work into shipped work. When things get sticky, I figure out why it's stuck, not just how to unstick it.</p>
+    <p class="lede hero-lede">Product manager with 5+ years turning customer and business needs into shipped features across financial services, technology, and nonprofits. I write the requirements, align design, engineering, and stakeholders, and stay through launch and the learning that follows.</p>
     <div class="hero-ctas">
       <a href="/product" class="btn btn-primary hero-btn"><span class="btn-label">Explore product work →</span></a>
       <a href="/program" class="btn btn-primary hero-btn"><span class="btn-label">Explore program &amp; project leadership →</span></a>
@@ -34,16 +34,16 @@ const faqs = [
   <div class="wrap">
     <div class="marquee">
       <span>Product management</span><span class="dot">·</span>
-      <span>Program management</span><span class="dot">·</span>
-      <span>Intake &amp; process design</span><span class="dot">·</span>
+      <span>Requirements &amp; PRDs</span><span class="dot">·</span>
       <span>Roadmap &amp; backlog</span><span class="dot">·</span>
-      <span>Risk &amp; escalation</span><span class="dot">·</span>
-      <span>Budgets &amp; SOWs</span>
+      <span>Launch readiness</span><span class="dot">·</span>
+      <span>KPIs &amp; analytics</span><span class="dot">·</span>
+      <span>Program delivery</span>
     </div>
     <div class="stats">
-      <div class="stat"><div class="stat-num" style="--circle: url('/assets/stat-circle-pink.png'); font-size: 56px;">5+</div><div class="stat-label">Years leading delivery</div></div>
-      <div class="stat"><div class="stat-num" style="--circle: url('/assets/stat-circle-yellow.png'); font-size: 28px;">$2.6M+</div><div class="stat-label">In project budgets managed</div></div>
-      <div class="stat"><div class="stat-num" style="--circle: url('/assets/stat-circle-orange.png'); font-size: 46px;">68%</div><div class="stat-label">Client retention &amp; growth</div></div>
+      <div class="stat"><div class="stat-num" style="--circle: url('/assets/stat-circle-pink.png'); font-size: 56px;">5+</div><div class="stat-label">Years shipping digital products</div></div>
+      <div class="stat"><div class="stat-num" style="--circle: url('/assets/stat-circle-yellow.png'); font-size: 46px;">50%</div><div class="stat-label">More on-time feature releases</div></div>
+      <div class="stat"><div class="stat-num" style="--circle: url('/assets/stat-circle-orange.png'); font-size: 56px;">30</div><div class="stat-label">Days to relaunch a stalled 3-year initiative</div></div>
     </div>
   </div>
 
@@ -54,7 +54,7 @@ const faqs = [
       <Kicker text="What I do" />
       <h2>Where I create leverage for a team.</h2>
     </div>
-    <ServicesTabs items={services} />
+    <ServicesTabs items={homeServices} />
   </section>
 
   <section class="wrap section">
@@ -66,12 +66,12 @@ const faqs = [
       <a href="/work/professional" class="btn btn-ghost hover-rainbow"><span>{letters('All case studies').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))} →</span></a>
     </div>
     <div class="work-grid">
-      {work.map((w) => (
-        <a href={`/work/professional#${w.slug}`} class="card work-card">
+      {homeWork.map((w) => (
+        <a href={w.href ?? `/work/professional#${w.slug}`} class="card work-card">
           <span class="card-kicker">{w.kicker}</span>
           <span class={`card-title ${w.highlight ? 'has-highlight' : ''}`} style={w.highlight ? `--highlight: url('${w.highlight}');` : undefined}>{w.title}</span>
           <p class="card-body">{w.body}</p>
-          <span class="card-meta" style="color: var(--color-accent);">Read case →</span>
+          <span class="card-meta" style="color: var(--color-accent);">{w.cta ?? 'Read case →'}</span>
         </a>
       ))}
     </div>
@@ -99,17 +99,17 @@ const faqs = [
       <div class="card next-card">
         <span class="card-kicker">The role</span>
         <span class="card-title next-title">Product manager</span>
-        <p class="card-body next-body">Owning delivery end to end across strategy, creative, and technology, as the steady point of contact that clients and teams both trust to keep things moving.</p>
+        <p class="card-body next-body">Owning a product area end to end: turning customer and business needs into clear requirements, prioritizing the backlog, and partnering with design and engineering through launch and iteration.</p>
       </div>
       <div class="card next-card">
         <span class="card-kicker">The team</span>
-        <span class="card-title next-title">Design &amp; technology agencies</span>
-        <p class="card-body next-body">Strategy, creative, and technology teams pushing toward what's next, new formats and platforms, who need a PM who can turn that ambition into something real.</p>
+        <span class="card-title next-title">Product &amp; technology teams</span>
+        <p class="card-body next-body">Teams building digital products in financial services, technology, and mission-driven organizations, who need a PM who can turn ambiguity into something real.</p>
       </div>
       <div class="card next-card">
         <span class="card-kicker">The setup</span>
-        <span class="card-title next-title">Contract & fractional roles</span>
-        <p class="card-body next-body">Based in NYC, I'd prefer remote-first or hybrid roles. Currently looking for contract or fractional roles, but open to full time positions for the right fit.</p>
+        <span class="card-title next-title">Full-time, contract &amp; fractional</span>
+        <p class="card-body next-body">Based in NYC, I'd prefer remote-first or hybrid roles. Open to full-time roles, as well as contract or fractional work for the right fit.</p>
       </div>
     </div>
   </section>
