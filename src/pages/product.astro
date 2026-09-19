@@ -1,0 +1,61 @@
+---
+import RoleLanding from '../components/RoleLanding.astro';
+import { homeWork } from '../lib/homeContent';
+
+const services = [
+  {
+    num: '01',
+    name: 'Discovery & requirements',
+    desc: "I start by getting clear on the problem before anyone touches a solution: running discovery workshops, gathering requirements, and turning ambiguous asks into functional specs and acceptance criteria that design and engineering can actually build from.",
+  },
+  {
+    num: '02',
+    name: 'Roadmap & prioritization',
+    desc: "I build intake and backlog systems that give every request a clear path, then prioritize by real business impact, not who asks loudest. The result is a roadmap the whole team can see, trust, and plan around.",
+  },
+  {
+    num: '03',
+    name: 'Building with AI',
+    desc: "I don't just theorize about emerging tech. I built Outpost, a coffee-shop finder for remote workers, from product brief to working prototype using Claude Design, Claude Code, Supabase, and Vercel, running it like a real product team with Linear tickets, grooming, and a feedback loop.",
+  },
+  {
+    num: '04',
+    name: 'Cross-functional alignment',
+    desc: "Getting a skeptical engineer, an anxious stakeholder, and a design team pointed in the same direction is the part of the job I like best. I translate between disciplines, spot the quiet bottleneck before it breaks a timeline, and keep everyone moving together.",
+  },
+  {
+    num: '05',
+    name: 'Data & reporting',
+    desc: "I build reporting that's easy to self-serve. When our tools couldn't give me the visibility I needed, I taught myself SQL and pulled my own Metabase reports, so decisions on scope, capacity, and priorities rest on real numbers.",
+  },
+];
+
+
+const testimonials = [
+  { quote: 'Mingwei was absolutely amazing to work with...all of the organizational systems she put into place meant we were able to survive after she left.', attr: 'Lead Developer · Design Agency' },
+  { quote: "Mingwei was fantastic. I wish she could manage all my projects and my whole life. I couldn't have worked with a better team.", attr: 'Communications Consultant · Girl Be Heard' },
+];
+---
+<RoleLanding
+  current="product"
+  title="Product Management — Mingwei Ma"
+  description="Mingwei Ma, PMP: Product Manager who turns ambiguous problems into shipped products across design, engineering, and leadership."
+  eyebrow="Product Manager, PMP"
+  headline="From fuzzy problem to shipped product."
+  lede="I'm a Product Manager who turns ambiguous problems into clear roadmaps and shipped work. Over five years of cross-functional delivery, most recently as Product Manager at a fintech SaaS company, plus a product of my own, built end to end with AI tools, that I took from brief to working prototype."
+  marquee={['Product discovery', 'Roadmap & prioritization', 'Backlog & intake', 'Requirements & specs', 'Cross-functional alignment', 'AI-assisted prototyping']}
+  stats={[
+    { num: '5+', label: 'Years leading delivery', circle: 'pink', size: 56 },
+    { num: '10', label: 'Teams aligned on one system', circle: 'yellow', size: 56 },
+    { num: '100%', label: 'Team adoption at SUBSCRIBE', circle: 'orange', size: 40 },
+  ]}
+  servicesKicker="How I work"
+  servicesHeading="How I approach product."
+  services={services}
+  workHeading="Product work I'm proud of."
+  work={homeWork}
+  testimonials={testimonials}
+  ctaHeading="Hiring for a product role?"
+  ctaLede="I'd love to hear about the team and the problems you're solving. Send a note, or take my résumé with you."
+  crossLink={{ text: 'Hiring for a program or project role instead?', label: 'See my program & project leadership', href: '/program' }}
+/>

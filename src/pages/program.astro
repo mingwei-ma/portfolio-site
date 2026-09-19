@@ -1,0 +1,27 @@
+---
+import RoleLanding from '../components/RoleLanding.astro';
+import { services, work, testimonials } from '../lib/homeContent';
+---
+<RoleLanding
+  current="program"
+  title="Program & Project Management — Mingwei Ma"
+  description="Mingwei Ma, PMP: over five years leading cross-functional, client-facing program and project delivery at award-winning creative agencies and startups."
+  eyebrow="Program & Project Management, PMP"
+  headline="Complex delivery, made calm."
+  lede="Over five years leading cross-functional, client-facing delivery at award-winning creative agencies and startups. I build the systems, roadmaps, and relationships that turn tangled work into shipped work, and when things get sticky, I figure out why it's stuck, not just how to unstick it."
+  marquee={['Program management', 'Intake & process design', 'Roadmap & backlog', 'Risk & escalation', 'Resourcing & capacity', 'Budgets & SOWs']}
+  stats={[
+    { num: '5+', label: 'Years leading delivery', circle: 'pink', size: 56 },
+    { num: '$2.6M+', label: 'In project budgets managed', circle: 'yellow', size: 28 },
+    { num: '68%', label: 'Client retention & growth', circle: 'orange', size: 46 },
+  ]}
+  servicesKicker="What I do"
+  servicesHeading="Where I create leverage for a team."
+  services={services}
+  workHeading="A few things I've landed."
+  work={work}
+  testimonials={testimonials}
+  ctaHeading="Hiring for a program or project leader?"
+  ctaLede="I'd love to hear about the team and the work. Send a note, or take my résumé with you."
+  crossLink={{ text: 'Hiring for a product role instead?', label: 'See my product work', href: '/product' }}
+/>

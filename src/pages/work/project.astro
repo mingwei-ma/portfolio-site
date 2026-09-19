@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Loop from '../../components/Loop.astro';
+import Kicker from '../../components/Kicker.astro';
+import { letters } from '../../lib/letters';
+
+function statHtml(s: { b: string; unit?: string }) {
+  if (!s.unit) return s.b.replace('→', '<span class="stat-arrow">→</span>');
+  const unitHtml = s.unit.replace('→', '<span class="stat-arrow">→</span>');
+  return s.b ? `${s.b} <span class="stat-unit">${unitHtml}</span>` : `<span class="stat-unit">${unitHtml}</span>`;
+}
+
+const cases = [
+  {
+    slug: 'subscribe',
+    role: 'Product Manager',
+    company: 'SUBSCRIBE · Fintech SaaS',
+    when: 'Oct 2025 – May 2026',
+    tag: 'PM · Program management',
+    title: 'A company-wide project management system, built from zero',
+    situation: "The company's Asana workspace was a free-for-all — teams spun up disjointed new boards every month with no shared standards, tasks routinely fell through the cracks, and I found unassigned work dating back four years. Leadership had no cross-functional visibility into what was actually shipping.",
+    whatIDid: "I audited how all ten teams — from creative and sales to engineering and execs — actually used Asana, then architected a three-tiered workspace with standardized naming, custom fields, and automations to cut out manual data entry. I drove adoption by documenting the new system in our wiki and joining teams' daily standups, so they helped shape it rather than have it handed down.",
+    results: "Pipeline confusion and cross-functional friction dropped sharply, and the four-year-old backlog was triaged and closed out in weeks instead of months. With clean, reliable data for the first time, teams could finally use the workspace to forecast capacity and plan resourcing proactively instead of just reacting.",
+    stats: [
+      { b: '10', span: 'Teams onboarded' },
+      { b: '4', unit: 'Yrs → weeks', span: 'Backlog cleared' },
+      { b: '100%', span: 'Team adoption' },
+    ],
+  },
+  {
+    slug: 'wide-eye',
+    role: 'Senior Digital PM',
+    company: 'Wide Eye · Creative agency',
+    when: 'Nov 2024 – Oct 2025',
+    tag: 'Senior DPM · Delivery & resourcing',
+    title: '$2.6M+ of brand and web work, delivered',
+    situation: "Wide Eye's lead PM was leaving, and the agency needed someone who could ramp up fast and take over a blended team of designers and engineers running custom brand and web work across several high-profile projects, without missing a beat on delivery.",
+    whatIDid: [
+      "I owned day-to-day operations and resourcing in Harvest, Asana, Notion, and Airtable, running capacity planning, staffing, and workload balancing across projects while managing budgets and burn reports through the full lifecycle. I translated ambiguous stakeholder feedback into clear requirements, built reusable trackers and reporting templates adopted across the wider PM team, and automated status reporting in Slack that cut the time it took to pull a report in half.",
+      "I also built content production and management templates to make client handoffs smoother, and started experimenting with AI tools for meeting notes and surfacing patterns in client feedback. When I spotted room to expand a client's scope, I worked with sales and the client directly to help shape it.",
+    ],
+    results: "My teams shipped $2.6M+ of brand and web work without burning out. Capacity was planned, budgets stayed predictable, and burn was visible weeks ahead instead of after the fact. The Slack automation and reporting templates became the team's default way of working, and half of my clients during that time expanded their scope or moved to a retainer.",
+    stats: [
+      { b: '$2.6M+', span: 'Delivered' },
+      { b: '10+', span: 'Concurrent clients' },
+      { b: '+20%', span: 'Team efficiency' },
+    ],
+  },
+  {
+    slug: 'studio-simpatico',
+    role: 'Senior Digital PM',
+    company: 'Studio Simpatico · Creative agency',
+    when: 'Nov 2023 – Nov 2024',
+    tag: 'Senior DPM · Change management',
+    title: 'How I migrated our dev team to Linear and cut handoff times by a full week',
+    situation: "Our agency was using Basecamp for both internal engineering work and external client communication. This shared setup created a serious liability: raw, internal technical debates and messy bug triaging were at risk of becoming visible to our clients. At the same time, Basecamp's minimalist feature set was holding our developers back. They needed a dedicated tool to run modern, agile sprints, but our monolithic workflow was capping their velocity and putting client trust at risk.",
+    whatIDid: ["To fix the workflow bottleneck and secure our data, I led a zero-downtime migration to separate our client and internal communication tracks:"],
+    bullets: [
+      { label: 'Audited alternative platforms', text: "Researched Monday.com, Asana, Notion, and Airtable against our engineering team's lifecycle needs." },
+      { label: 'Co-designed the new framework', text: 'Partnered directly with our Technical Architect and Lead Developer to build a high-velocity sprint system inside Linear.' },
+      { label: 'Secured team buy-in', text: 'Pitched the strategic value to the agency owner and the design team, ensuring everyone was aligned on how the new tool ecosystem would function.' },
+      { label: 'Established clear governance', text: 'Documented strict communication rules and handoff procedures to permanently separate internal development chat from client-facing spaces.' },
+    ],
+    results: "The migration completely eliminated the risk of clients seeing internal development notes. By tailoring the workflow to how our engineers actually work, we streamlined our QA ticket triage and made the handoff from design to development incredibly clean. Ultimately, this structural change compressed our handoff timelines by a full seven days and drastically improved our delivery precision.",
+    stats: [
+      { b: '-7', unit: 'Days', span: 'Design-to-Dev Handoff Time' },
+      { b: '0%', span: 'Exposed Internal Communications' },
+      { b: '', unit: 'Improved', span: 'Agile Sprint Adoption' },
+    ],
+  },
+];
+---
+<BaseLayout title="Work — Mingwei Ma" description="Project and program management case studies from Mingwei Ma's work at SUBSCRIBE, Wide Eye, and Studio Simpatico.">
+  <Nav current="work-project" />
+
+  <header class="wrap hero">
+    <Loop variant="double" />
+    <Kicker text="Project work" />
+    <h1>The roles, and what I built in them.</h1>
+    <p class="lede">Three recent roles — the scope, what I did, and what changed. The short version lives on my <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank">résumé</a>.</p>
+  </header>
+
+  {cases.map((c, i) => (
+      <section id={c.slug} class="wrap case case-section" style={i === 0 ? 'padding-top: 18px;' : 'padding-top: 72px;'}>
+        <div class="case-grid">
+          <aside class="meta-list">
+            <div class="meta-row"><span class="l">Role</span><span class="v">{c.role}</span></div>
+            <div class="meta-row"><span class="l">Company</span><span class="v">{c.company}</span></div>
+            <div class="meta-row"><span class="l">When</span><span class="v">{c.when}</span></div>
+            <div class="meta-tag"><span class="tag tag-outline">{c.tag}</span></div>
+          </aside>
+          <div>
+            <h2 class="case-title">{c.title}</h2>
+            <p><strong>The situation.</strong> {c.situation}</p>
+            {Array.isArray(c.whatIDid) ? (
+              <>
+                <p><strong>What I did.</strong> {c.whatIDid[0]}</p>
+                {c.whatIDid.slice(1).map((p) => <p>{p}</p>)}
+              </>
+            ) : (
+              <p><strong>What I did.</strong> {c.whatIDid}</p>
+            )}
+            {c.bullets && (
+              <ul class="case-list">
+                {c.bullets.map((b) => <li><strong>{b.label}:</strong> {b.text}</li>)}
+              </ul>
+            )}
+            <p><strong>The results.</strong> {c.results}</p>
+            <div class="result-row">
+              {c.stats.map((s) => (
+                <div class="result-stat"><b set:html={statHtml(s)} /><span>{s.span}</span></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+  ))}
+
+  <section class="wrap testi-band">
+    <blockquote class="testi-quote">"Mingwei was fantastic. I wish she could manage all my projects and my whole life. I couldn't have worked with a better team."</blockquote>
+    <div class="testi-attr">Communications Consultant · Girl Be Heard</div>
+  </section>
+
+  <section class="wrap section cta-section">
+    <div class="cta-band">
+      <Loop variant="below" />
+      <Kicker text="Let's talk" />
+      <h2 class="cta-h2">Want this kind of delivery on your team?</h2>
+      <p class="lede cta-lede">I'd love to hear about the team and the work. Send a note, or take my résumé with you.</p>
+      <div class="cta-ctas">
+        <a href="/contact" class="btn btn-primary cta-btn"><span class="btn-label">Get in touch →</span></a>
+        <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-ghost cta-btn cta-btn-icon hover-rainbow">
+          <span>{letters('Download résumé').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hero { text-align: center; padding-top: 88px; padding-bottom: 56px; }
+  .hero h1 { font-size: 52px; line-height: 1.08; margin: 20px 0 22px; font-weight: 400; }
+  .hero .lede { max-width: 640px; margin: 0 auto; }
+
+  .case-section { scroll-margin-top: 100px; }
+  .case-grid { display: grid; grid-template-columns: 248px 1fr; gap: 56px; align-items: start; padding-top: var(--space-6); border-top: 1px solid var(--color-divider); }
+  .case-title { font-size: 30px; margin: 0 0 12px; font-weight: 400; }
+
+  .meta-list { display: grid; gap: 14px; font-size: 13px; font-family: var(--font-nav); }
+  .meta-row { display: flex; flex-direction: column; gap: 3px; padding-bottom: 12px; border-bottom: 1px solid var(--color-divider); }
+  .meta-row:last-of-type { border-bottom: none; padding-bottom: 0; }
+  .meta-row .l { color: var(--color-neutral-600); text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
+  .meta-row .v { font-family: var(--font-nav); font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; font-size: 13px; }
+  .meta-tag { padding-top: 2px; }
+
+  .case-list { margin: 10px 0 0; padding-left: 20px; }
+  .case-list li { font-size: 15px; line-height: 1.68; font-family: var(--font-body); color: color-mix(in srgb, var(--color-text) 82%, transparent); margin-bottom: 8px; }
+
+  .result-row { display: flex; gap: var(--space-6); margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-divider); flex-wrap: wrap; }
+  :global(.result-stat b .stat-arrow) { display: inline-block; position: relative; top: 0.15em; font-size: inherit; color: inherit; text-transform: none; letter-spacing: normal; }
+  :global(.result-stat b .stat-unit) { font-size: 0.7em; color: inherit; text-transform: none; }
+
+  .testi-band { padding-top: 88px; text-align: center; max-width: 780px; }
+  .testi-quote { margin: 0; font-family: var(--font-nav); font-size: 30px; line-height: 1.28; font-weight: 400; padding: var(--space-6) 0; border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider); }
+  .testi-attr { font-size: 13px; font-family: var(--font-nav); letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-neutral-600); margin-top: var(--space-3); }
+
+  .cta-section { padding-top: 88px; padding-bottom: 88px; text-align: center; }
+  .cta-band {
+    padding: 110px 48px;
+    border-radius: var(--radius-lg);
+    background-color: #f0e9df;
+    background-image: url('/assets/cta-bg.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  .cta-h2 { font-size: 42px; margin: 0 0 18px; font-weight: 400; }
+  .cta-lede { max-width: 520px; margin: 0 auto var(--space-6); }
+  .cta-ctas { display: flex; align-items: flex-start; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+  .cta-btn { font-size: 15px; padding: 13px 28px; }
+  .cta-btn-icon { display: inline-flex; align-items: center; gap: 8px; }
+
+  @media (max-width: 860px) {
+    .hero { padding-top: 56px; padding-bottom: 40px; }
+    .hero h1 { font-size: 34px; }
+    .case-grid { grid-template-columns: 1fr !important; gap: 24px; }
+    .case-section { padding-top: 40px !important; }
+    .testi-band { padding-top: 56px; }
+    .testi-quote { font-size: 22px; }
+    .cta-section { padding-top: 56px; padding-bottom: 56px; }
+    .cta-h2 { font-size: 28px; }
+    .cta-band { padding: 52px 24px; }
+  }
+</style>
