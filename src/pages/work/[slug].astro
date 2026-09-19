@@ -33,7 +33,6 @@ const related = c.related.map((s) => caseStudies.find((x) => x.slug === s)!).fil
         <div class="meta-row"><span class="l">Role</span><span class="v">{c.role}</span></div>
         <div class="meta-row"><span class="l">Company</span><span class="v">{c.company}</span></div>
         <div class="meta-row"><span class="l">When</span><span class="v">{c.when}</span></div>
-        <div class="meta-tag">{c.tags.map((t) => <span class="tag tag-outline">{t}</span>)}</div>
         {c.tools.length > 0 && (
           <div class="meta-row tools-row"><span class="l">Skills &amp; tools</span><div class="meta-tag">{c.tools.map((t) => <span class="tag tag-neutral">{t}</span>)}</div></div>
         )}

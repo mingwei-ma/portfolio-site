@@ -7,7 +7,6 @@ export interface CaseStudy {
   role: string;
   company: string;
   when: string;
-  tags: string[];
   did: { label: string; text: string }[];
   outcomes: string[];
   stats: { b: string; span: string }[];
@@ -24,7 +23,6 @@ export const caseStudies: CaseStudy[] = [
     role: 'Product Manager',
     company: 'SUBSCRIBE · Financial services',
     when: 'Oct 2025 – Apr 2026',
-    tags: ['Product management', 'MVP', 'Analytics'],
     did: [
       { label: 'Defined the requirements', text: 'Wrote the PRD and functional requirements for the overhaul.' },
       { label: 'Ran a phased rollout', text: 'Planned and ran a controlled, phased MVP rollout across six customer organizations.' },
@@ -48,7 +46,6 @@ export const caseStudies: CaseStudy[] = [
     role: 'Product Manager',
     company: 'SUBSCRIBE · Financial services',
     when: 'Oct 2025 – Apr 2026',
-    tags: ['Product strategy', 'Stakeholder alignment', 'Prioritization'],
     did: [
       { label: 'Reframed the work', text: 'Translated unresolved stakeholder needs into a prioritized delivery plan.' },
       { label: 'Secured alignment', text: 'Got executive alignment on the re-scoped plan.' },
@@ -74,7 +71,6 @@ export const caseStudies: CaseStudy[] = [
     role: 'Product Manager',
     company: 'SUBSCRIBE · Financial services',
     when: 'Oct 2025 – Apr 2026',
-    tags: ['Roadmap', 'Backlog', 'Requirements quality'],
     did: [
       { label: 'Prioritized across teams', text: 'Defined product strategy and prioritized engineering backlogs across three teams, sequencing requirements and dependencies across concurrent initiatives.' },
       { label: 'Set a standard', text: 'Established Gherkin-format acceptance-criteria standards so requirements were testable by default.' },
@@ -99,7 +95,6 @@ export const caseStudies: CaseStudy[] = [
     role: 'Senior Digital PM',
     company: 'Wide Eye · Creative agency',
     when: 'Nov 2024 – Oct 2025',
-    tags: ['MVP definition', 'Scope management', 'Client partnership'],
     did: [
       { label: 'Scoped the MVP', text: 'Partnered with UX and engineering to prioritize features.' },
       { label: 'Mapped the flows', text: 'Mapped applicant and administrator flows in Figma.' },
@@ -124,7 +119,6 @@ export const caseStudies: CaseStudy[] = [
     role: 'Senior Digital PM',
     company: 'Wide Eye · Creative agency',
     when: 'Nov 2024 – Oct 2025',
-    tags: ['Discovery', 'Requirements', 'Integrations'],
     did: [
       { label: 'Led discovery', text: 'Ran discovery through design for the educator learning experience.' },
       { label: 'Translated needs into requirements', text: 'Turned stakeholder needs and engineering constraints into requirements for a Docebo LMS–marketing-site integration.' },
@@ -144,7 +138,6 @@ export const caseStudies: CaseStudy[] = [
     role: 'Senior Project Manager',
     company: 'Studio Simpatico · Creative agency',
     when: 'Jan 2022 – Nov 2024',
-    tags: ['Data architecture', 'Migration', 'Search & filtering'],
     did: [
       { label: 'Defined the structure', text: 'Partnered with UX and engineering to define taxonomy, data structures, and content-mapping requirements.' },
       { label: 'Designed for discovery', text: 'Scoped a multilingual research library with advanced filtering and search.' },
