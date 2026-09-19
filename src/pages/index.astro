@@ -14,7 +14,7 @@ const faqs = [
   { q: 'What kind of teams fit you best?', a: 'Strategic and creative tech organizations where I get to work with talented doers from multiple disciplines. Teams that push each other to new limits to create unique experiences that delight.' },
   { q: 'Which tools and methods do you use?', a: "Asana, Jira, Linear, Notion, Airtable, and Confluence, among others. I'm methodology-agnostic (Agile and Scrum where they fit, something lighter where they don't) and I shape process to the work, not the other way around." },
   { q: 'Do you hold any certifications (PMP, CSM)?', a: "I'm PMP certified, backed by over five years of hands-on product and project delivery." },
-  { q: 'How does AI fit into how you work?', a: "I'm actively building my technical and AI fluency, including prototyping tools with Claude Code and Design so I can speak my engineers' language and put AI to work sensibly on planning, reporting, and the busywork around delivery. Check out what I'm building here!" },
+  { q: 'How does AI fit into how you work?', a: "I'm actively building my technical and AI fluency, including prototyping tools with Claude Code and Design so I can speak my engineers' language and put AI to work sensibly on planning, reporting, and the busywork around delivery. <a href=\"/work/personal\">Check out what I'm building here!</a>" },
 ];
 ---
 <BaseLayout title="Mingwei Ma — Product Manager" description="The thread that holds everything together. Portfolio of Mingwei Ma, Product Manager.">
@@ -123,7 +123,7 @@ const faqs = [
     {faqs.map((f) => (
       <div class="faq-row">
         <div class="faq-q">{f.q}</div>
-        <p class="faq-a">{f.a}</p>
+        <p class="faq-a" set:html={f.a} />
       </div>
     ))}
   </section>
