@@ -1,50 +1,62 @@
 ---
+// Shared template for the role-specific landing pages (/product, /program).
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
-import Loop from '../components/Loop.astro';
-import ThreadRule from '../components/ThreadRule.astro';
-import Kicker from '../components/Kicker.astro';
-import LogoWall from '../components/LogoWall.astro';
-import ServicesTabs from '../components/ServicesTabs.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import Loop from './Loop.astro';
+import ThreadRule from './ThreadRule.astro';
+import Kicker from './Kicker.astro';
+import LogoWall from './LogoWall.astro';
+import ServicesTabs from './ServicesTabs.astro';
 import { letters } from '../lib/letters';
-import { services, work, testimonials } from '../lib/homeContent';
 
-const faqs = [
-  { q: 'What kind of teams fit you best?', a: 'Strategic and creative tech organizations where I get to work with talented doers from multiple disciplines. Teams that push each other to new limits to create unique experiences that delight.' },
-  { q: 'Which tools and methods do you use?', a: "Asana, Jira, Linear, Notion, Airtable, and Confluence, among others. I'm methodology-agnostic (Agile and Scrum where they fit, something lighter where they don't) and I shape process to the work, not the other way around." },
-  { q: 'Do you hold any certifications (PMP, CSM)?', a: "I'm PMP certified, backed by over five years of hands-on project management." },
-  { q: 'How does AI fit into how you work?', a: "I'm actively building my technical and AI fluency, including prototyping tools with Claude Code and Design so I can speak my engineers' language and put AI to work sensibly on planning, reporting, and the busywork around delivery. Check out what I'm building here!" },
-];
+interface Props {
+  current: 'product' | 'program';
+  title: string;
+  description: string;
+  eyebrow: string;
+  headline: string;
+  lede: string;
+  marquee: string[];
+  stats: { num: string; label: string; circle: 'pink' | 'yellow' | 'orange'; size: number }[];
+  servicesKicker: string;
+  servicesHeading: string;
+  services: { num: string; name: string; desc: string }[];
+  workHeading: string;
+  work: { slug: string; kicker: string; title: string; highlight?: string; body: string; href?: string; cta?: string }[];
+  testimonials: { quote: string; attr: string }[];
+  ctaHeading: string;
+  ctaLede: string;
+  crossLink: { text: string; label: string; href: string };
+}
+const p = Astro.props;
 ---
-<BaseLayout title="Mingwei Ma — Product Manager" description="The thread that holds everything together. Portfolio of Mingwei Ma, Product Manager.">
-  <Nav current="home" />
+<BaseLayout title={p.title} description={p.description}>
+  <Nav current={p.current} />
 
   <header class="wrap hero">
     <Loop variant="above" />
-    <Kicker text="Product Manager, PMP" />
-    <h1>The thread that holds everything together.</h1>
-    <p class="lede hero-lede">Over five years leading cross-functional, client-facing delivery at award-winning creative agencies and startups. I build the systems, roadmaps, and relationships that turn tangled work into shipped work. When things get sticky, I figure out why it's stuck, not just how to unstick it.</p>
+    <Kicker text={p.eyebrow} />
+    <h1>{p.headline}</h1>
+    <p class="lede hero-lede">{p.lede}</p>
     <div class="hero-ctas">
-      <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-primary hero-btn"><span class="btn-label">Download résumé (PDF)</span></a>
-      <a href="/product" class="btn btn-ghost hero-btn hover-rainbow"><span>{letters('Explore product work').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))} →</span></a>
-      <a href="/program" class="btn btn-ghost hero-btn hover-rainbow"><span>{letters('Explore program & project leadership').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))} →</span></a>
+      <a href="/contact" class="btn btn-primary hero-btn"><span class="btn-label">Get in touch →</span></a>
+      <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-ghost hero-btn hover-rainbow"><span>{letters('Download résumé').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))}</span></a>
     </div>
   </header>
 
   <div class="wrap">
     <div class="marquee">
-      <span>Product management</span><span class="dot">·</span>
-      <span>Program management</span><span class="dot">·</span>
-      <span>Intake &amp; process design</span><span class="dot">·</span>
-      <span>Roadmap &amp; backlog</span><span class="dot">·</span>
-      <span>Risk &amp; escalation</span><span class="dot">·</span>
-      <span>Budgets &amp; SOWs</span>
+      {p.marquee.map((m, i) => (
+        <>
+          <span>{m}</span>{i < p.marquee.length - 1 && <span class="dot">·</span>}
+        </>
+      ))}
     </div>
     <div class="stats">
-      <div class="stat"><div class="stat-num" style="--circle: url('/assets/stat-circle-pink.png'); font-size: 56px;">5+</div><div class="stat-label">Years leading delivery</div></div>
-      <div class="stat"><div class="stat-num" style="--circle: url('/assets/stat-circle-yellow.png'); font-size: 28px;">$2.6M+</div><div class="stat-label">In project budgets managed</div></div>
-      <div class="stat"><div class="stat-num" style="--circle: url('/assets/stat-circle-orange.png'); font-size: 46px;">68%</div><div class="stat-label">Client retention &amp; growth</div></div>
+      {p.stats.map((s) => (
+        <div class="stat"><div class="stat-num" style={`--circle: url('/assets/stat-circle-${s.circle}.png'); font-size: ${s.size}px;`}>{s.num}</div><div class="stat-label">{s.label}</div></div>
+      ))}
     </div>
   </div>
 
@@ -52,27 +64,27 @@ const faqs = [
 
   <section class="wrap section">
     <div class="section-head">
-      <Kicker text="What I do" />
-      <h2>Where I create leverage for a team.</h2>
+      <Kicker text={p.servicesKicker} />
+      <h2>{p.servicesHeading}</h2>
     </div>
-    <ServicesTabs items={services} />
+    <ServicesTabs items={p.services} />
   </section>
 
   <section class="wrap section">
     <div class="work-head">
       <div>
         <Kicker text="Selected work" />
-        <h2 style="font-size: 34px; margin-top: 12px;">A few things I've landed.</h2>
+        <h2 style="font-size: 34px; margin-top: 12px;">{p.workHeading}</h2>
       </div>
       <a href="/work/professional" class="btn btn-ghost hover-rainbow"><span>{letters('All case studies').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))} →</span></a>
     </div>
     <div class="work-grid">
-      {work.map((w) => (
-        <a href={`/work/professional#${w.slug}`} class="card work-card">
+      {p.work.map((w) => (
+        <a href={w.href ?? `/work/professional#${w.slug}`} class="card work-card">
           <span class="card-kicker">{w.kicker}</span>
           <span class={`card-title ${w.highlight ? 'has-highlight' : ''}`} style={w.highlight ? `--highlight: url('${w.highlight}');` : undefined}>{w.title}</span>
           <p class="card-body">{w.body}</p>
-          <span class="card-meta" style="color: var(--color-accent);">Read case →</span>
+          <span class="card-meta" style="color: var(--color-accent);">{w.cta ?? 'Read case →'}</span>
         </a>
       ))}
     </div>
@@ -82,7 +94,7 @@ const faqs = [
     <ThreadRule />
     <div style="text-align: center; margin-bottom: var(--space-6);"><Kicker text="Kind words" /></div>
     <div class="testi-grid">
-      {testimonials.map((t) => (
+      {p.testimonials.map((t) => (
         <figure>
           <blockquote class="testi-quote" set:html={t.quote} />
           <figcaption class="testi-attr">{t.attr}</figcaption>
@@ -91,50 +103,12 @@ const faqs = [
     </div>
   </section>
 
-  <section class="wrap section">
-    <div class="section-head">
-      <Kicker text="What's next" />
-      <h2>What I'm looking for next.</h2>
-    </div>
-    <div class="next-grid">
-      <div class="card next-card">
-        <span class="card-kicker">The role</span>
-        <span class="card-title next-title">Product manager</span>
-        <p class="card-body next-body">Owning delivery end to end across strategy, creative, and technology, as the steady point of contact that clients and teams both trust to keep things moving.</p>
-      </div>
-      <div class="card next-card">
-        <span class="card-kicker">The team</span>
-        <span class="card-title next-title">Design &amp; technology agencies</span>
-        <p class="card-body next-body">Strategy, creative, and technology teams pushing toward what's next, new formats and platforms, who need a PM who can turn that ambition into something real.</p>
-      </div>
-      <div class="card next-card">
-        <span class="card-kicker">The setup</span>
-        <span class="card-title next-title">Contract & fractional roles</span>
-        <p class="card-body next-body">Based in NYC, I'd prefer remote-first or hybrid roles. Currently looking for contract or fractional roles, but open to full time positions for the right fit.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="wrap section faq-section">
-    <img src="/assets/faq-divider.png" alt="" class="faq-divider" />
-    <div class="section-head">
-      <Kicker text="Questions" />
-      <h2>Good to know.</h2>
-    </div>
-    {faqs.map((f) => (
-      <div class="faq-row">
-        <div class="faq-q">{f.q}</div>
-        <p class="faq-a">{f.a}</p>
-      </div>
-    ))}
-  </section>
-
   <section class="wrap section cta-section">
     <div class="cta-band">
       <Loop variant="below" />
       <Kicker text="Let's talk" />
-      <h2 class="cta-h2">Hiring for a role I'd fit?</h2>
-      <p class="lede cta-lede">I'd love to hear about the team and the work. Send a note, or take my résumé with you.</p>
+      <h2 class="cta-h2">{p.ctaHeading}</h2>
+      <p class="lede cta-lede">{p.ctaLede}</p>
       <div class="cta-ctas">
         <a href="/contact" class="btn btn-primary cta-btn"><span class="btn-label">Get in touch →</span></a>
         <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-ghost cta-btn cta-btn-icon hover-rainbow">
@@ -142,6 +116,7 @@ const faqs = [
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
         </a>
       </div>
+      <p class="cross-link">{p.crossLink.text} <a href={p.crossLink.href}>{p.crossLink.label} →</a></p>
     </div>
   </section>
 
@@ -206,14 +181,6 @@ const faqs = [
   .testi-quote { margin: 0; font-family: var(--font-body); font-size: 22px; line-height: 1.45; font-weight: 400; }
   .testi-attr { font-size: 11px; font-family: var(--font-nav); letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-neutral-600); margin-top: var(--space-3); }
 
-  .next-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
-  .next-card { padding: var(--space-4); }
-  .next-title { font-size: 17px; text-transform: none; letter-spacing: normal; }
-  .next-body { font-size: 14px; }
-
-  .faq-section { max-width: 760px; }
-  .faq-divider { width: 100%; height: auto; display: block; margin: 0 auto var(--space-6); border-radius: var(--radius-md); }
-
   .cta-section { padding-top: 96px; text-align: center; }
   .cta-band {
     padding: 110px 48px;
@@ -228,6 +195,7 @@ const faqs = [
   .cta-ctas { display: flex; align-items: flex-start; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
   .cta-btn { font-size: 15px; padding: 13px 28px; }
   .cta-btn-icon { display: inline-flex; align-items: center; gap: 8px; }
+  .cross-link { margin: var(--space-6) 0 0; font-size: 14px; font-family: var(--font-nav); color: var(--color-neutral-700); }
 
   @media (max-width: 860px) {
     .hero { padding-top: 56px; padding-bottom: 44px; }
@@ -235,7 +203,6 @@ const faqs = [
     .stats { grid-template-columns: 1fr; gap: var(--space-4); }
     .work-grid { grid-template-columns: 1fr; }
     .testi-grid { grid-template-columns: 1fr; gap: var(--space-6); }
-    .next-grid { grid-template-columns: 1fr; }
     .section { padding-top: 56px; }
     .cta-h2 { font-size: 32px; }
     .cta-band { padding: 52px 24px; }

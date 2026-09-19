@@ -7,7 +7,7 @@
 // hamburger button that reveals a stacked panel, with Work/About as
 // native <details> accordions (keyboard/screen-reader support for free).
 interface Props {
-  current: 'home' | 'professional' | 'personal' | 'about' | 'blog' | 'contact';
+  current: 'home' | 'professional' | 'personal' | 'about' | 'blog' | 'contact' | 'product' | 'program';
 }
 const { current } = Astro.props;
 const isCurrent = (page: string) => (current === page ? 'page' : undefined);
