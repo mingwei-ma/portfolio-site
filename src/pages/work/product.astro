@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Loop from '../../components/Loop.astro';
+import Kicker from '../../components/Kicker.astro';
+import { letters } from '../../lib/letters';
+import { caseStudies } from '../../lib/caseStudies';
+---
+<BaseLayout title="Product work — Mingwei Ma" description="Product management case studies from Mingwei Ma: requirements and MVPs, roadmaps and prioritization, launch readiness, and post-launch learning.">
+  <Nav current="work-product" />
+
+  <header class="wrap hero">
+    <Loop variant="double" />
+    <Kicker text="Product work" />
+    <h1>From requirements to launch, and what came next.</h1>
+    <p class="lede">How I define, prioritize, and ship products: PRDs and MVPs, roadmaps and backlogs, launch readiness, and the learning after release.</p>
+  </header>
+
+  <section class="wrap list-section">
+    <div class="case-grid">
+      {caseStudies.map((c, i) => (
+        <a href={`/work/${c.slug}`} class="card case-card">
+          <span class="card-kicker">{c.kicker}</span>
+          <span class="card-title has-highlight" style={`--highlight: url('/assets/work-highlight-${(i % 3) + 1}.png');`}>{c.title}</span>
+          <p class="card-body">{c.lede}</p>
+          <span class="card-meta" style="color: var(--color-accent);">Read case →</span>
+        </a>
+      ))}
+    </div>
+    <p class="also">Looking for delivery and operations work? See the <a href="/work/project">project case studies</a>, or the <a href="/work/personal">personal builds</a>.</p>
+  </section>
+
+  <section class="wrap section cta-section">
+    <div class="cta-band">
+      <Loop variant="below" />
+      <Kicker text="Let's talk" />
+      <h2 class="cta-h2">Hiring for a product role?</h2>
+      <p class="lede cta-lede">I'd love to hear about the team and the problems you're solving. Send a note, or take my résumé with you.</p>
+      <div class="cta-ctas">
+        <a href="/contact" class="btn btn-primary cta-btn"><span class="btn-label">Get in touch →</span></a>
+        <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-ghost cta-btn cta-btn-icon hover-rainbow">
+          <span>{letters('Download résumé').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hero { text-align: center; padding-top: 88px; padding-bottom: 56px; }
+  .hero h1 { font-size: 52px; line-height: 1.08; margin: 20px auto 22px; font-weight: 400; max-width: 900px; }
+  .hero .lede { max-width: 640px; margin: 0 auto; }
+
+  .list-section { padding-top: 8px; }
+  .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6) var(--space-6); border-top: 1px solid var(--color-divider); padding-top: var(--space-6); }
+  .case-card { text-decoration: none; color: inherit; border: none; padding: var(--space-3) 0; }
+  .case-card .card-title { text-transform: none; letter-spacing: normal; font-size: 17px; }
+  .case-card .card-title.has-highlight {
+    align-self: flex-start;
+    background-image: var(--highlight);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    padding: 3px 8px;
+    margin: -3px -8px 5px -8px;
+  }
+  .case-card .card-meta { position: relative; align-self: flex-start; padding-bottom: 8px; transition: transform 0.25s ease; }
+  .case-card .card-meta::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 7px;
+    background-image: url('/assets/cta-underline.png');
+    background-size: 100% 100%; background-position: center; background-repeat: no-repeat;
+    opacity: 0; transition: opacity 0.25s ease;
+  }
+  .case-card:hover .card-meta { transform: translateY(-1px); }
+  .case-card:hover .card-meta::after { opacity: 1; }
+  .also { margin: var(--space-6) 0 0; font-size: 14px; font-family: var(--font-nav); color: var(--color-neutral-700); }
+
+  .cta-section { padding-top: 88px; padding-bottom: 88px; text-align: center; }
+  .cta-band { padding: 110px 48px; border-radius: var(--radius-lg); background-color: #f0e9df; background-image: url('/assets/cta-bg.jpg'); background-size: cover; background-position: center; }
+  .cta-h2 { font-size: 42px; margin: 0 0 18px; font-weight: 400; }
+  .cta-lede { max-width: 520px; margin: 0 auto var(--space-6); }
+  .cta-ctas { display: flex; align-items: flex-start; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+  .cta-btn { font-size: 15px; padding: 13px 28px; }
+  .cta-btn-icon { display: inline-flex; align-items: center; gap: 8px; }
+
+  @media (max-width: 860px) {
+    .hero { padding-top: 56px; padding-bottom: 40px; }
+    .hero h1 { font-size: 34px; }
+    .case-grid { grid-template-columns: 1fr; }
+    .cta-section { padding-top: 56px; padding-bottom: 56px; }
+    .cta-h2 { font-size: 28px; }
+    .cta-band { padding: 52px 24px; }
+  }
+</style>

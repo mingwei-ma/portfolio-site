@@ -63,11 +63,11 @@ const faqs = [
         <Kicker text="Selected work" />
         <h2 style="font-size: 34px; margin-top: 12px;">A few things I've landed.</h2>
       </div>
-      <a href="/work/professional" class="btn btn-ghost hover-rainbow"><span>{letters('All case studies').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))} →</span></a>
+      <a href="/work/product" class="btn btn-ghost hover-rainbow"><span>{letters('All case studies').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))} →</span></a>
     </div>
     <div class="work-grid">
       {homeWork.map((w) => (
-        <a href={w.href ?? `/work/professional#${w.slug}`} class="card work-card">
+        <a href={w.href ?? `/work/project#${w.slug}`} class="card work-card">
           <span class="card-kicker">{w.kicker}</span>
           <span class={`card-title ${w.highlight ? 'has-highlight' : ''}`} style={w.highlight ? `--highlight: url('${w.highlight}');` : undefined}>{w.title}</span>
           <p class="card-body">{w.body}</p>

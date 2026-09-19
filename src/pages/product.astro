@@ -1,5 +1,6 @@
 ---
 import RoleLanding from '../components/RoleLanding.astro';
+import { homeWork } from '../lib/homeContent';
 
 const services = [
   {
@@ -29,11 +30,6 @@ const services = [
   },
 ];
 
-const work = [
-  { slug: 'subscribe', kicker: 'SUBSCRIBE · Product Manager', title: 'A company-wide system, built from zero', highlight: '/assets/work-highlight-1.png', body: 'As Product Manager, I standardized a chaotic Asana workspace and drove full adoption across 10 teams, clearing a 4-year-old backlog in weeks.' },
-  { slug: 'outpost', kicker: 'Outpost · Personal project', title: 'A product, from brief to prototype', highlight: '/assets/work-highlight-2.png', body: 'Took a coffee-shop finder for remote workers from product brief to working prototype with Claude Design and Claude Code, run like a real product team.', href: '/work/personal', cta: 'See the build →' },
-  { slug: 'studio-simpatico', kicker: 'Studio Simpatico · Senior DPM', title: 'The tools that sped up delivery', highlight: '/assets/work-highlight-3.png', body: 'Evaluated platforms, co-designed a sprint system with engineering, and led change management from Basecamp to Linear.' },
-];
 
 const testimonials = [
   { quote: 'Mingwei was absolutely amazing to work with...all of the organizational systems she put into place meant we were able to survive after she left.', attr: 'Lead Developer · Design Agency' },
@@ -57,7 +53,7 @@ const testimonials = [
   servicesHeading="How I approach product."
   services={services}
   workHeading="Product work I'm proud of."
-  work={work}
+  work={homeWork}
   testimonials={testimonials}
   ctaHeading="Hiring for a product role?"
   ctaLede="I'd love to hear about the team and the problems you're solving. Send a note, or take my résumé with you."

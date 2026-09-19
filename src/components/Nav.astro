@@ -7,12 +7,12 @@
 // hamburger button that reveals a stacked panel, with Work/About as
 // native <details> accordions (keyboard/screen-reader support for free).
 interface Props {
-  current: 'home' | 'professional' | 'personal' | 'about' | 'blog' | 'contact' | 'product' | 'program';
+  current: 'home' | 'work-product' | 'work-project' | 'personal' | 'about' | 'blog' | 'contact' | 'product' | 'program';
 }
 const { current } = Astro.props;
 const isCurrent = (page: string) => (current === page ? 'page' : undefined);
 const letters = (text: string) => [...text].map((ch) => (ch.trim() ? ch : { space: true }));
-const workActive = current === 'professional' || current === 'personal';
+const workActive = current === 'work-product' || current === 'work-project' || current === 'personal';
 const aboutActive = current === 'about' || current === 'blog';
 ---
 <nav class="navbar">
@@ -22,12 +22,13 @@ const aboutActive = current === 'about' || current === 'blog';
     <a href="/" class="nav-home hover-rainbow" aria-current={isCurrent('home')}>{letters('Home').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
 
     <div class="navdrop nav-work">
-      <a href="/work/professional" class="hover-rainbow" aria-current={workActive ? 'page' : undefined}>
+      <a href="/work/product" class="hover-rainbow" aria-current={workActive ? 'page' : undefined}>
         <span>{letters('Work').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</span>
         <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </a>
       <div class="navmenu">
-        <a href="/work/professional" aria-current={isCurrent('professional')}>{letters('Professional').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
+        <a href="/work/product" aria-current={isCurrent('work-product')}>{letters('Product').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
+        <a href="/work/project" aria-current={isCurrent('work-project')}>{letters('Project').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
         <a href="/work/personal" aria-current={isCurrent('personal')}>{letters('Personal').map((c) => (typeof c === 'string' ? <span>{c}</span> : ' '))}</a>
       </div>
     </div>
@@ -47,7 +48,8 @@ const aboutActive = current === 'about' || current === 'blog';
 
     <details class="mobile-accordion" open={workActive}>
       <summary class={workActive ? 'current' : undefined}>Work</summary>
-      <a href="/work/professional" aria-current={isCurrent('professional')}>Professional</a>
+      <a href="/work/product" aria-current={isCurrent('work-product')}>Product</a>
+      <a href="/work/project" aria-current={isCurrent('work-project')}>Project</a>
       <a href="/work/personal" aria-current={isCurrent('personal')}>Personal</a>
     </details>
 

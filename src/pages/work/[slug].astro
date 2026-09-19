@@ -14,10 +14,10 @@ const { c } = Astro.props;
 const related = c.related.map((s) => caseStudies.find((x) => x.slug === s)!).filter(Boolean);
 ---
 <BaseLayout title={`${c.title} — Mingwei Ma`} description={c.lede}>
-  <Nav current="professional" />
+  <Nav current="work-product" />
 
   <nav class="wrap crumb" aria-label="Breadcrumb">
-    <a href="/work/professional" class="hover-rainbow"><span>{letters('← All case studies').map((ch) => (typeof ch === 'string' ? <span>{ch}</span> : <span> </span>))}</span></a>
+    <a href="/work/product" class="hover-rainbow"><span>{letters('← All case studies').map((ch) => (typeof ch === 'string' ? <span>{ch}</span> : <span> </span>))}</span></a>
   </nav>
 
   <header class="wrap hero">
