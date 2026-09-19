@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Loop from '../../components/Loop.astro';
+import Kicker from '../../components/Kicker.astro';
+import { letters } from '../../lib/letters';
+import { caseStudies } from '../../lib/caseStudies';
+
+export function getStaticPaths() {
+  return caseStudies.map((c) => ({ params: { slug: c.slug }, props: { c } }));
+}
+const { c } = Astro.props;
+const related = c.related.map((s) => caseStudies.find((x) => x.slug === s)!).filter(Boolean);
+---
+<BaseLayout title={`${c.title} — Mingwei Ma`} description={c.lede}>
+  <Nav current="professional" />
+
+  <nav class="wrap crumb" aria-label="Breadcrumb">
+    <a href="/work/professional" class="hover-rainbow"><span>{letters('← All case studies').map((ch) => (typeof ch === 'string' ? <span>{ch}</span> : <span> </span>))}</span></a>
+  </nav>
+
+  <header class="wrap hero">
+    <Loop variant="double" />
+    <Kicker text={c.kicker} />
+    <h1>{c.title}</h1>
+    <p class="lede">{c.lede}</p>
+  </header>
+
+  <section class="wrap case-section">
+    <div class="case-grid">
+      <aside class="meta-list">
+        <div class="meta-row"><span class="l">Role</span><span class="v">{c.role}</span></div>
+        <div class="meta-row"><span class="l">Company</span><span class="v">{c.company}</span></div>
+        <div class="meta-row"><span class="l">When</span><span class="v">{c.when}</span></div>
+        <div class="meta-tag">{c.tags.map((t) => <span class="tag tag-outline">{t}</span>)}</div>
+      </aside>
+      <div>
+        <h2 class="sec-h">What I did</h2>
+        <ul class="case-list">
+          {c.did.map((d) => <li><strong>{d.label}.</strong> {d.text}</li>)}
+        </ul>
+        <h2 class="sec-h">The outcome</h2>
+        <ul class="case-list">
+          {c.outcomes.map((o) => <li>{o}</li>)}
+        </ul>
+        {c.stats.length > 0 && (
+          <div class="result-row">
+            {c.stats.map((s) => (
+              <div class="result-stat"><b>{s.b}</b><span>{s.span}</span></div>
+            ))}
+          </div>
+        )}
+        {c.tools.length > 0 && (
+          <div class="tools"><span class="tools-label">Skills &amp; tools</span>{c.tools.map((t) => <span class="tag tag-neutral">{t}</span>)}</div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap related">
+    <div class="related-head"><Kicker text="More case studies" /></div>
+    <div class="related-grid">
+      {related.map((r) => (
+        <a href={`/work/${r.slug}`} class="card rel-card">
+          <span class="card-kicker">{r.kicker}</span>
+          <span class="card-title">{r.title}</span>
+          <p class="card-body">{r.lede}</p>
+          <span class="card-meta" style="color: var(--color-accent);">Read case →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section cta-section">
+    <div class="cta-band">
+      <Loop variant="below" />
+      <Kicker text="Let's talk" />
+      <h2 class="cta-h2">Want this kind of delivery on your team?</h2>
+      <p class="lede cta-lede">I'd love to hear about the team and the work. Send a note, or take my résumé with you.</p>
+      <div class="cta-ctas">
+        <a href="/contact" class="btn btn-primary cta-btn"><span class="btn-label">Get in touch →</span></a>
+        <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-ghost cta-btn cta-btn-icon hover-rainbow">
+          <span>{letters('Download résumé').map((ch) => (typeof ch === 'string' ? <span>{ch}</span> : <span> </span>))}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .crumb { padding-top: 28px; }
+  .crumb a { display: inline-block; font-family: var(--font-nav); font-weight: 500; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-700); text-decoration: none; }
+  .hero { text-align: center; padding-top: 36px; padding-bottom: 56px; }
+  .hero h1 { font-size: 48px; line-height: 1.1; margin: 20px auto 22px; font-weight: 400; max-width: 900px; }
+  .hero .lede { max-width: 640px; margin: 0 auto; }
+
+  .case-grid { display: grid; grid-template-columns: 248px 1fr; gap: 56px; align-items: start; padding-top: var(--space-6); border-top: 1px solid var(--color-divider); }
+  .meta-list { display: grid; gap: 14px; font-size: 13px; font-family: var(--font-nav); }
+  .meta-row { display: flex; flex-direction: column; gap: 3px; padding-bottom: 12px; border-bottom: 1px solid var(--color-divider); }
+  .meta-row .l { color: var(--color-neutral-600); text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
+  .meta-row .v { font-family: var(--font-nav); font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; font-size: 13px; }
+  .meta-tag { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 2px; }
+
+  .sec-h { font-size: 28px; font-weight: 400; margin: 0 0 var(--space-2); }
+  .sec-h:not(:first-child) { margin-top: var(--space-6); }
+  .case-list { margin: 10px 0 0; padding-left: 20px; }
+  .case-list li { font-size: 15px; line-height: 1.68; font-family: var(--font-body); color: color-mix(in srgb, var(--color-text) 82%, transparent); margin-bottom: 8px; }
+  .case-list li strong { color: var(--color-text); }
+
+  .result-row { display: flex; gap: var(--space-6); margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-divider); flex-wrap: wrap; }
+  .tools { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin-top: var(--space-6); padding-top: var(--space-3); border-top: 1px solid var(--color-divider); }
+  .tools-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-600); font-family: var(--font-nav); margin-right: 4px; }
+
+  .related { padding-top: 80px; }
+  .related-head { text-align: center; margin-bottom: var(--space-4); }
+  .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+  .rel-card { text-decoration: none; color: inherit; }
+  .rel-card .card-title { text-transform: none; letter-spacing: normal; }
+
+  .cta-section { padding-top: 88px; padding-bottom: 88px; text-align: center; }
+  .cta-band { padding: 110px 48px; border-radius: var(--radius-lg); background-color: #f0e9df; background-image: url('/assets/cta-bg.jpg'); background-size: cover; background-position: center; }
+  .cta-h2 { font-size: 42px; margin: 0 0 18px; font-weight: 400; }
+  .cta-lede { max-width: 520px; margin: 0 auto var(--space-6); }
+  .cta-ctas { display: flex; align-items: flex-start; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+  .cta-btn { font-size: 15px; padding: 13px 28px; }
+  .cta-btn-icon { display: inline-flex; align-items: center; gap: 8px; }
+
+  @media (max-width: 860px) {
+    .crumb { padding-top: 20px; }
+    .hero { padding-top: 28px; padding-bottom: 40px; }
+    .hero h1 { font-size: 32px; }
+    .case-grid { grid-template-columns: 1fr; gap: 24px; }
+    .related-grid { grid-template-columns: 1fr; }
+    .cta-section { padding-top: 56px; padding-bottom: 56px; }
+    .cta-h2 { font-size: 28px; }
+    .cta-band { padding: 52px 24px; }
+  }
+</style>

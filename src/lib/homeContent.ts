@@ -71,7 +71,7 @@ export const homeServices = [
 ];
 
 export const homeWork = [
-  { slug: 'subscribe', kicker: 'SUBSCRIBE · Product Manager', title: 'Invitations, from PRD to phased MVP', highlight: '/assets/work-highlight-1.png', body: 'Led the feature overhaul through a controlled rollout across six customer organizations, with MVP KPIs and a SQL-powered Metabase dashboard.' },
+  { slug: 'invitations-mvp', kicker: 'SUBSCRIBE · Product Manager', title: 'Invitations, from PRD to phased MVP', highlight: '/assets/work-highlight-1.png', body: 'Led the feature overhaul through a controlled rollout across six customer organizations, with MVP KPIs and a SQL-powered Metabase dashboard.', href: '/work/invitations-mvp' },
   { slug: 'outpost', kicker: 'Outpost · Personal project', title: 'A product, from brief to prototype', highlight: '/assets/work-highlight-2.png', body: 'Took a coffee-shop finder for remote workers from problem framing to a working prototype with Claude Design and Claude Code.', href: '/work/personal', cta: 'See the build →' },
-  { slug: 'wide-eye', kicker: 'Wide Eye · Senior DPM', title: 'MVP for a certification app', highlight: '/assets/work-highlight-3.png', body: 'Defined the MVP with UX and engineering, mapped applicant and admin flows in Figma, and turned client scope additions into a post-MVP statement of work.' },
+  { slug: 'certification-app-mvp', kicker: 'Wide Eye · Senior DPM', title: 'MVP for a certification app', highlight: '/assets/work-highlight-3.png', body: 'Defined the MVP with UX and engineering, mapped applicant and admin flows in Figma, and turned client scope additions into a post-MVP statement of work.', href: '/work/certification-app-mvp' },
 ];
