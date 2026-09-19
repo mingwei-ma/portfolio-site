@@ -28,8 +28,10 @@ interface Props {
   ctaHeading: string;
   ctaLede: string;
   crossLink: { text: string; label: string; href: string };
+  resumeHref?: string;
 }
 const p = Astro.props;
+const resumeHref = p.resumeHref ?? '/assets/Mingwei-Ma-Resume.pdf';
 ---
 <BaseLayout title={p.title} description={p.description}>
   <Nav current={p.current} />
@@ -45,7 +47,7 @@ const p = Astro.props;
     <p class="lede hero-lede">{p.lede}</p>
     <div class="hero-ctas">
       <a href="/contact" class="btn btn-primary hero-btn"><span class="btn-label">Get in touch →</span></a>
-      <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-ghost hero-btn hover-rainbow"><span>{letters('Download résumé').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))}</span></a>
+      <a href={resumeHref} target="_blank" class="btn btn-ghost hero-btn hover-rainbow"><span>{letters('Download résumé').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))}</span></a>
     </div>
   </header>
 
@@ -115,7 +117,7 @@ const p = Astro.props;
       <p class="lede cta-lede">{p.ctaLede}</p>
       <div class="cta-ctas">
         <a href="/contact" class="btn btn-primary cta-btn"><span class="btn-label">Get in touch →</span></a>
-        <a href="/assets/Mingwei-Ma-Resume.pdf" target="_blank" class="btn btn-ghost cta-btn cta-btn-icon hover-rainbow">
+        <a href={resumeHref} target="_blank" class="btn btn-ghost cta-btn cta-btn-icon hover-rainbow">
           <span>{letters('Download résumé').map((c) => (typeof c === 'string' ? <span>{c}</span> : <span> </span>))}</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
         </a>
